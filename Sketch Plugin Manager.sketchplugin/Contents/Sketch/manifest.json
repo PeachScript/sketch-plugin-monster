@@ -1,0 +1,25 @@
+{
+  "author": "PeachScript",
+  "commands" : [
+    {
+      "name": "Hello World",
+      "identifier": "managerInit",
+      "handler": "managerInit",
+      "script": "manager.sketchscript"
+    }
+  ],
+  "menu" : {
+    "isRoot" : false,
+    "shortcut" : "",
+    "items" : [
+      "managerInit"
+    ],
+    "title" : "Sketch Plugin Manager"
+  },
+  "identifier": "com.peachscript.pluginManager",
+  "homepage": "http://www.peachis.me/",
+  "version": "0.0.0",
+  "description" : "A manager for setting shortcuts and update plugins",
+  "authorEmail" : "scdzwyxst@gmail.com",
+  "name" : "Sketch Plugin Manager"
+}

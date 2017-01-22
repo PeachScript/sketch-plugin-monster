@@ -1,0 +1,6 @@
+function managerInit() {
+  var alert = [COSAlertWindow new];
+
+  [alert setMessageText:'Hello World!'];
+  [alert runModal];
+}
