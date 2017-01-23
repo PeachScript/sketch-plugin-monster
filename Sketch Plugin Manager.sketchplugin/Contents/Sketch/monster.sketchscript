@@ -1,4 +1,4 @@
-function managerInit() {
+function monsterInit() {
   var alert = [COSAlertWindow new];
 
   [alert setMessageText:'Hello World!'];

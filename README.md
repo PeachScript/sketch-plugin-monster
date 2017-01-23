@@ -1,2 +1,2 @@
-# Sketch Plugin Manager
-A manager for setting shortcuts and update plugins in Sketch.app.
+# Sketch Plugin Monster
+A manager for setting shortcuts of plugins in Sketch.app.

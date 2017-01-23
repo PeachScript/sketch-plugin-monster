@@ -1,25 +1,26 @@
 {
   "author": "PeachScript",
-  "commands" : [
+  "commands": [
     {
+      "script": "monster.sketchscript",
+      "handler": "monsterInit",
+      "shortcut": "ctrl shift t",
       "name": "Hello World",
-      "identifier": "managerInit",
-      "handler": "managerInit",
-      "script": "manager.sketchscript"
+      "identifier": "monsterInit"
     }
   ],
-  "menu" : {
-    "isRoot" : false,
-    "shortcut" : "",
-    "items" : [
-      "managerInit"
+  "menu": {
+    "isRoot": false,
+    "shortcut": "",
+    "items": [
+      "monsterInit"
     ],
-    "title" : "Sketch Plugin Manager"
+    "title": "Sketch Plugin Monster"
   },
-  "identifier": "com.peachscript.pluginManager",
-  "homepage": "http://www.peachis.me/",
+  "identifier": "com.peachscript.pluginMonster",
   "version": "0.0.0",
-  "description" : "A manager for setting shortcuts and update plugins",
-  "authorEmail" : "scdzwyxst@gmail.com",
-  "name" : "Sketch Plugin Manager"
+  "description": "A manager for setting shortcuts of plugins",
+  "homepage": "https://github.com/PeachScript/sketch-plugin-monster",
+  "authorEmail": "scdzwyxst@gmail.com",
+  "name": "Sketch Plugin Monster"
 }
