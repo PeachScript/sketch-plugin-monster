@@ -3,17 +3,17 @@
   "commands": [
     {
       "script": "monster.sketchscript",
-      "handler": "monsterInit",
+      "handler": "monsterShortcuts",
       "shortcut": "ctrl shift t",
-      "name": "Hello World",
-      "identifier": "monsterInit"
+      "name": "Manage plulgin shortcuts",
+      "identifier": "monsterShortcuts"
     }
   ],
   "menu": {
     "isRoot": false,
     "shortcut": "",
     "items": [
-      "monsterInit"
+      "monsterShortcuts"
     ],
     "title": "Sketch Plugin Monster"
   },

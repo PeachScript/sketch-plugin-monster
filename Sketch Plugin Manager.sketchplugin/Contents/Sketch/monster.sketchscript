@@ -3,12 +3,12 @@
 @import 'lib/MochaJSDelegate.js';
 @import 'lib/Panel.js';
 
-function monsterInit(context) {
+function monsterShortcuts(context) {
   var pluginHandler = new PluginHandler();
   var panel = new Panel({
     context: context,
-    template: 'index'
-  }, { a : 1 }, function () {
+    template: 'shortcuts'
+  }, pluginHandler.getCommandsOfAllPlugins(), function () {
     panel.execute('document.write(\'Execute callback successfully!\')');
   });
 
