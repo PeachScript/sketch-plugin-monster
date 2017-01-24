@@ -38,11 +38,12 @@ PluginHandler.prototype.getManifestOfPlugin = function (name) {
 PluginHandler.prototype.getCommandsOfAllPlugins = function () {
   var pluginList = this.getPluginList();
   var commandList = [];
+  var _self = this;
 
   utils.array.forEach(pluginList, function (item) {
     commandList.push({
       name: item,
-      commands: this.getManifestOfPlugin(item).commands
+      commands: _self.getManifestOfPlugin(item).commands
     });
   });
 
