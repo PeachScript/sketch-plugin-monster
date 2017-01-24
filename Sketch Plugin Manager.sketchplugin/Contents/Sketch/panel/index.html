@@ -7,8 +7,9 @@
 <body>
   Hello World!
   <script>
-    function init(data) {
+    function $initialize(data) {
       document.write(JSON.stringify(data));
+      $dispatch('hello', 'world');
     }
   </script>
 </body>

@@ -5,7 +5,12 @@
 
 function monsterInit(context) {
   var pluginHandler = new PluginHandler();
-  var panel = new Panel(context, { template: 'index' }, { a : 1 });
+  var panel = new Panel({
+    context: context,
+    template: 'index'
+  }, { a : 1 }, function () {
+    panel.execute('document.write(\'Execute callback successfully!\')');
+  });
 
   panel.show();
 }
