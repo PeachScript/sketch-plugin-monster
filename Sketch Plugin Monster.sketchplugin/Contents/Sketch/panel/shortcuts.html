@@ -51,65 +51,50 @@
 <body>
   <h1 class="page-title">Plugin shortcuts settings</h1>
   <p class="usage-desc">Usage: click the shortcut which you want to edit, then press your new shortcut.</p>
-  <div class="plugin-shortcuts-panel">
-    <h2>Plugin name</h2>
-    <table>
-      <tbody>
-        <tr>
-          <td>command name</td>
-          <td>
-            <input type="text">
-            <button>clear</button>
-          </td>
-        </tr>
-        <tr>
-          <td>command name</td>
-          <td>
-            <input type="text">
-            <button>clear</button>
-          </td>
-        </tr>
-        <tr>
-          <td>command name</td>
-          <td>
-            <input type="text">
-            <button>clear</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="plugin-shortcuts-panel">
-    <h2>Plugin name</h2>
-    <table>
-      <tbody>
-        <tr>
-          <td>command name</td>
-          <td>
-            <input type="text">
-            <button>clear</button>
-          </td>
-        </tr>
-        <tr>
-          <td>command name</td>
-          <td>
-            <input type="text">
-            <button>clear</button>
-          </td>
-        </tr>
-        <tr>
-          <td>command name</td>
-          <td>
-            <input type="text">
-            <button>clear</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
   <script>
+    function renderList(plugins) {
+      var wrapper = document.createElement('div');
+
+      plugins.forEach(function (plugin) {
+        var panel = document.createElement('div');
+        var title = document.createElement('h2');
+        var table = document.createElement('table');
+        var tbody = document.createElement('tbody');
+
+        panel.className = 'plugin-shortcuts-panel';
+        title.innerHTML = plugin.name;
+
+        plugin.commands.forEach(function (command) {
+          var tr = document.createElement('tr');
+          var name = document.createElement('td');
+          var shortcut = document.createElement('td');
+          var input = document.createElement('input');
+          var btn = document.createElement('button');
+
+          name.innerHTML = command.name;
+          input.setAttribute('readonly', 'readonly');
+          input.value = command.shortcut || '';
+          btn.innerHTML = 'clear';
+
+          shortcut.appendChild(input);
+          shortcut.appendChild(btn);
+          tr.appendChild(name);
+          tr.appendChild(shortcut);
+          tbody.appendChild(tr);
+
+        });
+
+        table.appendChild(tbody);
+        panel.appendChild(title);
+        panel.appendChild(table);
+        wrapper.appendChild(panel);
+      });
+
+      document.body.appendChild(wrapper);
+    }
+
     function $initialize(data) {
-      document.write(JSON.stringify(data));
+      renderList(data);
     }
   </script>
 </body>

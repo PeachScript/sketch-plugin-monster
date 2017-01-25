@@ -42,7 +42,7 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
 
   utils.array.forEach(pluginList, function (item) {
     commandList.push({
-      name: item,
+      name: String(item),
       commands: _self.getManifestOfPlugin(item).commands
     });
   });
