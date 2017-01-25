@@ -13,7 +13,7 @@ var utils = {
       return NSFileManager.defaultManager().contentsOfDirectoryAtPath_error(path, nil);
     },
     readFile: function (path) {
-      return NSFileManager.defaultManager().contentsAtPath(path);
+      return NSString.stringWithContentsOfFile_encoding_error(path, 4, nil);
     },
     writeFile: function (path, data) {
       NSFileManager.defaultManager().createFileAtPath_contents_attributes(path, data, nil);
@@ -21,7 +21,7 @@ var utils = {
   },
   JSON: {
     parse: function (data) {
-      return NSJSONSerialization.JSONObjectWithData_options_error(data, NSJSONReadingMutableLeaves, nil);
+      return JSON.parse(data.replace(/,(\n *})/, '$1'));
     },
     stringify: function (data) {
       return NSJSONSerialization.dataWithJSONObject_options_error(data, NSJSONWritingPrettyPrinted, nil);
