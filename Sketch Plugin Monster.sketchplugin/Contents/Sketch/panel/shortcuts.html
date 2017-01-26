@@ -73,7 +73,7 @@
 
           name.innerHTML = command.name;
           input.setAttribute('readonly', 'readonly');
-          input.value = command.shortcut || '';
+          input.value = convertShortcut(command.shortcut || '');
           btn.innerHTML = 'clear';
 
           shortcut.appendChild(input);
@@ -91,6 +91,23 @@
       });
 
       document.body.appendChild(wrapper);
+    }
+
+    function convertShortcut(str) {
+      var keys = str.split(' ');
+      var mapping = {
+        'cmd': '\u2318',
+        'command': '\u2318',
+        'ctrl': '\u2303',
+        'control': '\u2303',
+        'alt': '\u2325',
+        'option': '\u2325',
+        'shift': '\u21E7',
+      };
+
+      return keys.map(function (key) {
+        return mapping[key] || key;
+      }).join('');
     }
 
     function $initialize(data) {
