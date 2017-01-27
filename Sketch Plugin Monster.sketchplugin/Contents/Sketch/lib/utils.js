@@ -35,5 +35,11 @@ var utils = {
         if (cb.call(null, source[i], i) == true) break;
       }
     }
-  }
+  },
+  system: {
+    getLanguage: function () {
+      var lang = NSUserDefaults.standardUserDefaults().objectForKey('AppleLanguages').objectAtIndex(0);
+      return lang.split('-').slice(0, 2).join('-');
+    }
+  },
 };

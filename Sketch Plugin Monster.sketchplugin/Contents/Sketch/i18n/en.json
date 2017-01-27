@@ -1,0 +1,8 @@
+{
+  "commands": {
+    "monsterShortcuts": "Manage plulgin shortcuts"
+  },
+  "webview": {
+    "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut."
+  }
+}

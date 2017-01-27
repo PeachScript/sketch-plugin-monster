@@ -3,8 +3,9 @@
 @import 'lib/MochaJSDelegate.js';
 @import 'lib/Panel.js';
 
+var pluginHandler = new PluginHandler();
+
 function monsterShortcuts(context) {
-  var pluginHandler = new PluginHandler();
   var panel = new Panel({
     context: context,
     template: 'shortcuts'
@@ -13,4 +14,20 @@ function monsterShortcuts(context) {
   });
 
   panel.show();
+}
+
+function initialize(context) {
+  var lang = utils.system.getLanguage();
+  var manifestPath = pluginHandler.getManifestPathOfPlugin(context.plugin.name());
+  var i18n = utils.JSON.parse(utils.fs.readFile(utils.path.join(manifestPath.replace(/manifest\.json/, ''), './i18n', lang + '.json')));
+  var manifest = pluginHandler.getManifestOfPlugin(context.plugin.name());
+
+  utils.array.forEach(manifest.commands, function (command, i) {
+    var i18nStr = i18n.commands[command.identifier];
+    if (i18nStr) {
+      manifest.commands[i].name = i18nStr;
+    }
+  });
+
+  utils.fs.writeFile(manifestPath, utils.JSON.stringify(manifest));
 }
