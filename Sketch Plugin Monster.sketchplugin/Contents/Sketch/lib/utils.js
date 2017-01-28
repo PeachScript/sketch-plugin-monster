@@ -16,7 +16,10 @@ var utils = {
       return NSString.stringWithContentsOfFile_encoding_error(path, 4, nil);
     },
     writeFile: function (path, data) {
-      NSFileManager.defaultManager().createFileAtPath_contents_attributes(path, data, nil);
+      if (!/\n$/.test(data)) {
+        data += '\n';
+      }
+      return NSString.stringWithString(data).writeToFile_atomically_encoding_error(path, true, 4, nil);
     }
   },
   JSON: {
@@ -24,7 +27,7 @@ var utils = {
       return JSON.parse(data.replace(/,(\n *})/, '$1'));
     },
     stringify: function (data) {
-      return NSJSONSerialization.dataWithJSONObject_options_error(data, NSJSONWritingPrettyPrinted, nil);
+      return JSON.stringify(data, null, 2);
     }
   },
   array: {
