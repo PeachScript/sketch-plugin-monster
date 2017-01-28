@@ -7,6 +7,16 @@
       "shortcut": "ctrl shift t",
       "name": "Manage plulgin shortcuts",
       "identifier": "monsterShortcuts"
+    },
+    {
+      "script": "monster.sketchscript",
+      "handlers": {
+        "actions": {
+          "OpenDocument": "initialize"
+        }
+      },
+      "name": "Initialize",
+      "identifier": "initialize"
     }
   ],
   "menu": {
