@@ -9,7 +9,10 @@ function monsterShortcuts(context) {
   var panel = new Panel({
     context: context,
     template: 'shortcuts'
-  }, pluginHandler.getCommandsOfAllPlugins(), function () {
+  }, {
+    i18n: utils.system.getI18n(context).webview,
+    data: pluginHandler.getCommandsOfAllPlugins()
+  }, function () {
     panel.execute('document.write(\'Execute callback successfully!\')');
   });
 
@@ -17,9 +20,8 @@ function monsterShortcuts(context) {
 }
 
 function initialize(context) {
-  var lang = utils.system.getLanguage();
   var manifestPath = pluginHandler.getManifestPathOfPlugin(context.plugin.name());
-  var i18n = utils.JSON.parse(utils.fs.readFile(utils.path.join(manifestPath.replace(/manifest\.json/, ''), './i18n', lang + '.json')));
+  var i18n = utils.system.getI18n(context);
   var manifest = pluginHandler.getManifestOfPlugin(context.plugin.name());
 
   utils.array.forEach(manifest.commands, function (command, i) {

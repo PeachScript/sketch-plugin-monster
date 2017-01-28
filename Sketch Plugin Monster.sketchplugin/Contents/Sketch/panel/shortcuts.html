@@ -49,11 +49,14 @@
   </style>
 </head>
 <body>
-  <h1 class="page-title">Plugin shortcuts settings</h1>
-  <p class="usage-desc">Usage: click the shortcut which you want to edit, then press your new shortcut.</p>
+  <h1 class="page-title"></h1>
+  <p class="usage-desc"></p>
   <script>
-    function renderList(plugins) {
+    function renderList(source) {
       var wrapper = document.createElement('div');
+      var plugins = source.data;
+
+      setI18n(source.i18n);
 
       plugins.forEach(function (plugin) {
         var panel = document.createElement('div');
@@ -93,6 +96,11 @@
       document.body.appendChild(wrapper);
     }
 
+    function setI18n(i18n) {
+      document.querySelector('.page-title').innerHTML = i18n.title;
+      document.querySelector('.usage-desc').innerHTML = i18n.usage;
+    }
+
     function convertShortcut(str) {
       var keys = str.split(' ');
       var mapping = {
@@ -110,8 +118,8 @@
       }).join('');
     }
 
-    function $initialize(data) {
-      renderList(data);
+    function $initialize(source) {
+      renderList(source);
     }
   </script>
 </body>

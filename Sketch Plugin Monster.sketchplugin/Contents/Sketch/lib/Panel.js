@@ -11,7 +11,9 @@ function Panel(options, data, callback) {
   }, options);
   var _self = this;
 
-  opts.url = utils.path.join(options.context.scriptPath, '../panel/', options.template + '.html');
+  opts.url = utils.path.join(options.context.scriptPath.stringByDeletingLastPathComponent(),
+                             '/panel',
+                             options.template + '.html');
 
   // configure the panel
   this.panel = NSPanel.alloc().init();

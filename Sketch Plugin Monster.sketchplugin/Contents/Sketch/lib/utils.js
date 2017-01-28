@@ -40,6 +40,11 @@ var utils = {
     getLanguage: function () {
       var lang = NSUserDefaults.standardUserDefaults().objectForKey('AppleLanguages').objectAtIndex(0);
       return lang.split('-').slice(0, 2).join('-');
+    },
+    getI18n: function (context) {
+      return JSON.parse(utils.fs.readFile(utils.path.join(context.scriptPath.stringByDeletingLastPathComponent(),
+                                                          '/i18n',
+                                                          utils.system.getLanguage() + '.json')));
     }
   },
 };
