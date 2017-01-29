@@ -2,6 +2,7 @@
 @import 'lib/PluginHandler.js';
 @import 'lib/MochaJSDelegate.js';
 @import 'lib/Panel.js';
+@import 'lib/keyCodePresets.js';
 
 var pluginHandler = new PluginHandler();
 
@@ -11,9 +12,18 @@ function monsterShortcuts(context) {
     template: 'shortcuts'
   }, {
     i18n: utils.system.getI18n(context).webview,
-    data: pluginHandler.getCommandsOfAllPlugins()
-  }, function () {
-    panel.execute('document.write(\'Execute callback successfully!\')');
+    data: pluginHandler.getCommandsOfAllPlugins(),
+    keyCodes: keyCodePresets
+  }, function (type, data) {
+    switch (type) {
+      case '$pluginShortcut:set':
+        pluginHandler.setShortcutForPlugin(data.plugin, {
+          identifier: data.identifier,
+          shortcut: data.shortcut
+        });
+        break;
+      default:
+    }
   });
 
   panel.show();

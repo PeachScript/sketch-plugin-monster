@@ -46,7 +46,7 @@ function Panel(options, data, callback) {
     },
     'webView:didChangeLocationWithinPageForFrame:': function () {
       // read data from webView and passing to callback function
-      var type = NSURL.URLWithString(_self.webView.mainFrameURL()).fragment();
+      var type = String(NSURL.URLWithString(_self.webView.mainFrameURL()).fragment());
       var originalData = _self.webView.windowScriptObject().valueForKey("$dispatchData")
       var dispatchData = originalData ? JSON.parse(decodeURI(originalData)) : null;
       callback && callback.call(null, type, dispatchData);

@@ -75,7 +75,8 @@
           var btn = document.createElement('button');
 
           name.innerHTML = command.name;
-          input.setAttribute('readonly', 'readonly');
+          input.setAttribute('data-plugin', plugin.name);
+          input.setAttribute('data-identifier', command.identifier);
           input.value = convertShortcut(command.shortcut || '');
           btn.innerHTML = 'clear';
 
@@ -91,6 +92,30 @@
         panel.appendChild(title);
         panel.appendChild(table);
         wrapper.appendChild(panel);
+      });
+
+      wrapper.addEventListener('keydown', function (ev) {
+        if (ev.target.tagName === 'INPUT') {
+          var targetKey = source.keyCodes[ev.keyCode];
+          var shortcut  = targetKey ? [targetKey] : [];
+
+          if (shortcut.length) {
+            if (ev.shiftKey) shortcut.unshift('shift');
+            if (ev.altKey) shortcut.unshift('option');
+            if (ev.ctrlKey) shortcut.unshift('ctrl');
+            if (ev.metaKey) shortcut.unshift('cmd');
+
+            $dispatch('$pluginShortcut:set', {
+              plugin: ev.target.getAttribute('data-plugin'),
+              identifier: ev.target.getAttribute('data-identifier'),
+              shortcut: shortcut.join(' ')
+            });
+            ev.target.value = convertShortcut(shortcut.join(' '));
+            ev.target.blur();
+          }
+
+          ev.preventDefault();
+        }
       });
 
       document.body.appendChild(wrapper);
