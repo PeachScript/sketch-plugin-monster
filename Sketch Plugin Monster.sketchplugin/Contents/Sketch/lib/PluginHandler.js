@@ -41,9 +41,12 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
   var _self = this;
 
   utils.array.forEach(pluginList, function (item) {
+    var manifest = _self.getManifestOfPlugin(item);
     commandList.push({
       name: String(item),
-      commands: _self.getManifestOfPlugin(item).commands
+      commands: utils.array.filter(manifest.commands, function (item) {
+        return manifest.menu && manifest.menu.items && manifest.menu.items.indexOf(item.identifier) > -1;
+      })
     });
   });
 

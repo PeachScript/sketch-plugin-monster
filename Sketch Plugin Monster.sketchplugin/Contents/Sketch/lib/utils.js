@@ -37,6 +37,17 @@ var utils = {
       for (var i = 0; i < len; i++) {
         if (cb.call(null, source[i], i) == true) break;
       }
+    },
+    filter: function (source, cb) {
+      var result = [];
+
+      utils.array.forEach(source, function (item, index) {
+        if (cb.call(null, item, index)) {
+          result.push(item);
+        }
+      });
+
+      return result;
     }
   },
   system: {
