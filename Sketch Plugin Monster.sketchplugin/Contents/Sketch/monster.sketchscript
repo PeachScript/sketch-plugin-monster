@@ -22,6 +22,11 @@ function monsterShortcuts(context) {
           shortcut: data.shortcut
         });
         break;
+      case '$pluginShortcut:clear':
+        pluginHandler.setShortcutForPlugin(data.plugin, {
+          identifier: data.identifier
+        });
+        break;
       default:
     }
   });

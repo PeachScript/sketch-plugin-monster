@@ -46,6 +46,17 @@
       color: #666;
       border-top: 1px solid #eee;
     }
+    .plugin-shortcuts-panel table input {
+      width: 40px;
+      padding: 3px 10px;
+      text-align: right;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .plugin-shortcuts-panel table input:focus {
+      cursor: initial;
+      border-color: #09f;
+    }
   </style>
 </head>
 <body>
@@ -79,6 +90,10 @@
           input.setAttribute('data-identifier', command.identifier);
           input.value = convertShortcut(command.shortcut || '');
           btn.innerHTML = 'clear';
+          btn.setAttribute('onclick', '$dispatch("$pluginShortcut:clear", ' + JSON.stringify({
+            plugin: plugin.name,
+            identifier: command.identifier
+          }) + ');this.previousSibling.value = "";');
 
           shortcut.appendChild(input);
           shortcut.appendChild(btn);

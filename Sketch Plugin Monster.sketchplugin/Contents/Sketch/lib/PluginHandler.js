@@ -58,8 +58,15 @@ PluginHandler.prototype.setShortcutForPlugin = function (name, replacement) {
 
   utils.array.forEach(originalConfigurations.commands, function (item, i) {
     if (item.identifier == replacement.identifier) {
-      originalConfigurations.commands[i].shortcut = replacement.shortcut;
+      if (replacement.shortcut) {
+        // change shortcut
+        originalConfigurations.commands[i].shortcut = replacement.shortcut;
+      } else {
+        // empty shortcut
+        delete originalConfigurations.commands[i].shortcut;
+      }
 
+      // write configurations
       confFileData = utils.JSON.stringify(originalConfigurations);
       utils.fs.writeFile(confFilePath, confFileData);
       result = true;
