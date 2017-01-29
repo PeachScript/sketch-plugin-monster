@@ -47,9 +47,15 @@ function Panel(options, data, callback) {
     'webView:didChangeLocationWithinPageForFrame:': function () {
       // read data from webView and passing to callback function
       var type = String(NSURL.URLWithString(_self.webView.mainFrameURL()).fragment());
-      var originalData = _self.webView.windowScriptObject().valueForKey("$dispatchData")
-      var dispatchData = originalData ? JSON.parse(decodeURI(originalData)) : null;
-      callback && callback.call(null, type, dispatchData);
+      var originalData;
+      var dispatchData;
+
+      if (type && type != '$default') {
+        originalData = _self.webView.windowScriptObject().valueForKey("$dispatchData")
+        dispatchData = originalData ? JSON.parse(decodeURI(originalData)) : null;
+        callback && callback.call(null, type, dispatchData);
+        _self.execute('window.location.hash = "$default";');
+      }
     }
   }).getClassInstance());
 
