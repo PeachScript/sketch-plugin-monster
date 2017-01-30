@@ -109,24 +109,37 @@
         wrapper.appendChild(panel);
       });
 
+      // handle shortcut change
       wrapper.addEventListener('keydown', function (ev) {
         if (ev.target.tagName === 'INPUT') {
           var targetKey = source.keyCodes[ev.keyCode];
           var shortcut  = targetKey ? [targetKey] : [];
+          var shortcutStr;
 
           if (shortcut.length) {
+            // handle special keys
+            if (ev.metaKey) shortcut.unshift('cmd');
             if (ev.shiftKey) shortcut.unshift('shift');
             if (ev.altKey) shortcut.unshift('option');
             if (ev.ctrlKey) shortcut.unshift('ctrl');
-            if (ev.metaKey) shortcut.unshift('cmd');
 
-            $dispatch('$pluginShortcut:set', {
-              plugin: ev.target.getAttribute('data-plugin'),
-              identifier: ev.target.getAttribute('data-identifier'),
-              shortcut: shortcut.join(' ')
-            });
-            ev.target.value = convertShortcut(shortcut.join(' '));
-            ev.target.blur();
+            shortcutStr = shortcut.join(' ');
+
+            if (source.sketchShortcuts[shortcutStr]) {
+              // prompt user if this shortcut conflict with Sketch
+              document.write('Conflict!!');
+            } else {
+              // save shortcut for plugin
+              $dispatch('$pluginShortcut:set', {
+                plugin: ev.target.getAttribute('data-plugin'),
+                identifier: ev.target.getAttribute('data-identifier'),
+                shortcut: shortcut.join(' ')
+              });
+
+              // update shortcut to input
+              ev.target.value = convertShortcut(shortcutStr);
+              ev.target.blur();
+            }
           }
 
           ev.preventDefault();

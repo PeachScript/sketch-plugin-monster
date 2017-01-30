@@ -7,13 +7,15 @@
 var pluginHandler = new PluginHandler();
 
 function monsterShortcuts(context) {
+  var i18n = utils.system.getI18n(context);
   var panel = new Panel({
     context: context,
     template: 'shortcuts'
   }, {
-    i18n: utils.system.getI18n(context).webview,
+    i18n: i18n.webview,
     data: pluginHandler.getCommandsOfAllPlugins(),
-    keyCodes: keyCodePresets
+    keyCodes: keyCodePresets,
+    sketchShortcuts: i18n.sketchShortcuts
   }, function (type, data) {
     switch (type) {
       case '$pluginShortcut:set':
