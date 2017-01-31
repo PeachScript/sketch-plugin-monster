@@ -183,6 +183,7 @@
           var targetKey = source.keyCodes[ev.keyCode];
           var shortcut  = targetKey ? [targetKey] : [];
           var shortcutStr;
+          var conflictResult;
 
           if (shortcut.length) {
             // handle special keys
@@ -192,10 +193,18 @@
             if (ev.ctrlKey) shortcut.unshift('ctrl');
 
             shortcutStr = shortcut.join(' ');
+            conflictResult = checkShortcutConflict(shortcutStr, source);
 
-            if (source.sketchShortcuts[shortcutStr]) {
-              // prompt user if this shortcut conflict with Sketch
-              globalNotice.error(source.i18n.conflict.replace('${ sketchShortcut }', source.sketchShortcuts[shortcutStr]), 2000);
+            if (conflictResult) {
+              if (conflictResult.name !== ev.target.getAttribute('data-plugin')) {
+                // prompt user if this shortcut conflict with Sketch or other plugin
+                globalNotice.error(source.i18n.conflict
+                                              .replace('${ shortcutName }', conflictResult.shortcutName)
+                                              .replace('${ conflictTarget }', conflictResult.name)
+                                   , 2000);
+              } else {
+                ev.target.blur();
+              }
             } else {
               // save shortcut for plugin
               $dispatch('$pluginShortcut:set', {
@@ -215,6 +224,55 @@
       });
 
       document.body.appendChild(wrapper);
+    }
+
+    function checkShortcutConflict(shortcut, source) {
+      var result;
+      if (source.sketchShortcuts[shortcut]) {
+        result = {
+          name: 'Sketch',
+          shortcutName: source.sketchShortcuts[shortcut]
+        };
+      } else {
+        source.data.forEach(function (plugin) {
+          plugin.commands.forEach(function (command) {
+            var convertCommand = (command.shortcut || '').split(' ').sort(function (prev, next) {
+              var sortResult;
+
+              switch (prev) {
+                case 'cmd':
+                case 'command':
+                  sortResult = ['option', 'alt', 'control', 'ctrl', 'option'].indexOf(next);
+                  break;
+                case 'shift':
+                  sortResult = ['option', 'alt', 'control', 'ctrl'].indexOf(next);
+                  break;
+                case 'alt':
+                case 'option':
+                  sortResult = ['ctrl', 'control'].indexOf(next);
+                  break;
+                case 'ctrl':
+                case 'control':
+                  sortResult = -1;
+                  break;
+                default:
+                  sortResult = 1;
+              }
+
+              return sortResult;
+            }).join(' ');
+
+            if (convertCommand === shortcut) {
+              result = {
+                name: plugin.name,
+                shortcutName: command.name
+              };
+            }
+          });
+        });
+      }
+
+      return result;
     }
 
     function setI18n(i18n) {
