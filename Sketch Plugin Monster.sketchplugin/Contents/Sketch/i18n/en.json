@@ -4,7 +4,8 @@
   },
   "webview": {
     "title": "Plugin shortcuts settings",
-    "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut."
+    "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut.",
+    "conflict": "Error: Your shortcut conflicts with \"${ sketchShortcut }\" of Sketch!"
   },
   "sketchShortcuts": {
     "cmd c": "Copy",

@@ -4,7 +4,8 @@
   },
   "webview": {
     "title": "插件快捷键设定",
-    "usage": "用法：点击想要修改的快捷键，然后在键盘上按下新的快捷键。"
+    "usage": "用法：点击想要修改的快捷键，然后在键盘上按下新的快捷键。",
+    "conflict": "错误: 你设定的快捷键与 Sketch 『${ sketchShortcut }』操作冲突了！"
   },
   "sketchShortcuts": {
     "cmd c": "拷贝",
