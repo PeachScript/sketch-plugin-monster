@@ -184,6 +184,7 @@
           var shortcut  = targetKey ? [targetKey] : [];
           var shortcutStr;
           var conflictResult;
+          var replacement;
 
           if (shortcut.length) {
             // handle special keys
@@ -206,15 +207,19 @@
                 ev.target.blur();
               }
             } else {
-              // save shortcut for plugin
-              $dispatch('$pluginShortcut:set', {
+              replacement = {
                 plugin: ev.target.getAttribute('data-plugin'),
                 identifier: ev.target.getAttribute('data-identifier'),
                 shortcut: shortcut.join(' ')
-              });
+              };
+              // save shortcut for plugin
+              $dispatch('$pluginShortcut:set', replacement);
 
               // update shortcut to input
               ev.target.value = convertShortcut(shortcutStr);
+
+              // update shortcut of source
+              updateShortcutOfSource(source, replacement);
               ev.target.blur();
             }
           }
@@ -273,6 +278,22 @@
       }
 
       return result;
+    }
+
+    function updateShortcutOfSource(source, replacement) {
+      var i;
+      var j;
+
+      for (i = 0; i < source.data.length; i++) {
+        if (source.data[i].name === replacement.plugin) {
+          for(j = 0; j < source.data[i].commands.length; j++) {
+            if (source.data[i].commands[j].identifier === replacement.identifier) {
+              source.data[i].commands[j].shortcut = replacement.shortcut;
+              break;
+            }
+          }
+        }
+      }
     }
 
     function setI18n(i18n) {
