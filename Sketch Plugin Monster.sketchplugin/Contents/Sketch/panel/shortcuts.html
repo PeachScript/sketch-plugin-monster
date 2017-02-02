@@ -222,6 +222,8 @@
               updateShortcutOfSource(source, replacement);
               ev.target.blur();
             }
+          } else if (ev.keyCode === 27) {
+            ev.target.blur();
           }
 
           ev.preventDefault();
