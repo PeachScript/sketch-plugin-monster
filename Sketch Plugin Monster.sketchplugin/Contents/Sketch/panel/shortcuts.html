@@ -179,7 +179,7 @@
 
       // handle shortcut change
       wrapper.addEventListener('keydown', function (ev) {
-        if (ev.target.tagName === 'INPUT') {
+        if (ev.target.tagName === 'INPUT' && ev.keyCode) {
           var targetKey = source.keyCodes[ev.keyCode];
           var shortcut  = targetKey ? [targetKey] : [];
           var shortcutStr;
@@ -220,10 +220,14 @@
 
               // update shortcut of source
               updateShortcutOfSource(source, replacement);
+
+              globalNotice.success(source.i18n.success, 1500);
               ev.target.blur();
             }
           } else if (ev.keyCode === 27) {
             ev.target.blur();
+          } else if ([16, 17, 18, 91, 93].indexOf(ev.keyCode) === -1) { // except shift, control, option, command keys
+            globalNotice.error(source.i18n.notSupport, 1500);
           }
 
           ev.preventDefault();

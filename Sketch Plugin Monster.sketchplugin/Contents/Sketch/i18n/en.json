@@ -5,7 +5,9 @@
   "webview": {
     "title": "Plugin shortcuts settings",
     "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut.",
-    "conflict": "Error: Your shortcut conflicts with \"${ shortcutName }\" of ${ conflictTarget }!"
+    "conflict": "Error: Your shortcut conflicts with \"${ shortcutName }\" of ${ conflictTarget }!",
+    "success": "Set shortcut successful!",
+    "notSupport": "Error: The keys you select are not supported as shortcut!"
   },
   "sketchShortcuts": {
     "cmd c": "Copy",
