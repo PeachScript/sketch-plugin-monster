@@ -99,6 +99,7 @@
   <h1 class="page-title"></h1>
   <p class="usage-desc"></p>
   <script>
+    // Notification Class
     function Notice() {
       this.content = document.querySelector('.notice-wrapper .notice-content');
     }
@@ -128,16 +129,105 @@
       this.content.className = 'notice-content';
       clearTimeout(this.timer);
     };
+  </script>
+  <script>
+    // Shortcuts handler Class
+    function ShortcutsHandler(shortcuts, sketchShortcuts) {
+      // sort shortcut keys, eg: "(ctrl) (shift) (option) (cmd) key"
+      shortcuts.forEach(function (plugin) {
+        plugin.commands.forEach(function (command) {
+          command.shortcut = (command.shortcut || '').split(' ').sort(function (prev, next) {
+            var sortResult;
 
+            switch (prev) {
+              case 'cmd':
+              case 'command':
+                sortResult = ['option', 'alt', 'control', 'ctrl', 'option'].indexOf(next);
+                break;
+              case 'shift':
+                sortResult = ['option', 'alt', 'control', 'ctrl'].indexOf(next);
+                break;
+              case 'alt':
+              case 'option':
+                sortResult = ['ctrl', 'control'].indexOf(next);
+                break;
+              case 'ctrl':
+              case 'control':
+                sortResult = -1;
+                break;
+              default:
+                sortResult = 1;
+            }
+
+            return sortResult;
+          }).join(' ');
+        });
+      });
+
+      this.raw = shortcuts;
+      this.sketchRaw = sketchShortcuts;
+    }
+
+    ShortcutsHandler.prototype.getCommandsList = function () {
+      return this.raw;
+    };
+
+    ShortcutsHandler.prototype.checkConflict = function (shortcut) {
+      var result;
+      var i;
+      var j;
+
+      if (this.sketchRaw[shortcut]) {
+        result = {
+          name: 'Sketch',
+          shortcutName: this.sketchRaw[shortcut]
+        };
+      } else {
+        for (i = 0; i < this.raw.length; i++) {
+          for (j = 0; j < this.raw[i].commands.length; j++) {
+            if (this.raw[i].commands[j].shortcut === shortcut) {
+              result = {
+                name: this.raw[i].name,
+                shortcutName: this.raw[i].commands[j].name
+              };
+
+              i = this.raw.length;
+              break;
+            }
+          }
+        }
+      }
+
+      return result;
+    };
+
+    ShortcutsHandler.prototype.setShortcutForPlugin = function (replacement) {
+      var i;
+      var j;
+
+      for (i = 0; i < this.raw.length; i++) {
+        if (this.raw[i].name === replacement.plugin) {
+          for(j = 0; j < this.raw[i].commands.length; j++) {
+            if (this.raw[i].commands[j].identifier === replacement.identifier) {
+              this.raw[i].commands[j].shortcut = replacement.shortcut;
+              i = this.raw.length;
+              // save shortcut for plugin
+              $dispatch('$pluginShortcut:set', replacement);
+              break;
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <script>
     var globalNotice = new Notice();
+    var shortcutsHandler;
 
     function renderList(source) {
       var wrapper = document.createElement('div');
-      var plugins = source.data;
 
-      setI18n(source.i18n);
-
-      plugins.forEach(function (plugin) {
+      shortcutsHandler.getCommandsList().forEach(function (plugin) {
         var panel = document.createElement('div');
         var title = document.createElement('h2');
         var table = document.createElement('table');
@@ -194,7 +284,7 @@
             if (ev.ctrlKey) shortcut.unshift('ctrl');
 
             shortcutStr = shortcut.join(' ');
-            conflictResult = checkShortcutConflict(shortcutStr, source);
+            conflictResult = shortcutsHandler.checkConflict(shortcutStr);
 
             if (conflictResult) {
               if (conflictResult.name !== ev.target.getAttribute('data-plugin')) {
@@ -212,21 +302,20 @@
                 identifier: ev.target.getAttribute('data-identifier'),
                 shortcut: shortcut.join(' ')
               };
-              // save shortcut for plugin
-              $dispatch('$pluginShortcut:set', replacement);
 
               // update shortcut to input
               ev.target.value = convertShortcut(shortcutStr);
 
-              // update shortcut of source
-              updateShortcutOfSource(source, replacement);
+              // update shortcut
+              shortcutsHandler.setShortcutForPlugin(replacement);
 
               globalNotice.success(source.i18n.success, 1500);
               ev.target.blur();
             }
           } else if (ev.keyCode === 27) {
             ev.target.blur();
-          } else if ([16, 17, 18, 91, 93].indexOf(ev.keyCode) === -1) { // except shift, control, option, command keys
+          } else if ([16, 17, 18, 91, 93].indexOf(ev.keyCode) === -1) {
+            // except shift, control, option, command keys
             globalNotice.error(source.i18n.notSupport, 1500);
           }
 
@@ -235,71 +324,6 @@
       });
 
       document.body.appendChild(wrapper);
-    }
-
-    function checkShortcutConflict(shortcut, source) {
-      var result;
-      if (source.sketchShortcuts[shortcut]) {
-        result = {
-          name: 'Sketch',
-          shortcutName: source.sketchShortcuts[shortcut]
-        };
-      } else {
-        source.data.forEach(function (plugin) {
-          plugin.commands.forEach(function (command) {
-            var convertCommand = (command.shortcut || '').split(' ').sort(function (prev, next) {
-              var sortResult;
-
-              switch (prev) {
-                case 'cmd':
-                case 'command':
-                  sortResult = ['option', 'alt', 'control', 'ctrl', 'option'].indexOf(next);
-                  break;
-                case 'shift':
-                  sortResult = ['option', 'alt', 'control', 'ctrl'].indexOf(next);
-                  break;
-                case 'alt':
-                case 'option':
-                  sortResult = ['ctrl', 'control'].indexOf(next);
-                  break;
-                case 'ctrl':
-                case 'control':
-                  sortResult = -1;
-                  break;
-                default:
-                  sortResult = 1;
-              }
-
-              return sortResult;
-            }).join(' ');
-
-            if (convertCommand === shortcut) {
-              result = {
-                name: plugin.name,
-                shortcutName: command.name
-              };
-            }
-          });
-        });
-      }
-
-      return result;
-    }
-
-    function updateShortcutOfSource(source, replacement) {
-      var i;
-      var j;
-
-      for (i = 0; i < source.data.length; i++) {
-        if (source.data[i].name === replacement.plugin) {
-          for(j = 0; j < source.data[i].commands.length; j++) {
-            if (source.data[i].commands[j].identifier === replacement.identifier) {
-              source.data[i].commands[j].shortcut = replacement.shortcut;
-              break;
-            }
-          }
-        }
-      }
     }
 
     function setI18n(i18n) {
@@ -325,6 +349,8 @@
     }
 
     function $initialize(source) {
+      shortcutsHandler = new ShortcutsHandler(source.shortcuts, source.sketchShortcuts);
+      setI18n(source.i18n);
       renderList(source);
     }
   </script>
