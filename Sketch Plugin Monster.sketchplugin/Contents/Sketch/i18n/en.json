@@ -10,6 +10,13 @@
     "notSupport": "Error: The keys you select are not supported as shortcut!"
   },
   "sketchShortcuts": {
+    "cmd o": "Open",
+    "cmd s": "Save",
+    "shift cmd s": "Duplicate",
+    "cmd w": "Close",
+    "cmd n": "New",
+    "shift cmd n": "New page",
+    "shift cmd p": "Page setup",
     "cmd c": "Copy",
     "cmd v": "Paste",
     "shift cmd v": "Paste in place",

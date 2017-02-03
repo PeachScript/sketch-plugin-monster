@@ -10,6 +10,13 @@
     "notSupport": "错误：你选择的按键不支持设置为快捷键！"
   },
   "sketchShortcuts": {
+    "cmd o": "打开",
+    "cmd s": "保存",
+    "shift cmd s": "拷贝",
+    "cmd w": "关闭",
+    "cmd n": "新建",
+    "shift cmd n": "新建页面",
+    "shift cmd p": "页面设置",
     "cmd c": "拷贝",
     "cmd v": "粘贴",
     "shift cmd v": "粘贴到所选",
