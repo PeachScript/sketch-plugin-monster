@@ -24,7 +24,10 @@ var utils = {
   },
   JSON: {
     parse: function (data) {
-      return JSON.parse(data.replace(/,(\n *})/, '$1'));
+      // remove useless commas to avoid parse error
+      var replaceReg = new RegExp(',(\\n\\s*(\\}|\\]))', 'g');
+
+      return JSON.parse(String(data).replace(replaceReg, '$1'));
     },
     stringify: function (data) {
       return JSON.stringify(data, null, 2);
