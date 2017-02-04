@@ -98,6 +98,30 @@
   </div>
   <h1 class="page-title"></h1>
   <p class="usage-desc"></p>
+  <script type="text/template" id="shortcuts-template">
+    <%for (var i = 0; i < plugins.length; i++) {%>
+    <div class="plugin-shortcuts-panel">
+      <h2><%=plugins[i].name %></h2>
+      <table>
+        <tbody>
+          <%for (var j = 0; j < plugins[i].commands.length; j++) {%>
+          <tr>
+            <td><%=plugins[i].commands[j].name %></td>
+            <td>
+              <input type="text"
+                     value="<%=convertShortcut(plugins[i].commands[j].shortcut) %>"
+                     data-plugin="<%=plugins[i].name %>"
+                     data-identifier="<%=plugins[i].commands[j].identifier %>">
+              <button data-plugin="<%=plugins[i].name %>"
+                      data-identifier="<%=plugins[i].commands[j].identifier %>">clear</button>
+            </td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+    <%}%>
+  </script>
   <script>
     // Notification Class
     function Notice() {
@@ -206,63 +230,68 @@
         if (this.raw[i].name === replacement.plugin) {
           for(j = 0; j < this.raw[i].commands.length; j++) {
             if (this.raw[i].commands[j].identifier === replacement.identifier) {
-              this.raw[i].commands[j].shortcut = replacement.shortcut;
+              if (replacement.shortcut) {
+                this.raw[i].commands[j].shortcut = replacement.shortcut;
+                // save shortcut for plugin
+                $dispatch('$pluginShortcut:set', replacement);
+              } else {
+                delete this.raw[i].commands[j].shortcut;
+                // clear shortcut for plugin
+                $dispatch('$pluginShortcut:clear', replacement);
+              }
               i = this.raw.length;
-              // save shortcut for plugin
-              $dispatch('$pluginShortcut:set', replacement);
               break;
             }
           }
         }
       }
     };
+
+    ShortcutsHandler.prototype.clearShortcutForPlugin = function (replacement) {
+      delete replacement.shortcut;
+      this.setShortcutForPlugin(replacement);
+    };
+  </script>
+  <script>
+    // Simple template engine Class
+    function TemplateEngine(templateId) {
+      var template = document.getElementById(templateId).innerHTML;
+      var templateParsed = ['var $out = [];\nwith ($data) {'];
+
+      template.split('\n').forEach(function (line) {
+        var parsed;
+
+        line = line.trim();
+
+        if (/<%=/.test(line)) {
+          // parse data output
+          templateParsed.push('$out.push(\'' + line.replace(/<%= ?([a-z\(\)\.\[\]_]*) ?%>/gi, '\' + $1 + \'') + '\');');
+        } else if (/<% ?for ?\(/.test(line)) {
+          // parse for iteration
+          templateParsed.push(line.replace(/<% ?(for ?\(.*\) ?{) ?%>/gi, '$1'));
+        } else if (/^<% ?} ?%>$/.test(line)) {
+          templateParsed.push('}');
+        } else if (!/^[\s\n]*$/.test(line)) {
+          templateParsed.push('$out.push(\'' + line + '\');');
+        }
+      });
+
+      templateParsed.push('}\nreturn $out.join(\'\')');
+
+      return function (data) {
+        return new Function('$data', templateParsed.join(''))(data);
+      };
+    }
   </script>
   <script>
     var globalNotice = new Notice();
     var shortcutsHandler;
 
     function renderList(source) {
+      var listRender = new TemplateEngine('shortcuts-template');
       var wrapper = document.createElement('div');
 
-      shortcutsHandler.getCommandsList().forEach(function (plugin) {
-        var panel = document.createElement('div');
-        var title = document.createElement('h2');
-        var table = document.createElement('table');
-        var tbody = document.createElement('tbody');
-
-        panel.className = 'plugin-shortcuts-panel';
-        title.innerHTML = plugin.name;
-
-        plugin.commands.forEach(function (command) {
-          var tr = document.createElement('tr');
-          var name = document.createElement('td');
-          var shortcut = document.createElement('td');
-          var input = document.createElement('input');
-          var btn = document.createElement('button');
-
-          name.innerHTML = command.name;
-          input.setAttribute('data-plugin', plugin.name);
-          input.setAttribute('data-identifier', command.identifier);
-          input.value = convertShortcut(command.shortcut || '');
-          btn.innerHTML = 'clear';
-          btn.setAttribute('onclick', '$dispatch("$pluginShortcut:clear", ' + JSON.stringify({
-            plugin: plugin.name,
-            identifier: command.identifier
-          }) + ');this.previousSibling.value = "";');
-
-          shortcut.appendChild(input);
-          shortcut.appendChild(btn);
-          tr.appendChild(name);
-          tr.appendChild(shortcut);
-          tbody.appendChild(tr);
-
-        });
-
-        table.appendChild(tbody);
-        panel.appendChild(title);
-        panel.appendChild(table);
-        wrapper.appendChild(panel);
-      });
+      wrapper.innerHTML = listRender({ plugins: source.shortcuts });
 
       // handle shortcut change
       wrapper.addEventListener('keydown', function (ev) {
@@ -320,6 +349,17 @@
         }
       });
 
+      // handle clear action
+      wrapper.addEventListener('click', function (ev) {
+        if (ev.target.tagName === 'BUTTON') {
+          shortcutsHandler.clearShortcutForPlugin({
+            plugin: ev.target.getAttribute('data-plugin'),
+            identifier: ev.target.getAttribute('data-identifier')
+          });
+          ev.target.previousSibling.value = '';
+        }
+      });
+
       document.body.appendChild(wrapper);
     }
 
@@ -329,7 +369,7 @@
     }
 
     function convertShortcut(str) {
-      var keys = str.split(' ');
+      var keys = (str || '').split(' ');
       var mapping = {
         'cmd': '\u2318',
         'command': '\u2318',
