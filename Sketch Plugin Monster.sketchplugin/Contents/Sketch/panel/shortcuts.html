@@ -133,34 +133,31 @@
   <script>
     // Shortcuts handler Class
     function ShortcutsHandler(shortcuts, sketchShortcuts) {
+      var keyPriorities = {
+        ctrl: 5,
+        control: 5,
+        shift: 4,
+        option: 3,
+        alt: 3,
+        cmd: 2,
+        command: 2
+      };
+
       // sort shortcut keys, eg: "(ctrl) (shift) (option) (cmd) key"
       shortcuts.forEach(function (plugin) {
         plugin.commands.forEach(function (command) {
-          command.shortcut = (command.shortcut || '').split(' ').sort(function (prev, next) {
-            var sortResult;
+          var handleShortcut = (command.shortcut || '').trim();
 
-            switch (prev) {
-              case 'cmd':
-              case 'command':
-                sortResult = ['option', 'alt', 'control', 'ctrl', 'option'].indexOf(next);
-                break;
-              case 'shift':
-                sortResult = ['option', 'alt', 'control', 'ctrl'].indexOf(next);
-                break;
-              case 'alt':
-              case 'option':
-                sortResult = ['ctrl', 'control'].indexOf(next);
-                break;
-              case 'ctrl':
-              case 'control':
-                sortResult = -1;
-                break;
-              default:
-                sortResult = 1;
-            }
+          if (handleShortcut &&
+              !/^(ctrl |control )?(shift )?(option |alt )?(cmd |command )?.{1}$/
+                .test(handleShortcut)) {
+            command.shortcut = handleShortcut.split(' ').sort(function (prev, next) {
+              var prevPriority = keyPriorities[prev] || 1;
+              var nextPriority = keyPriorities[next] || 1;
 
-            return sortResult;
-          }).join(' ');
+              return nextPriority - prevPriority;
+            }).join(' ');
+          }
         });
       });
 
