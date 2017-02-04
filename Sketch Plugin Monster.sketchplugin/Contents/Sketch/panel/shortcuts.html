@@ -357,6 +357,7 @@
             identifier: ev.target.getAttribute('data-identifier')
           });
           ev.target.previousSibling.value = '';
+          globalNotice.success(source.i18n.clear, 1500);
         }
       });
 

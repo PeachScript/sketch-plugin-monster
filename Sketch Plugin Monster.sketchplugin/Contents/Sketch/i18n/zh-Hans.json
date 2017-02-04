@@ -7,7 +7,8 @@
     "usage": "用法：点击想要修改的快捷键，然后在键盘上按下新的快捷键。",
     "conflict": "错误: 你设定的快捷键与 ${ conflictTarget } 的『${ shortcutName }』操作冲突了！",
     "success": "设置快捷键成功！",
-    "notSupport": "错误：你选择的按键不支持设置为快捷键！"
+    "notSupport": "错误：你选择的按键不支持设置为快捷键！",
+    "clear": "清除快捷键成功！"
   },
   "sketchShortcuts": {
     "cmd o": "打开",
