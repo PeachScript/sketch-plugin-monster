@@ -3,29 +3,34 @@
 function PluginHandler() {
   var pluginPath = '/Library/Application Support/com.bohemiancoding.sketch3/Plugins';
   this.path = utils.path.join(NSHomeDirectory(), pluginPath);
+  this.manifests = {};
 }
 
 PluginHandler.prototype.getPluginList = function () {
-  return utils.fs.readdir(this.path);
+  var pluginFiles = utils.fs.readSubpaths(this.path);
+  var result = [];
+  var manifests = {};
+  var _self = this;
+
+  utils.array.forEach(pluginFiles, function (item) {
+    var target;
+    if (/manifest.json$/.test(item)) {
+      target = {
+        name: item.replace(/([\w\-]*?)(\.sketchplugin)?\/.*$/i, '$1'),
+        manifest: utils.path.join(_self.path, item)
+      };
+      result.push(target.name);
+      manifests[target.name] = target.manifest;
+    }
+  });
+
+  this.manifests = manifests;
+
+  return result;
 };
 
 PluginHandler.prototype.getManifestPathOfPlugin = function (name) {
-  var basicPath = utils.path.join(this.path, name);
-  var filesInBasicPath = utils.fs.readdir(basicPath);
-  var targetPath;
-
-  utils.array.forEach(filesInBasicPath, function (item) {
-    var r = false;
-
-    if (/\.sketchplugin$/.test(item)) {
-      targetPath = item;
-      r = true;
-    }
-
-    return r;
-  });
-
-  return utils.path.join(this.path, name, targetPath, '/Contents/Sketch/manifest.json');
+  return this.manifests[name];
 };
 
 PluginHandler.prototype.getManifestOfPlugin = function (name) {

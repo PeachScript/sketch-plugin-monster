@@ -20,6 +20,9 @@ var utils = {
         data += '\n';
       }
       return NSString.stringWithString(data).writeToFile_atomically_encoding_error(path, true, 4, nil);
+    },
+    readSubpaths: function (path) {
+      return NSFileManager.defaultManager().subpathsAtPath(path);
     }
   },
   JSON: {
