@@ -1,6 +1,6 @@
 {
   "commands": {
-    "monsterShortcuts": "管理插件快捷键"
+    "monsterShortcuts": "插件快捷键管理"
   },
   "webview": {
     "title": "插件快捷键设定",

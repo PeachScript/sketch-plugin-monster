@@ -1,6 +1,6 @@
 {
   "commands": {
-    "monsterShortcuts": "Manage plulgin shortcuts"
+    "monsterShortcuts": "Plugin shortcuts management"
   },
   "webview": {
     "title": "Plugin shortcuts settings",
