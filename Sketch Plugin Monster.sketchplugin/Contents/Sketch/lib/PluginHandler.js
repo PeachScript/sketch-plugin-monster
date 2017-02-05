@@ -3,7 +3,7 @@
 function PluginHandler() {
   var pluginPath = '/Library/Application Support/com.bohemiancoding.sketch3/Plugins';
   this.path = utils.path.join(NSHomeDirectory(), pluginPath);
-  this.manifests = {};
+  this.getPluginList(); // cache manifest
 }
 
 PluginHandler.prototype.getPluginList = function () {
