@@ -23,6 +23,9 @@ var utils = {
     },
     readSubpaths: function (path) {
       return NSFileManager.defaultManager().subpathsAtPath(path);
+    },
+    fileExists: function (path) {
+      return NSFileManager.defaultManager().fileExistsAtPath(path);
     }
   },
   JSON: {
@@ -62,9 +65,18 @@ var utils = {
       return lang.split('-').slice(0, 2).join('-');
     },
     getI18n: function (context) {
-      return JSON.parse(utils.fs.readFile(utils.path.join(context.scriptPath.stringByDeletingLastPathComponent(),
-                                                          '/i18n',
-                                                          utils.system.getLanguage() + '.json')));
+      var path = utils.path.join(context.scriptPath.stringByDeletingLastPathComponent(),
+                                                    '/i18n',
+                                                    utils.system.getLanguage() + '.json');
+      var i18n;
+
+      if (utils.fs.fileExists(path)) {
+        i18n = utils.fs.readFile(path);
+      } else {
+        i18n = utils.fs.readFile(path.replace(/[\w\-]*\.json$/, '/en.json'));
+      }
+
+      return JSON.parse(i18n);
     }
   },
 };

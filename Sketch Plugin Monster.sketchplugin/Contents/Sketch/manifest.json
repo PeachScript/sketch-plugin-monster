@@ -5,7 +5,7 @@
       "script": "monster.sketchscript",
       "handler": "monsterShortcuts",
       "shortcut": "ctrl shift m",
-      "name": "Manage plulgin shortcuts",
+      "name": "插件快捷鍵管理",
       "identifier": "monsterShortcuts"
     },
     {
