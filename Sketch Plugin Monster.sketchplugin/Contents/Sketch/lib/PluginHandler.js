@@ -21,8 +21,14 @@ PluginHandler.prototype.getPluginList = function () {
         name: item.replace(/([\w\-]*?)(\.sketchplugin)?\/.*$/i, '$1'),
         manifest: utils.path.join(_self.path, item)
       };
-      result.push(target.name);
-      manifests[target.name] = target.manifest;
+
+      if (!manifests[target.name]) {
+        manifests[target.name] = target.manifest;
+        result.push(target.name);
+      } else if (manifests[target.name] && manifests[target.name].length > target.manifest.length) {
+        // override manifest path if some users put multiple plugin files in same path
+        manifests[target.name] = target.manifest;
+      }
     }
   });
 
