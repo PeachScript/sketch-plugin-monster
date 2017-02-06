@@ -1,6 +1,3 @@
-@import 'utils.js';
-@import 'MochaJSDelegate.js';
-
 /**
  * Panel initialize
  * @param {Object}   options  panel configurations
@@ -58,7 +55,7 @@ function Panel(options, data, callback) {
 
       if (type && type != '$default') {
         originalData = _self.webView.windowScriptObject().valueForKey("$dispatchData")
-        dispatchData = originalData ? JSON.parse(decodeURI(originalData)) : null;
+        dispatchData = originalData ? utils.JSON.parse(decodeURI(originalData)) : null;
         callback && callback.call(null, type, dispatchData);
         _self.execute('window.location.hash = "$default";');
       }

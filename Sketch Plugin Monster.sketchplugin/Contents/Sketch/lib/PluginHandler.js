@@ -1,5 +1,3 @@
-@import 'utils.js';
-
 function PluginHandler() {
   var pluginPath = '/Library/Application Support/com.bohemiancoding.sketch3/Plugins';
   this.path = utils.path.join(NSHomeDirectory(), pluginPath);

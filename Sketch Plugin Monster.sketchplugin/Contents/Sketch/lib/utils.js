@@ -76,7 +76,7 @@ var utils = {
         i18n = utils.fs.readFile(path.replace(/[\w\-]*\.json$/, '/en.json'));
       }
 
-      return JSON.parse(i18n);
+      return utils.JSON.parse(i18n);
     }
   },
 };

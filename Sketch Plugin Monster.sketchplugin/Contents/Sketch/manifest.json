@@ -5,7 +5,7 @@
       "script": "monster.sketchscript",
       "handler": "monsterShortcuts",
       "shortcut": "ctrl shift m",
-      "name": "插件快捷鍵管理",
+      "name": "Plugin shortcuts management",
       "identifier": "monsterShortcuts"
     },
     {
