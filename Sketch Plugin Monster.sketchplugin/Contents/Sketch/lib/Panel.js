@@ -1,6 +1,12 @@
 @import 'utils.js';
 @import 'MochaJSDelegate.js';
 
+/**
+ * Panel initialize
+ * @param {Object}   options  panel configurations
+ * @param {Object}   data     passing data for webview
+ * @param {Function} callback callback function for webview
+ */
 function Panel(options, data, callback) {
   var opts = Object.assign({}, {
     x: 0,
@@ -64,14 +70,25 @@ function Panel(options, data, callback) {
   this.panel.center();
 }
 
+/**
+ * close panel
+ */
 Panel.prototype.close = function () {
   NSApp.stopModal();
 };
 
+/**
+ * display panel
+ */
 Panel.prototype.show = function () {
   NSApp.runModalForWindow(this.panel);
 };
 
+/**
+ * execute JavaScript code
+ * @param  {String} jsCode JavaScript code
+ * @return {Any}           return value of JavaScript code
+ */
 Panel.prototype.execute = function (jsCode) {
   return this.webView.windowScriptObject().evaluateWebScript(jsCode);
 };

@@ -6,6 +6,10 @@ function PluginHandler() {
   this.getPluginList(); // cache manifest
 }
 
+/**
+ * get plugin list
+ * @return {Array} plugin list
+ */
 PluginHandler.prototype.getPluginList = function () {
   var pluginFiles = utils.fs.readSubpaths(this.path);
   var result = [];
@@ -29,10 +33,20 @@ PluginHandler.prototype.getPluginList = function () {
   return result;
 };
 
+/**
+ * get the path of manifest for specific plugin
+ * @param  {String} name plugin name
+ * @return {String}      the path of manifest
+ */
 PluginHandler.prototype.getManifestPathOfPlugin = function (name) {
   return this.manifests[name];
 };
 
+/**
+ * get manifest for specific plugin
+ * @param  {String} name plugin name
+ * @return {String}      content of manifest file
+ */
 PluginHandler.prototype.getManifestOfPlugin = function (name) {
   var confFileData = utils.fs.readFile(this.getManifestPathOfPlugin(name));
   var configurations = utils.JSON.parse(confFileData);
@@ -40,6 +54,10 @@ PluginHandler.prototype.getManifestOfPlugin = function (name) {
   return configurations;
 };
 
+/**
+ * get commands of all plugins
+ * @return {Array}  command list
+ */
 PluginHandler.prototype.getCommandsOfAllPlugins = function () {
   var pluginList = this.getPluginList();
   var commandList = [];
@@ -58,6 +76,11 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
   return commandList;
 };
 
+/**
+ * set shortcut for plugin
+ * @param {String} name        plugin name
+ * @param {Object} replacement contains command identifier and replace shortcut
+ */
 PluginHandler.prototype.setShortcutForPlugin = function (name, replacement) {
   var originalConfigurations = this.getManifestOfPlugin(name);
   var confFilePath = this.getManifestPathOfPlugin(name);
