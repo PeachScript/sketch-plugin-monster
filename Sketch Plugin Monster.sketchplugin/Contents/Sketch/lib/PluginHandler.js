@@ -16,7 +16,7 @@ PluginHandler.prototype.getPluginList = function () {
 
   utils.array.forEach(pluginFiles, function (item) {
     var target;
-    if (/manifest.json$/.test(item)) {
+    if (/\.sketchplugin\/Contents\/Sketch\/manifest.json$/.test(item)) {
       target = {
         name: item.replace(/([\w\-]*?)(\.sketchplugin)?\/.*$/i, '$1'),
         manifest: utils.path.join(_self.path, item)
