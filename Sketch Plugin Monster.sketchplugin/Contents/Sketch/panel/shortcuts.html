@@ -41,6 +41,9 @@
       width: 100%;
       border-collapse: collapse;
     }
+    .plugin-shortcuts-panel table tr.shortcut-conflict {
+      background-color: #fde5cb;
+    }
     .plugin-shortcuts-panel table td {
       padding: 10px;
       color: #666;
@@ -290,8 +293,25 @@
     function renderList(source) {
       var listRender = new TemplateEngine('shortcuts-template');
       var wrapper = document.createElement('div');
+      var inputs;
+      var i;
+      var j;
 
-      wrapper.innerHTML = listRender({ plugins: source.shortcuts });
+      wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandsList() });
+
+      // check and display conflicting shortcut key
+      inputs = wrapper.getElementsByTagName('input');
+      for (i = 0; i < inputs.length - 1; i++) {
+        if (!inputs[i].parentNode.parentNode.classList.contains('conflict') &&
+            inputs[i].value) {
+          for (j = i + 1; j < inputs.length; j++) {
+            if (inputs[i].value === inputs[j].value) {
+              inputs[i].parentNode.parentNode.classList.add('shortcut-conflict');
+              inputs[j].parentNode.parentNode.classList.add('shortcut-conflict');
+            }
+          }
+        }
+      }
 
       // handle shortcut change
       wrapper.addEventListener('keydown', function (ev) {
@@ -329,8 +349,8 @@
                 shortcut: shortcut.join(' ')
               };
 
-              // update shortcut to input
-              ev.target.value = convertShortcut(shortcutStr);
+              // update shortcut and review conflict for input
+              reviewConflict(ev.target, convertShortcut(shortcutStr));
 
               // update shortcut
               shortcutsHandler.setShortcutForPlugin(replacement);
@@ -356,7 +376,10 @@
             plugin: ev.target.getAttribute('data-plugin'),
             identifier: ev.target.getAttribute('data-identifier')
           });
-          ev.target.previousSibling.value = '';
+
+          // clear shortcut and review conflict for input
+          reviewConflict(ev.target.previousSibling, '');
+
           globalNotice.success(source.i18n.clear, 1500);
         }
       });
@@ -384,6 +407,25 @@
       return keys.map(function (key) {
         return mapping[key] || key;
       }).join('');
+    }
+
+    function reviewConflict (targetInput, newShortcut) {
+      var inputs;
+      var queryStr;
+      var parentRow = targetInput.parentNode.parentNode;
+
+      if (parentRow.classList.contains('shortcut-conflict')) {
+        queryStr = '.plugin-shortcuts-panel input[value=' + targetInput.value + ']';
+        targetInput.setAttribute('value', newShortcut); // prevent querySelectorAll get error result
+        inputs = document.querySelectorAll(queryStr);
+        parentRow.classList.remove('shortcut-conflict');
+
+        if (inputs.length === 1) {
+          inputs[0].parentNode.parentNode.classList.remove('shortcut-conflict');
+        }
+      } else {
+        targetInput.value = newShortcut;
+      }
     }
 
     function $initialize(source) {
