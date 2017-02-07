@@ -131,6 +131,11 @@
       this.content = document.querySelector('.notice-wrapper .notice-content');
     }
 
+    /**
+     * display notification
+     * @param  {String} str      content
+     * @param  {Number} duration display duration time(optional)
+     */
     Notice.prototype.show = function (str, duration) {
       var _self = this;
       this.content.classList.add('show');
@@ -141,16 +146,29 @@
       }, duration));
     };
 
+    /**
+     * display error notification
+     * @param  {String} str      content
+     * @param  {Number} duration display duration time(optional)
+     */
     Notice.prototype.error = function (str, duration) {
       this.content.classList.add('error');
       this.show(str, duration);
     };
 
+    /**
+     * display success notification
+     * @param  {String} str      content
+     * @param  {Number} duration display duration time(optional)
+     */
     Notice.prototype.success = function (str, duration) {
       this.content.classList.add('success');
       this.show(str, duration);
     };
 
+    /**
+     * hide notification
+     */
     Notice.prototype.hide = function () {
       this.content.innerHTML = '';
       this.content.className = 'notice-content';
@@ -159,6 +177,11 @@
   </script>
   <script>
     // Shortcuts handler Class
+    /**
+     * ShortcutsHandler initialize
+     * @param {Array}   shortcuts       plugins shortcuts
+     * @param {Object}  sketchShortcuts sketch shortcuts
+     */
     function ShortcutsHandler(shortcuts, sketchShortcuts) {
       var keyPriorities = {
         ctrl: 5,
@@ -192,10 +215,19 @@
       this.sketchRaw = sketchShortcuts;
     }
 
-    ShortcutsHandler.prototype.getCommandsList = function () {
+    /**
+     * get commands list of all plugins
+     * @return {Array} command list
+     */
+    ShortcutsHandler.prototype.getCommandList = function () {
       return this.raw;
     };
 
+    /**
+     * check shortcut conflict
+     * @param  {String}           shortcut checked shortcut
+     * @return {Object|undefined}          conflicting action or nothing;
+     */
     ShortcutsHandler.prototype.checkConflict = function (shortcut) {
       var result;
       var i;
@@ -225,6 +257,10 @@
       return result;
     };
 
+    /**
+     * set shortcut for plugin
+     * @param {Object} replacement contains plugin name, command identifier and shortcut
+     */
     ShortcutsHandler.prototype.setShortcutForPlugin = function (replacement) {
       var i;
       var j;
@@ -250,6 +286,10 @@
       }
     };
 
+    /**
+     * clear shortcut for plugin
+     * @param  {Object} replacement contains plugin name and command identifier
+     */
     ShortcutsHandler.prototype.clearShortcutForPlugin = function (replacement) {
       delete replacement.shortcut;
       this.setShortcutForPlugin(replacement);
@@ -257,6 +297,11 @@
   </script>
   <script>
     // Simple template engine Class
+    /**
+     * Template engind initialize
+     * @param   {String} templateId  the id attribute of template script element
+     * @return  {Function} render function
+     */
     function TemplateEngine(templateId) {
       var template = document.getElementById(templateId).innerHTML;
       var templateParsed = ['var $out = [];\nwith ($data) {'];
@@ -290,6 +335,10 @@
     var globalNotice = new Notice();
     var shortcutsHandler;
 
+    /**
+     * render plugin list into page
+     * @param  {Object} source source data
+     */
     function renderList(source) {
       var listRender = new TemplateEngine('shortcuts-template');
       var wrapper = document.createElement('div');
@@ -297,7 +346,7 @@
       var i;
       var j;
 
-      wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandsList() });
+      wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandList() });
 
       // check and display conflicting shortcut key
       inputs = wrapper.getElementsByTagName('input');
@@ -387,11 +436,19 @@
       document.body.appendChild(wrapper);
     }
 
+    /**
+     * set i18n with i18n configurations
+     */
     function setI18n(i18n) {
       document.querySelector('.page-title').innerHTML = i18n.title;
       document.querySelector('.usage-desc').innerHTML = i18n.usage;
     }
 
+    /**
+     * convert shortcut to symbols
+     * @param  {String} str original shortcut
+     * @return {String}     shortcut
+     */
     function convertShortcut(str) {
       var keys = (str || '').split(' ');
       var mapping = {
@@ -409,6 +466,11 @@
       }).join('');
     }
 
+    /**
+     * review conflict and update shortcut for input
+     * @param  {DOM}    targetInput the input which will update
+     * @param  {String} newShortcut updating shortcut
+     */
     function reviewConflict (targetInput, newShortcut) {
       var inputs;
       var queryStr;
@@ -428,6 +490,10 @@
       }
     }
 
+    /**
+     * $initialize by CocoaScript
+     * @param  {Object} source source data from CocoaScript
+     */
     function $initialize(source) {
       shortcutsHandler = new ShortcutsHandler(source.shortcuts, source.sketchShortcuts);
       setI18n(source.i18n);
