@@ -77,6 +77,9 @@ var utils = {
       }
 
       return utils.JSON.parse(i18n);
+    },
+    againstVersion: function (againstVersion, baseVersion) {
+      return parseInt(againstVersion.replace(/\./g, ''), 10) > parseInt(baseVersion.replace(/\./g, ''), 10);
     }
   },
 };

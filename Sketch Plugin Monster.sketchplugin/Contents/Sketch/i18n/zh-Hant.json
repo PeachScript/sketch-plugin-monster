@@ -1,6 +1,7 @@
 {
   "commands": {
-    "monsterShortcuts": "插件快捷鍵管理"
+    "manageShortcuts": "插件快捷鍵管理",
+    "checkForUpdates": "檢查更新..."
   },
   "webview": {
     "title": "插件快捷鍵設定",

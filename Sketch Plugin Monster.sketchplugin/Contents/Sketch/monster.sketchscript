@@ -6,7 +6,7 @@
 
 var pluginHandler = new PluginHandler();
 
-function monsterShortcuts(context) {
+function manageShortcuts(context) {
   var i18n = utils.system.getI18n(context);
   var panel = new Panel({
     context: context,
@@ -49,4 +49,42 @@ function initialize(context) {
   });
 
   utils.fs.writeFile(manifestPath, utils.JSON.stringify(manifest));
+}
+
+function checkForUpdates(context) {
+  var checkUrl = NSURL.URLWithString(encodeURI([
+                  'https://raw.githubusercontent.com',
+                  'PeachScript',
+                  'sketch-plugin-monster',
+                  'master',
+                  'Sketch Plugin Monster.sketchplugin/Contents/Sketch',
+                  'manifest.json'].join('/')));
+  var updateUrl = NSURL.URLWithString(encodeURI([
+                  'https://github.com',
+                  'PeachScript',
+                  'sketch-plugin-monster',
+                  'releases'].join('/')));
+  var packageJSON = utils.JSON.parse(NSString.stringWithContentsOfURL_encoding_error(checkUrl, 0, nil));
+  var currentVersion = context.plugin.version();
+  var updateAvailable = utils.system.againstVersion(packageJSON.version, currentVersion);
+  var promptWindow = COSAlertWindow.new();
+
+  promptWindow.setMessageText('Sketch Plugin Monster');
+
+  if (updateAvailable) {
+    promptWindow.setInformativeText('New version detected! The latest version is ' +
+                                    packageJSON.version +
+                                    ' and you have version ' +
+                                    currentVersion +
+                                    ', download it now?');
+    promptWindow.addButtonWithTitle('Download Now');
+    promptWindow.addButtonWithTitle('Later');
+  } else {
+    promptWindow.setInformativeText('You have installed the latest version of the Sketch Plugin Monster! 🎉🎉🎉');
+    promptWindow.addButtonWithTitle('Done');
+  }
+
+  if (promptWindow.runModal() == "1000" && updateAvailable) {
+    NSWorkspace.sharedWorkspace().openURL(updateUrl);
+  }
 }

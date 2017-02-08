@@ -3,10 +3,16 @@
   "commands": [
     {
       "script": "monster.sketchscript",
-      "handler": "monsterShortcuts",
+      "handler": "manageShortcuts",
       "shortcut": "ctrl shift m",
-      "name": "Plugin shortcuts management",
-      "identifier": "monsterShortcuts"
+      "name": "Plugin Shortcuts Management",
+      "identifier": "manageShortcuts"
+    },
+    {
+      "script": "monster.sketchscript",
+      "handler": "checkForUpdates",
+      "name": "Check For Updates...",
+      "identifier": "checkForUpdates"
     },
     {
       "script": "monster.sketchscript",
@@ -23,7 +29,9 @@
     "isRoot": false,
     "shortcut": "",
     "items": [
-      "monsterShortcuts"
+      "manageShortcuts",
+      "-",
+      "checkForUpdates"
     ],
     "title": "Sketch Plugin Monster"
   },

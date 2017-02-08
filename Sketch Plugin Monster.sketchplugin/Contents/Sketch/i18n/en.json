@@ -1,6 +1,7 @@
 {
   "commands": {
-    "monsterShortcuts": "Plugin shortcuts management"
+    "manageShortcuts": "Plugin Shortcuts Management",
+    "checkForUpdates": "Check For Updates..."
   },
   "webview": {
     "title": "Plugin shortcuts settings",
