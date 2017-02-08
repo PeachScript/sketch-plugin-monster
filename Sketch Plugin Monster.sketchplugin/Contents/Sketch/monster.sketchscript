@@ -49,9 +49,12 @@ function initialize(context) {
   });
 
   utils.fs.writeFile(manifestPath, utils.JSON.stringify(manifest));
+
+  // check for updates automatically
+  checkForUpdates(context, true);
 }
 
-function checkForUpdates(context) {
+function checkForUpdates(context, isAutomatically) {
   var checkUrl = NSURL.URLWithString(encodeURI([
                   'https://raw.githubusercontent.com',
                   'PeachScript',
@@ -83,7 +86,11 @@ function checkForUpdates(context) {
     promptWindow.addButtonWithTitle(i18n.checkForUpdates.btnDone);
   }
 
-  if (promptWindow.runModal() == "1000" && updateAvailable) {
-    NSWorkspace.sharedWorkspace().openURL(updateUrl);
+  if (updateAvailable) {
+    if (promptWindow.runModal() == "1000") {
+      NSWorkspace.sharedWorkspace().openURL(updateUrl);
+    }
+  } else if (!isAutomatically) {
+    promptWindow.runModal()
   }
 }
