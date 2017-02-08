@@ -326,6 +326,8 @@
 
       templateParsed.push('}\nreturn $out.join(\'\')');
 
+      document.getElementById(templateId).remove();
+
       return function (data) {
         return new Function('$data', templateParsed.join(''))(data);
       };
