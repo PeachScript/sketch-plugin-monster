@@ -68,20 +68,19 @@ function checkForUpdates(context) {
   var currentVersion = context.plugin.version();
   var updateAvailable = utils.system.againstVersion(packageJSON.version, currentVersion);
   var promptWindow = COSAlertWindow.new();
+  var i18n = utils.system.getI18n(context);
 
   promptWindow.setMessageText('Sketch Plugin Monster');
 
   if (updateAvailable) {
-    promptWindow.setInformativeText('New version detected! The latest version is ' +
-                                    packageJSON.version +
-                                    ' and you have version ' +
-                                    currentVersion +
-                                    ', download it now?');
-    promptWindow.addButtonWithTitle('Download Now');
-    promptWindow.addButtonWithTitle('Later');
+    promptWindow.setInformativeText(i18n.checkForUpdates.available
+                                        .replace('${ latestVersion }', packageJSON.version)
+                                        .replace('${ currentVersion }', currentVersion));
+    promptWindow.addButtonWithTitle(i18n.checkForUpdates.btnDownload);
+    promptWindow.addButtonWithTitle(i18n.checkForUpdates.btnLater);
   } else {
-    promptWindow.setInformativeText('You have installed the latest version of the Sketch Plugin Monster! 🎉🎉🎉');
-    promptWindow.addButtonWithTitle('Done');
+    promptWindow.setInformativeText(i18n.checkForUpdates.unavailable);
+    promptWindow.addButtonWithTitle(i18n.checkForUpdates.btnDone);
   }
 
   if (promptWindow.runModal() == "1000" && updateAvailable) {

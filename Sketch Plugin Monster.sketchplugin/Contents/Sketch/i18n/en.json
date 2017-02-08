@@ -11,6 +11,13 @@
     "notSupport": "Error: The keys you select are not supported as shortcut!",
     "clear": "Clear shortcut successful!"
   },
+  "checkForUpdates": {
+    "available": "New version detected! The latest version is ${ latestVersion } and you have version ${ currentVersion }, download it now?",
+    "unavailable": "You have installed the latest version! 🎉🎉🎉",
+    "btnDownload": "Download Now",
+    "btnLater": "Later",
+    "btnDone": "Done"
+  },
   "sketchShortcuts": {
     "cmd o": "Open",
     "cmd s": "Save",
