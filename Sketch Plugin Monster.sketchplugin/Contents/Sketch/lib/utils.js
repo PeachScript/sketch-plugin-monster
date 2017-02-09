@@ -65,7 +65,7 @@ var utils = {
       var macOSVersion = String(NSDictionary.dictionaryWithContentsOfFile('/System/Library/CoreServices/SystemVersion.plist')
                                      .objectForKey('ProductVersion'));
 
-      return macOSVersion >= '10.12' ? lang.split('-').slice(0, -1).join('-') : lang;
+      return utils.system.againstVersion(macOSVersion, '10.11.9999') ? lang.split('-').slice(0, -1).join('-') : lang;
     },
     getI18n: function (context) {
       var path = utils.path.join(context.scriptPath.stringByDeletingLastPathComponent(),
@@ -82,7 +82,21 @@ var utils = {
       return utils.JSON.parse(i18n);
     },
     againstVersion: function (againstVersion, baseVersion) {
-      return parseInt(againstVersion.replace(/\./g, ''), 10) > parseInt(baseVersion.replace(/\./g, ''), 10);
+      var baseArr = baseVersion.split('.');
+      var againstArr = againstVersion.split('.').map(function (item, index) {
+        var diff = baseArr[index].length - item.length;
+        var result = item;
+
+        if (diff > 0) {
+          result = new Array(diff).join('0') + result;
+        } else if (diff < 0) {
+          baseArr[index] = new Array(Math.abs(diff)).join('0') + baseArr[index];
+        }
+
+        return result;
+      });
+
+      return againstArr.join('.') > baseArr.join('.');
     }
-  },
+  }
 };
