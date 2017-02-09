@@ -62,7 +62,10 @@ var utils = {
   system: {
     getLanguage: function () {
       var lang = NSUserDefaults.standardUserDefaults().objectForKey('AppleLanguages').objectAtIndex(0);
-      return lang.split('-').slice(0, 2).join('-');
+      var macOSVersion = String(NSDictionary.dictionaryWithContentsOfFile('/System/Library/CoreServices/SystemVersion.plist')
+                                     .objectForKey('ProductVersion'));
+
+      return macOSVersion >= '10.12' ? lang.split('-').slice(0, -1).join('-') : lang;
     },
     getI18n: function (context) {
       var path = utils.path.join(context.scriptPath.stringByDeletingLastPathComponent(),
