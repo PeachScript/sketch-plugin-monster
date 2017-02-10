@@ -89,11 +89,10 @@
       cursor: initial;
       border-color: #09f;
     }
-    .plugin-shortcuts-panel table input[value] + .btn-clear {
-      display: inline-block;
+    .plugin-shortcuts-panel table input:invalid + .btn-clear {
+      display: none;
     }
     .plugin-shortcuts-panel table .btn-clear {
-      display: none;
       margin: 0 10px;
       width: 24px;
       height: 24px;
@@ -127,6 +126,7 @@
             <td><%=plugins[i].commands[j].name %></td>
             <td>
               <input type="text"
+                     required="required"
                      value="<%=convertShortcut(plugins[i].commands[j].shortcut) %>"
                      data-plugin="<%=plugins[i].name %>"
                      data-identifier="<%=plugins[i].commands[j].identifier %>">
