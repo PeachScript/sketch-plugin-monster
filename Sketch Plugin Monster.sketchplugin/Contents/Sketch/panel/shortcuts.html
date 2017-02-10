@@ -9,9 +9,9 @@
       font-family: "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif";
     }
     .page-title {
-      margin: 20px 0 0;
+      margin: 10px 0;
       font-weight: normal;
-      font-size: 28px;
+      font-size: 24px;
       line-height: 40px;
       color: #333;
       text-align: center;
@@ -23,7 +23,7 @@
       text-align: center;
     }
     .conflict-warning {
-      margin: 10px 20px 30px;
+      margin: 10px 20px 15px;
       padding: 6px 12px;
       color: #fc7b49;
       font-size: 14px;
@@ -37,17 +37,16 @@
     }
     .plugin-shortcuts-panel {
       margin-top: -1px;
-      padding: 0 0 0 20px;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
+      border-top: 1px solid #ccc;
     }
     .plugin-shortcuts-panel h2 {
       margin: 0;
-      padding: 0;
+      padding: 0 24px;
       font-weight: normal;
-      font-size: 20px;
-      line-height: 40px;
-      color: #09f;
+      font-size: 24px;
+      line-height: 60px;
+      color: #4990E2;
+      border-bottom: 1px solid #ccc;
     }
     .plugin-shortcuts-panel table {
       width: 100%;
@@ -57,20 +56,57 @@
       background-color: #fde5cb;
     }
     .plugin-shortcuts-panel table td {
-      padding: 10px;
+      height: 48px;
+      line-height: 48px;
       color: #666;
-      border-top: 1px solid #eee;
+      background-color: #fbfbfb;
+      border-bottom: 1px solid #ddd;
+    }
+    .plugin-shortcuts-panel table td:first-child {
+      padding-left: 40px;
+    }
+    .plugin-shortcuts-panel table td:last-child {
+      width: 150px;
     }
     .plugin-shortcuts-panel table input {
-      width: 40px;
-      padding: 3px 10px;
-      text-align: right;
+      width: 64px;
+      height: 28px;
+      padding: 0 10px;
+      font-size: 14px;
+      color: #666;
+      text-indent: -1px;
+      letter-spacing: 1px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      vertical-align: middle;
       cursor: pointer;
-      border: 1px solid transparent;
     }
     .plugin-shortcuts-panel table input:focus {
       cursor: initial;
       border-color: #09f;
+    }
+    .plugin-shortcuts-panel table input[value] + .btn-clear {
+      display: inline-block;
+    }
+    .plugin-shortcuts-panel table .btn-clear {
+      display: none;
+      margin: 0 10px;
+      width: 24px;
+      height: 24px;
+      background: url('assets/img/icon_clear.png') no-repeat;
+      background-size: 18px;
+      background-position: center center;
+      border: 0;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    .plugin-shortcuts-panel table .btn-clear:hover {
+      opacity: .8;
+    }
+    .plugin-shortcuts-panel table .btn-clear:active {
+      opacity: .6;
     }
   </style>
 </head>
@@ -92,8 +128,9 @@
                      value="<%=convertShortcut(plugins[i].commands[j].shortcut) %>"
                      data-plugin="<%=plugins[i].name %>"
                      data-identifier="<%=plugins[i].commands[j].identifier %>">
-              <button data-plugin="<%=plugins[i].name %>"
-                      data-identifier="<%=plugins[i].commands[j].identifier %>">clear</button>
+              <button class="btn-clear"
+                      data-plugin="<%=plugins[i].name %>"
+                      data-identifier="<%=plugins[i].commands[j].identifier %>"></button>
             </td>
           </tr>
           <%}%>
