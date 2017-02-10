@@ -9,7 +9,8 @@
     "conflict": "错误: 你设定的快捷键与 ${ conflictTarget } 的『${ shortcutName }』操作冲突了！",
     "success": "设置快捷键成功！",
     "notSupport": "错误：你选择的按键不支持设置为快捷键！",
-    "clear": "清除快捷键成功！"
+    "clear": "清除快捷键成功！",
+    "conflictWarning": "警告: 有 ${ conflictCount } 个快捷键发生了冲突！"
   },
   "checkForUpdates": {
     "available": "检测到新版本！当前版本为 ${ currentVersion }，最新版本为 ${ latestVersion }，要下载最新版吗？",
