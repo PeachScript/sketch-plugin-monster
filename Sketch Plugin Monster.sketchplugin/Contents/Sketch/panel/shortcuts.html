@@ -8,29 +8,32 @@
       margin: 0;
       font-family: "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "sans-serif";
     }
+    header {
+      text-align: center;
+    }
     .page-title {
       margin: 10px 0;
       font-weight: normal;
       font-size: 24px;
       line-height: 40px;
       color: #333;
-      text-align: center;
     }
     .usage-desc {
-      margin-top: 0;
+      margin: 0 0 15px;
       font-size: 14px;
       color: #999;
-      text-align: center;
     }
     .conflict-warning {
-      margin: 10px 20px 15px;
-      padding: 6px 12px;
-      color: #fc7b49;
+      display: inline-block;
+      margin: 0 20px 20px;
+      padding: 6px 20px;
+      color: #EF4444;
       font-size: 14px;
       line-height: 20px;
-      background-color: #fde5cb;
-      border: 1px solid #fdc2a5;
+      background-color: #fff;
+      border: 1px solid #EF4444;
       box-sizing: border-box;
+      border-radius: 64px;
     }
     .conflict-warning:empty {
       display: none;
@@ -116,9 +119,11 @@
   </style>
 </head>
 <body>
-  <h1 class="page-title"></h1>
-  <p class="usage-desc"></p>
-  <p class="conflict-warning"></p>
+  <header>
+    <h1 class="page-title"></h1>
+    <p class="usage-desc"></p>
+    <span class="conflict-warning"></span>
+  </header>
   <script type="text/template" id="shortcuts-template">
     <%for (var i = 0; i < plugins.length; i++) {%>
     <div class="plugin-shortcuts-panel">
