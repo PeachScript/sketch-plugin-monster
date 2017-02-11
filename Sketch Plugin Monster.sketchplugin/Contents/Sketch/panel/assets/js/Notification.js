@@ -11,35 +11,32 @@
     // .notification-wrapper {
     //   position: fixed;
     //   z-index: 100;
-    //   top: 10px;
     //   left: 0;
     //   right: 0;
+    //   bottom: 20px;
     //   text-align: center;
     // }
     // .notification-content {
     //   display: none;
     //   max-width: 70%;
-    //   padding: 5px 10px;
+    //   padding: 6px 20px;
     //   font-size: 14px;
-    //   line-height: 18px;
-    //   text-align: left;
-    //   color: #fff;
+    //   line-height: 20px;
+    //   color: #666;
     //   overflow-wrap: break-word;
-    //   background-color: #19C1F3;
-    //   border: 1px solid #17B9E8;
-    //   box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    //   background-color: #fff;
+    //   border-radius: 64px;
+    //   box-shadow: 0 10px 24px rgba(0,0,0,.24);
     //   box-sizing: border-box;
     // }
     // .notification-content.show {
     //   display: inline-block;
     // }
     // .notification-content.error {
-    //   background-color: #F91F2E;
-    //   border-color: #E71A27;
+    //   color: #EF4444;
     // }
     // .notification-content.success {
-    //   background-color: #9CDE07;
-    //   border-color: #91CF06;
+    //   color: #93D106;
     // }
   }).toString().replace(/(^function[ \w\(\)]*\{\n)|(\/\/ )|(\n\s*\}$)/g, '');
   document.head.appendChild(style);
