@@ -41,8 +41,16 @@
     .plugin-shortcuts-panel {
       margin-top: -1px;
       border-top: 1px solid #ccc;
+      overflow: hidden;
+    }
+    .plugin-shortcuts-panel.collapse {
+      height: 61px;
+    }
+    .plugin-shortcuts-panel.collapse h2::after {
+      transform: rotate(180deg);
     }
     .plugin-shortcuts-panel h2 {
+      position: relative;
       margin: 0;
       padding: 0 24px;
       font-weight: normal;
@@ -50,6 +58,19 @@
       line-height: 60px;
       color: #4990E2;
       border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .plugin-shortcuts-panel h2::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      margin-top: -6px;
+      display: block;
+      width: 12px;
+      height: 12px;
+      background: url('assets/img/icon_arrow.png') no-repeat center center;
+      background-size: 100%;
     }
     .plugin-shortcuts-panel table {
       width: 100%;
@@ -187,7 +208,17 @@
       }
 
       // wait for DOM updated
-      setTimeout(renderConflictMsg, 0);
+      setTimeout(function () {
+        renderConflictMsg();
+
+        // support collapse
+        Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel h2'), function (item) {
+          item.addEventListener('click', function () {
+            this.parentNode.classList.toggle('collapse');
+          });
+        });
+      }, 0);
+
 
       // handle shortcut change
       wrapper.addEventListener('keydown', function (ev) {
