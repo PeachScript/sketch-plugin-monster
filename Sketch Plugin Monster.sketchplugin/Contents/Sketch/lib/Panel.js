@@ -30,7 +30,7 @@ function Panel(options, data, callback) {
   this.panel.standardWindowButton(NSWindowCloseButton).setCOSJSTargetFunction(this.close);
 
   // configure the webView
-  this.webView = WebView.alloc().initWithFrame(NSMakeRect(0, 0, opts.width, opts.height));
+  this.webView = WebView.alloc().initWithFrame(NSMakeRect(0, -1, opts.width, opts.height));
 
   // use MochaJSDelegate to exchange data with webview
   this.webView.setFrameLoadDelegate_(new MochaJSDelegate({

@@ -15,10 +15,17 @@
     //   right: 0;
     //   bottom: 20px;
     //   text-align: center;
+    //   transform: scale(0) translateY(100px);
+    //   opacity: 0;
+    //   transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    // }
+    // .notification-wrapper.show {
+    //   opacity: 1;
+    //   transform: scale(1) translateY(0);
     // }
     // .notification-content {
-    //   display: none;
     //   max-width: 70%;
+    //   display: inline-block;
     //   padding: 6px 20px;
     //   font-size: 14px;
     //   line-height: 20px;
@@ -28,9 +35,6 @@
     //   border-radius: 64px;
     //   box-shadow: 0 10px 24px rgba(0,0,0,.24);
     //   box-sizing: border-box;
-    // }
-    // .notification-content.show {
-    //   display: inline-block;
     // }
     // .notification-content.error {
     //   color: #EF4444;
@@ -53,7 +57,7 @@
    */
   Notification.prototype.show = function (str, duration) {
     var _self = this;
-    this.content.classList.add('show');
+    wrapper.classList.add('show');
     this.content.innerHTML = str;
     clearTimeout(this.timer);
     duration && (this.timer = setTimeout(function () {
@@ -87,6 +91,7 @@
   Notification.prototype.hide = function () {
     this.content.innerHTML = '';
     this.content.className = 'notification-content';
+    wrapper.classList.remove('show');
     clearTimeout(this.timer);
   };
 

@@ -39,12 +39,13 @@
       display: none;
     }
     .plugin-shortcuts-panel {
-      margin-top: -1px;
+      margin-bottom: -1px;
       border-top: 1px solid #ccc;
       overflow: hidden;
+      transition: max-height .5s cubic-bezier(0.215, 0.61, 0.355, 1);
     }
     .plugin-shortcuts-panel.collapse {
-      height: 61px;
+      max-height: 61px!important;
     }
     .plugin-shortcuts-panel.collapse h2::after {
       transform: rotate(180deg);
@@ -59,6 +60,7 @@
       color: #4990E2;
       border-bottom: 1px solid #ccc;
       cursor: pointer;
+      -webkit-user-select: none;
     }
     .plugin-shortcuts-panel h2::after {
       content: '';
@@ -71,6 +73,7 @@
       height: 12px;
       background: url('assets/img/icon_arrow.png') no-repeat center center;
       background-size: 100%;
+      transition: transform .5s cubic-bezier(0.215, 0.61, 0.355, 1);
     }
     .plugin-shortcuts-panel table {
       width: 100%;
@@ -112,10 +115,14 @@
       box-sizing: border-box;
       vertical-align: middle;
       cursor: pointer;
+      box-shadow: 0 0 0 10px rgba(0,153,255,0);
+      outline: none;
     }
     .plugin-shortcuts-panel table input:focus {
       cursor: initial;
-      border-color: #09f;
+      transition: border-color .2s, box-shadow .4s;
+      border-color: #4990E2;
+      box-shadow: 0 0 0 3px rgba(0,153,255,.3);
     }
     .plugin-shortcuts-panel table input:invalid + .btn-clear {
       display: none;
@@ -213,6 +220,9 @@
 
         // support collapse
         Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel h2'), function (item) {
+          var parentPlugin = item.parentNode;
+          parentPlugin.style.maxHeight = (parseInt(getComputedStyle(parentPlugin).height) || 0) + 'px';
+
           item.addEventListener('click', function () {
             this.parentNode.classList.toggle('collapse');
           });
