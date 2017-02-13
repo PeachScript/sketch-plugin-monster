@@ -178,6 +178,7 @@
               <input type="text"
                      required="required"
                      tabindex="-2"
+                     placeholder="<%=i18n.none %>"
                      value="<%=convertShortcut(plugins[i].commands[j].shortcut) %>"
                      data-plugin="<%=plugins[i].name %>"
                      data-identifier="<%=plugins[i].commands[j].identifier %>">
@@ -211,7 +212,7 @@
       var commands = {};
       var inputs;
 
-      wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandList() });
+      wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandList(), i18n: i18n });
 
       // check and display conflicting shortcut key
       inputs = wrapper.getElementsByTagName('input');

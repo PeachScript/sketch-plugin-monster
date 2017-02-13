@@ -10,7 +10,8 @@
     "success": "Set shortcut successful!",
     "notSupport": "Error: The keys you select are not supported as shortcut!",
     "clear": "Clear shortcut successful!",
-    "conflictWarning": "Warning: There are ${ conflictCount } shortcut keys in conflict!"
+    "conflictWarning": "Warning: There are ${ conflictCount } shortcut keys in conflict!",
+    "none": "none"
   },
   "checkForUpdates": {
     "available": "New version detected! The latest version is ${ latestVersion } and you have version ${ currentVersion }, download it now?",
