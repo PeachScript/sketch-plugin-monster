@@ -15,7 +15,7 @@ function TemplateEngine(templateId) {
 
     if (/<%=/.test(line)) {
       // parse data output
-      templateParsed.push('$out.push(\'' + line.replace(/<%= ?([a-z\(\)\.\[\]_]*) ?%>/gi, '\' + $1 + \'') + '\');');
+      templateParsed.push('$out.push(\'' + line.replace(/<%= ?([\w\(\)\.\[\]]*) ?%>/gi, '\' + $1 + \'') + '\');');
     } else if (/<% ?for ?\(/.test(line)) {
       // parse for iteration
       templateParsed.push(line.replace(/<% ?(for ?\(.*\) ?{) ?%>/gi, '$1'));
