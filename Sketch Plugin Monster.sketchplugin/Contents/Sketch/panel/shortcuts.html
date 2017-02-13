@@ -360,8 +360,8 @@
     function reviewConflict (targetInput, newShortcut) {
       var inputs;
       var queryStr;
+      var plugins = document.querySelectorAll('.plugin-shortcuts-panel.shortcut-conflict');
       var parentRow = targetInput.parentNode.parentNode;
-      var parentPlugin = parentRow.parentNode.parentNode.parentNode;
 
       if (parentRow.classList.contains('shortcut-conflict')) {
         queryStr = '.plugin-shortcuts-panel input[value=' + targetInput.value + ']';
@@ -373,9 +373,11 @@
           inputs[0].parentNode.parentNode.classList.remove('shortcut-conflict');
         }
 
-        if (!parentPlugin.querySelectorAll('.shortcut-conflict').length) {
-          parentPlugin.classList.remove('shortcut-conflict');
-        }
+        Array.prototype.forEach.call(plugins, function (plugin) {
+          if (!plugin.querySelectorAll('.shortcut-conflict').length) {
+            plugin.classList.remove('shortcut-conflict');
+          }
+        });
 
         renderConflictMsg();
       } else {
