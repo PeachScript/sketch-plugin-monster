@@ -194,25 +194,27 @@
     function renderList(source) {
       var listRender = new TemplateEngine('shortcuts-template');
       var wrapper = document.createElement('div');
+      var commands = {};
       var inputs;
-      var i;
-      var j;
 
       wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandList() });
 
       // check and display conflicting shortcut key
       inputs = wrapper.getElementsByTagName('input');
-      for (i = 0; i < inputs.length - 1; i++) {
-        if (!inputs[i].parentNode.parentNode.classList.contains('conflict') &&
-            inputs[i].value) {
-          for (j = i + 1; j < inputs.length; j++) {
-            if (inputs[i].value === inputs[j].value) {
-              inputs[i].parentNode.parentNode.classList.add('shortcut-conflict');
-              inputs[j].parentNode.parentNode.classList.add('shortcut-conflict');
-            }
-          }
+
+      Array.prototype.forEach.call(inputs, function (input) {
+        if (input.value) {
+          commands[input.value] = typeof(commands[input.value]) === 'number' ?
+                                  (commands[input.value] + 1) :
+                                  0;
         }
-      }
+      });
+
+      Array.prototype.forEach.call(inputs, function (input) {
+        if (commands[input.value]) {
+           input.parentNode.parentNode.classList.add('shortcut-conflict'); // row
+        }
+      });
 
       // wait for DOM updated
       setTimeout(function () {
