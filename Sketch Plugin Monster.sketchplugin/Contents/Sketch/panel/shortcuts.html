@@ -48,8 +48,20 @@
     .plugin-shortcuts-panel.collapse {
       max-height: 61px!important;
     }
-    .plugin-shortcuts-panel.collapse h2::after {
+    .plugin-shortcuts-panel.collapse h2::before {
       transform: rotate(180deg);
+    }
+    .plugin-shortcuts-panel.shortcut-conflict h2 {
+      color: #EF4444;
+    }
+    .plugin-shortcuts-panel.shortcut-conflict h2::after {
+      content: '';
+      margin-left: 5px;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: url('assets/img/icon_warning.png') no-repeat center center;
+      background-size: 100%;
     }
     .plugin-shortcuts-panel h2 {
       position: relative;
@@ -63,7 +75,7 @@
       cursor: pointer;
       -webkit-user-select: none;
     }
-    .plugin-shortcuts-panel h2::after {
+    .plugin-shortcuts-panel h2::before {
       content: '';
       position: absolute;
       top: 50%;
@@ -214,6 +226,7 @@
       Array.prototype.forEach.call(inputs, function (input) {
         if (commands[input.value]) {
            input.parentNode.parentNode.classList.add('shortcut-conflict'); // row
+           input.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add('shortcut-conflict'); // plugin panel
         }
       });
 
@@ -346,6 +359,7 @@
       var inputs;
       var queryStr;
       var parentRow = targetInput.parentNode.parentNode;
+      var parentPlugin = parentRow.parentNode.parentNode.parentNode;
 
       if (parentRow.classList.contains('shortcut-conflict')) {
         queryStr = '.plugin-shortcuts-panel input[value=' + targetInput.value + ']';
@@ -355,6 +369,10 @@
 
         if (inputs.length === 1) {
           inputs[0].parentNode.parentNode.classList.remove('shortcut-conflict');
+        }
+
+        if (!parentPlugin.querySelectorAll('.shortcut-conflict').length) {
+          parentPlugin.classList.remove('shortcut-conflict');
         }
 
         renderConflictMsg();
