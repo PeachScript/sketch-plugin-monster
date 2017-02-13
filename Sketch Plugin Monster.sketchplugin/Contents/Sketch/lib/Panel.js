@@ -13,6 +13,7 @@ function Panel(options, data, callback) {
     title: options.context.plugin.name()
   }, options);
   var _self = this;
+  var bgColor = NSColor.colorWithRed_green_blue_alpha(1, 1, 1, 1);
 
   opts.url = utils.path.join(options.context.scriptPath.stringByDeletingLastPathComponent(),
                              '/panel',
@@ -23,11 +24,10 @@ function Panel(options, data, callback) {
   this.panel.setFrame_display(NSMakeRect(opts.x, opts.y, opts.width, opts.height + 20), false);
   this.panel.setTitle(opts.title);
   this.panel.setTitlebarAppearsTransparent(true);
-  this.panel.standardWindowButton(NSWindowCloseButton);
   this.panel.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true);
   this.panel.standardWindowButton(NSWindowZoomButton).setHidden(true);
-  this.panel.setBackgroundColor(NSColor.colorWithRed_green_blue_alpha(255,255,255, 1));
   this.panel.standardWindowButton(NSWindowCloseButton).setCOSJSTargetFunction(this.close);
+  this.panel.contentView().superview().titlebarViewController().view().setBackgroundColor(bgColor);
 
   // configure the webView
   this.webView = WebView.alloc().initWithFrame(NSMakeRect(0, -1, opts.width, opts.height));
