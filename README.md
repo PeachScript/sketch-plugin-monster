@@ -1,5 +1,5 @@
 # Sketch Plugin Monster
-[![version](https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg)]()[![downloads](https://img.shields.io/github/downloads/PeachScript/sketch-plugin-monster/total.svg)]()[![license](https://img.shields.io/github/license/PeachScript/sketch-plugin-monster.svg)]()
+[![version](https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg)]() [![downloads](https://img.shields.io/github/downloads/PeachScript/sketch-plugin-monster/total.svg)]() [![license](https://img.shields.io/github/license/PeachScript/sketch-plugin-monster.svg)]()
 
 A Sketch plugin for managing all plugin shortcuts in Sketch.
 
