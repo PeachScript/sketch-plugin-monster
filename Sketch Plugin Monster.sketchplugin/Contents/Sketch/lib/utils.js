@@ -97,6 +97,9 @@ var utils = {
       });
 
       return againstArr.join('.') > baseArr.join('.');
+    },
+    openLink: function (url) {
+      NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url + '?ref=sketch'));
     }
   }
 };
