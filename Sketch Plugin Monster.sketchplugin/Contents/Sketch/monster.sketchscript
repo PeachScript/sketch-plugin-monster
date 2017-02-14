@@ -94,3 +94,7 @@ function checkForUpdates(context, isAutomatically) {
     promptWindow.runModal()
   }
 }
+
+function linkFeedback() {
+  utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/issues/new');
+}

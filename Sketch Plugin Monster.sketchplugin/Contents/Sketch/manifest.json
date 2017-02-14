@@ -10,6 +10,12 @@
     },
     {
       "script": "monster.sketchscript",
+      "handler": "linkFeedback",
+      "name": "Feedback",
+      "identifier": "linkFeedback"
+    },
+    {
+      "script": "monster.sketchscript",
       "handler": "checkForUpdates",
       "name": "Check For Updates...",
       "identifier": "checkForUpdates"
@@ -31,6 +37,7 @@
     "items": [
       "manageShortcuts",
       "-",
+      "linkFeedback",
       "checkForUpdates"
     ],
     "title": "Sketch Plugin Monster"

@@ -1,7 +1,8 @@
 {
   "commands": {
     "manageShortcuts": "Plugin Shortcuts Management",
-    "checkForUpdates": "Check For Updates..."
+    "checkForUpdates": "Check For Updates...",
+    "linkFeedback": "Feedback"
   },
   "webview": {
     "title": "Plugin shortcuts settings",

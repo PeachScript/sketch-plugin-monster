@@ -1,7 +1,8 @@
 {
   "commands": {
     "manageShortcuts": "插件快捷键管理",
-    "checkForUpdates": "检查更新..."
+    "checkForUpdates": "检查更新...",
+    "linkFeedback": "意见反馈"
   },
   "webview": {
     "title": "插件快捷键设定",
