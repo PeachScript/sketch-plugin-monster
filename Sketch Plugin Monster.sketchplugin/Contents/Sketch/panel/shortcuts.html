@@ -181,6 +181,7 @@
                      placeholder="<%=i18n.none %>"
                      value="<%=convertShortcut(plugins[i].commands[j].shortcut) %>"
                      data-plugin="<%=plugins[i].name %>"
+                     data-command="<%=plugins[i].commands[j].name %>"
                      data-identifier="<%=plugins[i].commands[j].identifier %>">
               <button class="btn-clear"
                       data-plugin="<%=plugins[i].name %>"
@@ -268,7 +269,7 @@
             conflictResult = shortcutsHandler.checkConflict(shortcutStr);
 
             if (conflictResult) {
-              if (conflictResult.name !== ev.target.getAttribute('data-plugin')) {
+              if (conflictResult.shortcutName !== ev.target.getAttribute('data-command')) {
                 // prompt user if this shortcut conflict with Sketch or other plugin
                 globalNotice.error(source.i18n.conflict
                                               .replace('${ shortcutName }', conflictResult.shortcutName)
