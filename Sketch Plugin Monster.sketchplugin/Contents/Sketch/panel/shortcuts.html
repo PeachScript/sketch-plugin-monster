@@ -39,7 +39,6 @@
       display: none;
     }
     .plugin-shortcuts-panel {
-      max-height: 2000px;
       margin-bottom: -1px;
       border-top: 1px solid #ccc;
       overflow: hidden;
@@ -167,7 +166,7 @@
   </header>
   <script type="text/template" id="shortcuts-template">
     <%for (var i = 0; i < plugins.length; i++) {%>
-    <div class="plugin-shortcuts-panel">
+    <div class="plugin-shortcuts-panel collapse">
       <h2><%=plugins[i].name %></h2>
       <table>
         <tbody>
@@ -227,9 +226,13 @@
       });
 
       Array.prototype.forEach.call(inputs, function (input) {
+        var commandWrapper = input.parentNode.parentNode;
+        var pluginWrapper = commandWrapper.parentNode.parentNode.parentNode;
+
         if (commands[input.value]) {
-           input.parentNode.parentNode.classList.add('shortcut-conflict'); // row
-           input.parentNode.parentNode.parentNode.parentNode.parentNode.classList.add('shortcut-conflict'); // plugin panel
+           commandWrapper.classList.add('shortcut-conflict');
+           pluginWrapper.classList.add('shortcut-conflict');
+           pluginWrapper.classList.remove('collapse');
         }
       });
 
@@ -239,8 +242,13 @@
 
         // support collapse
         Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel h2'), function (item) {
-          var parentPlugin = item.parentNode;
-          parentPlugin.style.maxHeight = (parseInt(getComputedStyle(parentPlugin).height) || 0) + 'px';
+          var parentPlugin = item.parentNode.cloneNode(true);
+
+          parentPlugin.classList.remove('collapse');
+          parentPlugin.style.visibility = 'hidden';
+          document.body.appendChild(parentPlugin);
+          item.parentNode.style.maxHeight = (parseInt(getComputedStyle(parentPlugin).height) || 0) + 'px';
+          parentPlugin.remove();
 
           item.addEventListener('click', function () {
             this.parentNode.classList.toggle('collapse');
