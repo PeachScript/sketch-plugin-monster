@@ -97,6 +97,7 @@ function checkForUpdates(context, isAutomatically) {
 
 function exportShortcuts(context) {
   var original = pluginHandler.getCommandsOfAllPlugins();
+  var i18n = utils.system.getI18n(context);
   var parsedConf = original.map(function (plugin) {
     return {
       name: plugin.name,
@@ -111,8 +112,12 @@ function exportShortcuts(context) {
     };
   });
 
-  utils.system.saveFileWithPanel(utils.JSON.stringify(parsedConf), ['json'], function () {
-    context.document.showMessage('Export configurations successfully!');
+  utils.system.saveFileWithPanel({
+    title: i18n.exportAndImport.exportTitle,
+    defaultFileName: 'plugin_monster_export',
+    types: ['json']
+  }, utils.JSON.stringify(parsedConf), function () {
+    context.document.showMessage(i18n.exportAndImport.exportSuccess);
   });
 }
 

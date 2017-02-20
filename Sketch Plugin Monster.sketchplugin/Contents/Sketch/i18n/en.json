@@ -1,6 +1,7 @@
 {
   "commands": {
     "manageShortcuts": "Plugin Shortcuts Management",
+    "exportShortcuts": "Export Shortcut Configurations...",
     "checkForUpdates": "Check For Updates...",
     "linkFeedback": "Feedback"
   },
@@ -20,6 +21,10 @@
     "btnDownload": "Download Now",
     "btnLater": "Later",
     "btnDone": "Done"
+  },
+  "exportAndImport": {
+    "exportTitle": "Export Shortcut Configurations",
+    "exportSuccess": "Export configurations successfully!"
   },
   "sketchShortcuts": {
     "cmd o": "Open",

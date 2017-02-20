@@ -101,12 +101,12 @@ var utils = {
     openLink: function (url) {
       NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url + '?ref=sketch'));
     },
-    saveFileWithPanel: function (content, types, cb) {
+    saveFileWithPanel: function (config, content, cb) {
       var panel = NSSavePanel.savePanel();
 
-      panel.title = 'Export Shortcut Configurations'
-      panel.nameFieldStringValue = 'plugin_monster_export';
-      panel.allowedFileTypes = types;
+      panel.title = config.title;
+      panel.nameFieldStringValue = config.defaultFileName;
+      panel.allowedFileTypes = config.types;
       panel.allowsOtherFileTypes = false;
 
       if (panel.runModal()) {
