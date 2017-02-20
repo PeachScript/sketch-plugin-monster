@@ -10,6 +10,12 @@
     },
     {
       "script": "monster.sketchscript",
+      "handler": "exportShortcuts",
+      "name": "Export Configurations",
+      "identifier": "exportShortcuts"
+    },
+    {
+      "script": "monster.sketchscript",
       "handler": "linkFeedback",
       "name": "Feedback",
       "identifier": "linkFeedback"
@@ -36,6 +42,7 @@
     "shortcut": "",
     "items": [
       "manageShortcuts",
+      "exportShortcuts",
       "-",
       "linkFeedback",
       "checkForUpdates"

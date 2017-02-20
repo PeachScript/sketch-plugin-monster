@@ -95,6 +95,27 @@ function checkForUpdates(context, isAutomatically) {
   }
 }
 
+function exportShortcuts(context) {
+  var original = pluginHandler.getCommandsOfAllPlugins();
+  var parsedConf = original.map(function (plugin) {
+    return {
+      name: plugin.name,
+      identifier: plugin.identifier,
+      commands: plugin.commands.reduce(function (result, command) {
+        if (command.shortcut) {
+          result[command.identifier] = command.shortcut;
+        }
+
+        return result;
+      }, {})
+    };
+  });
+
+  utils.system.saveFileWithPanel(utils.JSON.stringify(parsedConf), ['json'], function () {
+    context.document.showMessage('Export configurations successfully!');
+  });
+}
+
 function linkFeedback() {
   utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/issues/new');
 }

@@ -100,6 +100,19 @@ var utils = {
     },
     openLink: function (url) {
       NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url + '?ref=sketch'));
+    },
+    saveFileWithPanel: function (content, types, cb) {
+      var panel = NSSavePanel.savePanel();
+
+      panel.title = 'Export Shortcut Configurations'
+      panel.nameFieldStringValue = 'plugin_monster_export';
+      panel.allowedFileTypes = types;
+      panel.allowsOtherFileTypes = false;
+
+      if (panel.runModal()) {
+        utils.fs.writeFile(panel.URL(), content);
+        cb && cb.call(null);
+      }
     }
   }
 };

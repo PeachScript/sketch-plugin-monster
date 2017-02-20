@@ -73,6 +73,7 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
 
     commandList.push({
       name: String(item),
+      identifier: manifest.identifier,
       commands: utils.array.filter(manifest.commands, function (item) {
         // Only display the commands which belong to the menu items
         return menuStr.indexOf(item.identifier) > -1;
