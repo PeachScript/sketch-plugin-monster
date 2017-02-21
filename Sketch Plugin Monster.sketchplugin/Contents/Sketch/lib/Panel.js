@@ -26,7 +26,7 @@ function Panel(options, data, callback) {
   this.panel.setTitlebarAppearsTransparent(true);
   this.panel.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true);
   this.panel.standardWindowButton(NSWindowZoomButton).setHidden(true);
-  this.panel.standardWindowButton(NSWindowCloseButton).setCOSJSTargetFunction(this.close);
+  this.panel.standardWindowButton(NSWindowCloseButton).setCOSJSTargetFunction(function () { _self.close(); });
   this.panel.contentView().superview().titlebarViewController().view().setBackgroundColor(bgColor);
 
   // configure the webView
@@ -71,6 +71,7 @@ function Panel(options, data, callback) {
  * close panel
  */
 Panel.prototype.close = function () {
+  this.panel.orderOut(nil);
   NSApp.stopModal();
 };
 
