@@ -113,6 +113,16 @@ var utils = {
         utils.fs.writeFile(panel.URL(), content);
         cb && cb.call(null);
       }
+    },
+    openFileWithPanel: function (config, cb) {
+      var panel = NSOpenPanel.openPanel();
+
+      panel.allowedFileTypes = config.types;
+      panel.allowsOtherFileTypes = false;
+
+      if (panel.runModal()) {
+        cb && cb.call(null, String(panel.URL()).replace('file://', ''));
+      }
     }
   }
 };

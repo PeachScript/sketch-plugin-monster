@@ -11,8 +11,14 @@
     {
       "script": "monster.sketchscript",
       "handler": "exportShortcuts",
-      "name": "Export Configurations",
+      "name": "Export Shortcut Configurations",
       "identifier": "exportShortcuts"
+    },
+    {
+      "script": "monster.sketchscript",
+      "handler": "importShortcuts",
+      "name": "Import Shortcut Configurations",
+      "identifier": "importShortcuts"
     },
     {
       "script": "monster.sketchscript",
@@ -42,6 +48,7 @@
     "shortcut": "",
     "items": [
       "manageShortcuts",
+      "importShortcuts",
       "exportShortcuts",
       "-",
       "linkFeedback",

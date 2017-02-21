@@ -121,6 +121,44 @@ function exportShortcuts(context) {
   });
 }
 
+function importShortcuts(context) {
+  var i18n = utils.system.getI18n(context);
+
+  utils.system.openFileWithPanel({
+    types: ['json']
+  }, function (path) {
+    var importConf;
+    var importResult;
+    var promptWindow;
+
+    try {
+      importConf = utils.JSON.parse(utils.fs.readFile(path));
+    } catch (e) {
+      context.document.showMessage('Read configuration file error!');
+      throw new Error('Read configuration file error!');
+    }
+
+    if (importConf[0] && importConf[0].name && importConf[0].commands) {
+      importResult = pluginHandler.restoreShortcutsFromConfig(importConf);
+      if (importResult.length) {
+        promptWindow = COSAlertWindow.new();
+        promptWindow.setMessageText('Sketch Plugin Monster');
+        promptWindow.setInformativeText('The following plugin\'s shortcuts import failure, ' +
+                                         'because cannot found them in this computer:\n' +
+                                         importResult.map(function (item, index) {
+                                           return ['  ', index + 1, '.', ' ', item].join('');
+                                         }).join('\n'));
+        promptWindow.addButtonWithTitle(i18n.checkForUpdates.btnDone);
+        promptWindow.runModal();
+      } else {
+        context.document.showMessage('Import shortcut configurations successfully!');
+      }
+    } else {
+      context.document.showMessage('Read configuration file error!');
+    }
+  });
+}
+
 function linkFeedback() {
   utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/issues/new');
 }

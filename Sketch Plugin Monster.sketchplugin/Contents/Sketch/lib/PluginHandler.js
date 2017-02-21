@@ -116,3 +116,37 @@ PluginHandler.prototype.setShortcutForPlugin = function (name, replacement) {
 
   return result;
 };
+
+/**
+ * restore shortcuts from configuration file
+ * @param  {Array}  importConf shortcut configurations
+ * @return {Array}  failures
+ */
+PluginHandler.prototype.restoreShortcutsFromConfig = function (importConf) {
+  var failures = [];
+  var _self = this;
+  this.getPluginList(); // cache manifest
+
+  utils.array.forEach(importConf, function (plugin) {
+    var manifest;
+    var confPath;
+    if (_self.manifests[plugin.name]) {
+      manifest = _self.getManifestOfPlugin(plugin.name);
+      confPath = _self.getManifestPathOfPlugin(plugin.name);
+
+      utils.array.forEach(manifest.commands, function (command) {
+        if (plugin.commands[command.identifier]) {
+          command.shortcut = plugin.commands[command.identifier];
+        } else if (command.shortcut) {
+          delete command.shortcut;
+        }
+      });
+
+      utils.fs.writeFile(confPath, utils.JSON.stringify(manifest));
+    } else {
+      failures.push(plugin.name);
+    }
+  });
+
+  return failures;
+}
