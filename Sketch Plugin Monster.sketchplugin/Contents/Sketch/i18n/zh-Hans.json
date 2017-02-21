@@ -2,6 +2,7 @@
   "commands": {
     "manageShortcuts": "插件快捷键管理",
     "exportShortcuts": "导出快捷键配置...",
+    "importShortcuts": "导入快捷键配置...",
     "checkForUpdates": "检查更新...",
     "linkFeedback": "意见反馈"
   },

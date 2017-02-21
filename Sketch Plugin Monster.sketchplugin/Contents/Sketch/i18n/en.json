@@ -2,6 +2,7 @@
   "commands": {
     "manageShortcuts": "Plugin Shortcuts Management",
     "exportShortcuts": "Export Shortcut Configurations...",
+    "importShortcuts": "Import Shortcut Configurations...",
     "checkForUpdates": "Check For Updates...",
     "linkFeedback": "Feedback"
   },
