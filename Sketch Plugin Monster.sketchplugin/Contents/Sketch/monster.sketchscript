@@ -134,8 +134,8 @@ function importShortcuts(context) {
     try {
       importConf = utils.JSON.parse(utils.fs.readFile(path));
     } catch (e) {
-      context.document.showMessage('Read configuration file error!');
-      throw new Error('Read configuration file error!');
+      context.document.showMessage(i18n.exportAndImport.importReadError);
+      throw new Error(i18n.exportAndImport.importReadError);
     }
 
     if (importConf[0] && importConf[0].name && importConf[0].commands) {
@@ -143,18 +143,17 @@ function importShortcuts(context) {
       if (importResult.length) {
         promptWindow = COSAlertWindow.new();
         promptWindow.setMessageText('Sketch Plugin Monster');
-        promptWindow.setInformativeText('The following plugin\'s shortcuts import failure, ' +
-                                         'because cannot found them in this computer:\n' +
+        promptWindow.setInformativeText(i18n.exportAndImport.importPartOfShortcuts +
                                          importResult.map(function (item, index) {
                                            return ['  ', index + 1, '.', ' ', item].join('');
                                          }).join('\n'));
-        promptWindow.addButtonWithTitle(i18n.checkForUpdates.btnDone);
+        promptWindow.addButtonWithTitle(i18n.exportAndImport.btnKnow);
         promptWindow.runModal();
       } else {
-        context.document.showMessage('Import shortcut configurations successfully!');
+        context.document.showMessage(i18n.exportAndImport.importSuccess);
       }
     } else {
-      context.document.showMessage('Read configuration file error!');
+      context.document.showMessage(i18n.exportAndImport.importReadError);
     }
   });
 }

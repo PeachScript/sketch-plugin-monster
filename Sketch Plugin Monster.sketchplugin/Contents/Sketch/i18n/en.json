@@ -24,7 +24,11 @@
   },
   "exportAndImport": {
     "exportTitle": "Export Shortcut Configurations",
-    "exportSuccess": "Export configurations successfully!"
+    "exportSuccess": "Export configurations successfully!",
+    "importReadError": "Read configuration file error!",
+    "importPartOfShortcuts": "The following plugin's shortcuts import failure, because cannot found them in this computer:\n\n",
+    "importSuccess": "Import shortcut configurations successfully!",
+    "btnKnow": "I know"
   },
   "sketchShortcuts": {
     "cmd o": "Open",

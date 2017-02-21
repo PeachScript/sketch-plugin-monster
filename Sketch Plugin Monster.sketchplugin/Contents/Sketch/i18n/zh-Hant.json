@@ -24,7 +24,11 @@
   },
   "exportAndImport": {
     "exportTitle": "導出快捷鍵配置",
-    "exportSuccess": "導出快捷鍵配置成功！"
+    "exportSuccess": "導出快捷鍵配置成功！",
+    "importReadError": "讀取配置文件出錯！",
+    "importPartOfShortcuts": "由於在此計算機中找不到相應插件，這些插件的快捷鍵導入失敗：\n\n",
+    "importSuccess": "導入快捷鍵配置成功！",
+    "btnKnow": "明白了"
   },
   "sketchShortcuts": {
     "cmd o": "開啟",
