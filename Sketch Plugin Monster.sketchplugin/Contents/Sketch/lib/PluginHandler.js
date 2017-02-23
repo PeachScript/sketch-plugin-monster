@@ -74,10 +74,17 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
     commandList.push({
       name: String(item),
       identifier: manifest.identifier,
-      commands: utils.array.filter(manifest.commands, function (item) {
+      commands: manifest.commands.reduce(function (result, item) {
         // Only display the commands which belong to the menu items
-        return menuStr.indexOf(item.identifier) > -1;
-      })
+        if (menuStr.indexOf(item.identifier) > -1) {
+          item.name = _self.getCommandPathFromMenu(manifest.menu.items, item.identifier)
+                           .concat(item.name)
+                           .join(' -› ');
+          result.push(item);
+        }
+
+        return result;
+      }, [])
     });
   });
 
@@ -149,4 +156,31 @@ PluginHandler.prototype.restoreShortcutsFromConfig = function (importConf) {
   });
 
   return failures;
+}
+
+/**
+ * get selection path of command in menu items
+ * @param  {Array}  menus     menu configurations in manifest.json
+ * @param  {String} command   command identifier
+ * @return {Array|undefined}  the select path of command
+ */
+PluginHandler.prototype.getCommandPathFromMenu = function (menus, command) {
+  var i;
+  var nextResult;
+  var result;
+
+  for (var i = 0; i < menus.length; i++) {
+    if (typeof(menus[i]) == 'string' && command == menus[i]) {
+      result = [];
+      break;
+    } else if (menus[i].items && menus[i].items.length) {
+      nextResult = this.getCommandPathFromMenu(menus[i].items, command);
+      if (nextResult) {
+        result = [menus[i].title].concat(nextResult);
+        break;
+      }
+    }
+  }
+
+  return result;
 }
