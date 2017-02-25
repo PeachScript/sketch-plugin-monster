@@ -490,7 +490,9 @@
           return ['<li onclick="filterPluginList(\'', item ,'\')">', item, '<span>x', arr[item], '</span></li>'].join('');
         }).join('');
       } else {
+        conflictDetails.innerHTML = '';
         container.innerHTML = '';
+        filterPluginList();
       }
 
     }
