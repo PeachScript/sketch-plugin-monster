@@ -11,6 +11,13 @@
     header {
       text-align: center;
     }
+    .clearfix::before, .clearfix::after {
+      content: '';
+      display: table;
+    }
+    .clearfix::before {
+      clear: both;
+    }
     .page-title {
       margin: 10px 0;
       font-weight: normal;
@@ -45,6 +52,9 @@
       padding: 0;
       width: 200px;
     }
+    .conflict-details:empty {
+      display: none;
+    }
     .conflict-details li {
       padding: 8px 15px;
       color: #333;
@@ -54,6 +64,10 @@
       text-align: left;
       border: 1px solid #ccc;
       border-top: 0;
+      cursor: pointer;
+    }
+    .conflict-details li:hover {
+      color: #EF4444;
     }
     .conflict-details li:last-child {
       border-bottom-left-radius: 5px;
@@ -64,6 +78,32 @@
       font-size: 14px;
       font-style: italic;
       color: #888;
+    }
+    #panel-wrapper .btn-filter-reset {
+      margin: -5px 0 5px;
+      float: right;
+      padding: 0 24px;
+      color: #4990E2;
+      font-size: 16px;
+      line-height: 30px;
+      text-decoration: none;
+    }
+    #panel-wrapper .btn-filter-reset:hover {
+      color: #3F7FC8;
+    }
+    #panel-wrapper .btn-filter-reset,
+    #panel-wrapper.filtered .plugin-shortcuts-panel,
+    #panel-wrapper.filtered .plugin-shortcuts-panel tr {
+      display: none;
+    }
+    #panel-wrapper.filtered .btn-filter-reset {
+      display: inline;
+    }
+    #panel-wrapper.filtered .plugin-shortcuts-panel.filter-target {
+      display: block;
+    }
+    #panel-wrapper.filtered .plugin-shortcuts-panel tr.filter-target {
+      display: table-row;
     }
     .plugin-shortcuts-panel {
       margin-bottom: -1px;
@@ -193,6 +233,8 @@
     <ul class="conflict-details"></ul>
   </header>
   <script type="text/template" id="shortcuts-template">
+    <a href="javascript: filterPluginList();" class="btn-filter-reset">Clear filter</a>
+    <div class="clearfix"></div>
     <%for (var i = 0; i < plugins.length; i++) {%>
     <div class="plugin-shortcuts-panel collapse">
       <h2><%=plugins[i].name %></h2>
@@ -240,6 +282,7 @@
       var commands = {};
       var inputs;
 
+      wrapper.id = 'panel-wrapper';
       wrapper.innerHTML = listRender({ plugins: shortcutsHandler.getCommandList(), i18n: i18n });
 
       // check and display conflicting shortcut key
@@ -444,12 +487,36 @@
 
           return r;
         }, {}), function (item, i, arr) {
-          return ['<li>', item, '<span>x', arr[item], '</span></li>'].join('');
+          return ['<li onclick="filterPluginList(\'', item ,'\')">', item, '<span>x', arr[item], '</span></li>'].join('');
         }).join('');
       } else {
         container.innerHTML = '';
       }
 
+    }
+
+    /**
+     * filter plugin list and command list
+     * @param  {String|undefined} shortcut shorcut name; exit filter status
+     */
+    function filterPluginList(shortcut) {
+      // clear current filter targets
+      Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel .filter-target'), function (item) {
+        item.classList.remove('filter-target');
+      });
+      if (shortcut) {
+        // find filter targets
+        Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel input'), function (input) {
+          var row = input.parentNode.parentNode;
+          if (input.value === shortcut) {
+            row.classList.add('filter-target');
+            row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
+          }
+        });
+        document.getElementById('panel-wrapper').classList.add('filtered');
+      } else {
+        document.getElementById('panel-wrapper').classList.remove('filtered');
+      }
     }
 
     /**
