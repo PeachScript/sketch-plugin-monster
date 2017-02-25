@@ -25,7 +25,7 @@
     }
     .conflict-warning {
       display: inline-block;
-      margin: 0 20px 20px;
+      margin: 0 20px 0;
       padding: 6px 20px;
       color: #EF4444;
       font-size: 14px;
@@ -37,6 +37,33 @@
     }
     .conflict-warning:empty {
       display: none;
+    }
+    .conflict-details {
+      list-style: none;
+      display: block;
+      margin: 0 auto 20px;
+      padding: 0;
+      width: 200px;
+    }
+    .conflict-details li {
+      padding: 8px 15px;
+      color: #333;
+      font-size: 14px;
+      line-height: 14px;
+      letter-spacing: 2px;
+      text-align: left;
+      border: 1px solid #ccc;
+      border-top: 0;
+    }
+    .conflict-details li:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    .conflict-details li span {
+      float: right;
+      font-size: 14px;
+      font-style: italic;
+      color: #888;
     }
     .plugin-shortcuts-panel {
       margin-bottom: -1px;
@@ -163,6 +190,7 @@
     <h1 class="page-title"></h1>
     <p class="usage-desc"></p>
     <span class="conflict-warning"></span>
+    <ul class="conflict-details"></ul>
   </header>
   <script type="text/template" id="shortcuts-template">
     <%for (var i = 0; i < plugins.length; i++) {%>
@@ -398,11 +426,26 @@
      * render conflict message in header
      */
     function renderConflictMsg() {
-      var conflictCount = document.querySelectorAll('.plugin-shortcuts-panel .shortcut-conflict').length;
+      var conflictCommands = document.querySelectorAll('.plugin-shortcuts-panel .shortcut-conflict input');
+      var conflictCount = conflictCommands.length;
       var container = document.querySelector('.conflict-warning');
+      var conflictDetails = document.querySelector('.conflict-details');
 
       if (conflictCount) {
         container.innerHTML = i18n.conflictWarning.replace('${ conflictCount }', conflictCount);
+        conflictDetails.innerHTML = Array.prototype.map.call(Array.prototype.reduce.call(conflictCommands, function (r, input, index) {
+          if (r[input.value]) {
+            r[input.value] ++;
+          } else {
+            r[input.value] = 1;
+            r[index] = input.value;
+            r.length ? r.length ++ : (r.length = 1);
+          }
+
+          return r;
+        }, {}), function (item, i, arr) {
+          return ['<li>', item, '<span>x', arr[item], '</span></li>'].join('');
+        }).join('');
       } else {
         container.innerHTML = '';
       }
