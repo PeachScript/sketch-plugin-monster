@@ -519,7 +519,7 @@
      */
     function filterPluginList(shortcut) {
       // clear current filter targets
-      Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel .filter-target'), function (item) {
+      Array.prototype.forEach.call(document.querySelectorAll('#panel-wrapper .filter-target'), function (item) {
         item.classList.remove('filter-target');
       });
       if (shortcut) {
