@@ -1,0 +1,231 @@
+body {
+  margin: 0;
+  font-family: "Arial", "PingFang SC", "sans-serif";
+}
+header {
+  text-align: center;
+}
+.clearfix::before, .clearfix::after {
+  content: '';
+  display: table;
+}
+.clearfix::before {
+  clear: both;
+}
+.page-title {
+  margin: 10px 0;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 40px;
+  color: #333;
+}
+.usage-desc {
+  margin: 0 0 15px;
+  font-size: 14px;
+  color: #999;
+}
+.conflict-warning {
+  display: inline-block;
+  margin: 0 20px 0;
+  padding: 6px 20px;
+  color: #EF4444;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #fff;
+  border: 1px solid #EF4444;
+  box-sizing: border-box;
+  border-radius: 64px;
+}
+.conflict-warning:empty {
+  display: none;
+}
+.conflict-details {
+  list-style: none;
+  display: block;
+  margin: 0 auto 20px;
+  padding: 0;
+  width: 200px;
+}
+.conflict-details:empty {
+  display: none;
+}
+.conflict-details li {
+  padding: 8px 15px;
+  color: #333;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: 2px;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-top: 0;
+  cursor: pointer;
+}
+.conflict-details li:hover {
+  color: #4990E2;
+}
+.conflict-details li:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.conflict-details li span {
+  float: right;
+  font-size: 14px;
+  font-style: italic;
+  color: #888;
+}
+#panel-wrapper .filtering-tips {
+  margin: -5px 0 5px;
+  padding: 0 10px;
+  line-height: 24px;
+  font-size: 14px;
+  color: #999;
+}
+#panel-wrapper .filtering-tips kbd {
+  padding: 2px 5px;
+  text-indent: -2px;
+  letter-spacing: 2px;
+  color: #4990E2;
+  border: 1px solid #4990E2;
+  border-radius: 3px;
+}
+#panel-wrapper .btn-filter-reset {
+  float: right;
+  color: #4990E2;
+  text-decoration: none;
+}
+#panel-wrapper .btn-filter-reset:hover {
+  color: #3F7FC8;
+}
+#panel-wrapper .filtering-tips,
+#panel-wrapper.filtered .plugin-shortcuts-panel,
+#panel-wrapper.filtered .plugin-shortcuts-panel tr {
+  display: none;
+}
+#panel-wrapper.filtered .filtering-tips,
+#panel-wrapper.filtered .plugin-shortcuts-panel.filter-target {
+  display: block;
+}
+#panel-wrapper.filtered .plugin-shortcuts-panel tr.filter-target {
+  display: table-row;
+}
+.plugin-shortcuts-panel {
+  margin-bottom: -1px;
+  border-top: 1px solid #ccc;
+  overflow: hidden;
+  transition: max-height .5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.plugin-shortcuts-panel.collapse {
+  max-height: 61px!important;
+}
+.plugin-shortcuts-panel.collapse h2::before {
+  transform: rotate(180deg);
+}
+.plugin-shortcuts-panel.shortcut-conflict h2 {
+  color: #EF4444;
+}
+.plugin-shortcuts-panel.shortcut-conflict h2::after {
+  content: '';
+  margin-left: 5px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url('assets/img/icon_warning.png') no-repeat center center;
+  background-size: 100%;
+}
+.plugin-shortcuts-panel h2 {
+  position: relative;
+  margin: 0;
+  padding: 0 24px;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 60px;
+  color: #4990E2;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  -webkit-user-select: none;
+}
+.plugin-shortcuts-panel h2::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  margin-top: -6px;
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: url('assets/img/icon_arrow.png') no-repeat center center;
+  background-size: 100%;
+  transition: transform .5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.plugin-shortcuts-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.plugin-shortcuts-panel table tr {
+  background-color: #fbfbfb;
+}
+.plugin-shortcuts-panel table tr.shortcut-conflict {
+  background-image: linear-gradient(to right, rgba(239,68,68,.12), rgba(239,68,68,0));
+  background-attachment: fixed;
+}
+.plugin-shortcuts-panel table tr.shortcut-conflict td:first-child {
+  box-shadow: 4px 0 0 #EF4444 inset;
+}
+.plugin-shortcuts-panel table td {
+  height: 48px;
+  line-height: 48px;
+  color: #666;
+  border-bottom: 1px solid #ddd;
+}
+.plugin-shortcuts-panel table td:first-child {
+  padding-left: 40px;
+}
+.plugin-shortcuts-panel table td:last-child {
+  width: 150px;
+}
+.plugin-shortcuts-panel table input {
+  width: 92px;
+  height: 28px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #666;
+  text-indent: -1px;
+  letter-spacing: 1px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: 0 0 0 10px rgba(0,153,255,0);
+  outline: none;
+}
+.plugin-shortcuts-panel table input:focus {
+  cursor: initial;
+  transition: border-color .2s, box-shadow .4s;
+  border-color: #4990E2;
+  box-shadow: 0 0 0 3px rgba(0,153,255,.3);
+}
+.plugin-shortcuts-panel table input:invalid + .btn-clear {
+  display: none;
+}
+.plugin-shortcuts-panel table input:valid {
+  font-family: monospace;
+}
+.plugin-shortcuts-panel table .btn-clear {
+  margin: 0 10px;
+  width: 24px;
+  height: 24px;
+  background: url('assets/img/icon_clear.png') no-repeat;
+  background-size: 18px;
+  background-position: center center;
+  border: 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.plugin-shortcuts-panel table .btn-clear:hover {
+  opacity: .8;
+}
+.plugin-shortcuts-panel table .btn-clear:active {
+  opacity: .6;
+}
