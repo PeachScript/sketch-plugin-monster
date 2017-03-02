@@ -37,9 +37,7 @@ function Panel(options, data, callback) {
     'webView:didFinishLoadForFrame:': function () {
       // export a function to receive data from webview
       _self.execute((function $dispatch(type, dispatchData) {
-        if (dispatchData) {
-          window.$dispatchData = encodeURI(JSON.stringify(dispatchData));
-        }
+        window.$dispatchData = dispatchData ? encodeURI(JSON.stringify(dispatchData)) : null;
         window.location.hash = type;
       }).toString());
 
