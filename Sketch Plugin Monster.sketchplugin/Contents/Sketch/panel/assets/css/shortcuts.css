@@ -3,7 +3,7 @@
  */
 body {
   margin: 0;
-  padding-bottom: 57px;
+  padding-bottom: 56px;
   font-family: "Arial", "PingFang SC", "sans-serif";
 }
 .clearfix::before, .clearfix::after {
@@ -131,8 +131,9 @@ footer .conflict-warning::after {
   border-radius: 14px;
   box-sizing: border-box;
 }
-footer .button-settings {
+footer .btn-settings {
   align-self: center;
+  margin-left: 50px;
   width: 20px;
   height: 20px;
   background: url('../img/icon_settings.png') no-repeat;
@@ -140,10 +141,10 @@ footer .button-settings {
   border: none;
   cursor: pointer;
 }
-footer .button-settings:hover {
+footer .btn-settings:hover {
   opacity: .8;
 }
-footer .button-settings:active {
+footer .btn-settings:active {
   opacity: .9;
 }
 
@@ -151,8 +152,13 @@ footer .button-settings:active {
  * Overlay menu
  */
 .fixed-overlay-menu {
+  list-style: none;
   position: fixed;
   z-index: 11;
+  margin: 0;
+  display: inline-block;
+  max-height: 200px;
+  padding: 0;
   bottom: 50px;
   background-color: #fff;
   border: 5px;
@@ -163,45 +169,45 @@ footer .button-settings:active {
   visibility: hidden;
   transform: scale(0);
 }
+.fixed-overlay-menu li {
+  padding: 2px 12px;
+  color: #999;
+  font-size: 14px;
+  line-height: 32px;
+  cursor: pointer;
+}
+.fixed-overlay-menu li:hover {
+  background-color: #fafafa;
+}
 .fixed-overlay-menu.show {
   visibility: visible;
   transform: scale(1);
 }
 .fixed-overlay-menu.left-menu {
+  left: 16px;
   transform-origin: left bottom;
 }
 .fixed-overlay-menu.right-menu {
-  transform-origin: left bottom;
+  right: 16px;
+  transform-origin: right bottom;
 }
 
 /**
  * Conflict details menu
  */
 .conflict-details {
-  list-style: none;
-  left: 16px;
-  margin: 0;
   width: 150px;
-  max-height: 200px;
-  padding: 0;
 }
 .conflict-details li {
   padding: 0 5px;
   color: #333;
-  font-size: 14px;
-  line-height: 32px;
-  text-align: left;
   border-bottom: 1px solid #ddd;
   border-top: 0;
-  cursor: pointer;
   background: url('../img/icon_search.png') no-repeat 93% center;
   background-size: 12px;
 }
 .conflict-details li:last-child {
   border-bottom: 0;
-}
-.conflict-details li:hover {
-  background-color: #fafafa;
 }
 .conflict-details li span {
   float: right;

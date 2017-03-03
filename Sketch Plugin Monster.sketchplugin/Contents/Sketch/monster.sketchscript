@@ -15,7 +15,8 @@ function manageShortcuts(context) {
     i18n: i18n.webview,
     shortcuts: pluginHandler.getCommandsOfAllPlugins(),
     keyCodes: keyCodePresets,
-    sketchShortcuts: i18n.sketchShortcuts
+    sketchShortcuts: i18n.sketchShortcuts,
+    i18nCommands: i18n.commands
   }, function (type, data) {
     switch (type) {
       case '$pluginShortcut:set':
@@ -28,6 +29,12 @@ function manageShortcuts(context) {
         pluginHandler.setShortcutForPlugin(data.plugin, {
           identifier: data.identifier
         });
+        break;
+      case '$pluginMonster:checkForUpdates':
+        checkForUpdates(context);
+        break;
+      case '$pluginMonster:linkFeedback':
+        linkFeedback();
         break;
       default:
     }

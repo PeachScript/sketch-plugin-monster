@@ -267,8 +267,27 @@ function initOverlayMenus() {
   });
 
   document.addEventListener('click', function (ev) {
-    document.querySelector('.fixed-overlay-menu').classList.remove('show');
+    var target = document.querySelector('.fixed-overlay-menu.show');
+    target && target.classList.remove('show');
   });
+}
+
+/**
+ * initialize settings menu
+ * @param  {Object} commands commands from i18n
+ */
+function initSettingsMenu(commands) {
+  var presets = ['checkForUpdates', 'linkFeedback'];
+  var settingsMenu = document.querySelector('.fixed-overlay-menu[data-toggle=".btn-settings"]');
+  var result = '';
+
+  Object.keys(commands).forEach(function (i) {
+    if (presets.indexOf(i) > -1) {
+      result += ['<li onclick="$dispatch(\'$pluginMonster:', i, '\')">', commands[i], '</li>'].join('');
+    }
+  });
+
+  settingsMenu.innerHTML = result;
 }
 
 /**
@@ -281,4 +300,5 @@ function $initialize(source) {
   renderList(source);
   setI18n(source.i18n);
   initOverlayMenus();
+  initSettingsMenu(source.i18nCommands);
 }
