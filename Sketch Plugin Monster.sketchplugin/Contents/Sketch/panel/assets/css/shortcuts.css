@@ -157,7 +157,7 @@ footer .btn-settings:active {
   z-index: 11;
   margin: 0;
   display: inline-block;
-  max-height: 200px;
+  max-height: 250px;
   padding: 0;
   bottom: 50px;
   background-color: #fff;
@@ -170,6 +170,7 @@ footer .btn-settings:active {
   transform: scale(0);
 }
 .fixed-overlay-menu li {
+  position: relative;
   padding: 2px 12px;
   color: #999;
   font-size: 14px;
