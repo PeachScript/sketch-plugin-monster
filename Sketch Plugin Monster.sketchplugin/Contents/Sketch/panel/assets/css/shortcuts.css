@@ -173,11 +173,15 @@ footer .btn-settings:active {
   padding: 2px 12px;
   color: #999;
   font-size: 14px;
-  line-height: 32px;
+  line-height: 28px;
   cursor: pointer;
 }
 .fixed-overlay-menu li:hover {
   background-color: #fafafa;
+}
+.fixed-overlay-menu li.disabled {
+  color: #ccc;
+  pointer-events: none;
 }
 .fixed-overlay-menu.show {
   visibility: visible;
@@ -200,6 +204,7 @@ footer .btn-settings:active {
 }
 .conflict-details li {
   padding: 0 5px;
+  line-height: 32px;
   color: #333;
   border-bottom: 1px solid #ddd;
   border-top: 0;

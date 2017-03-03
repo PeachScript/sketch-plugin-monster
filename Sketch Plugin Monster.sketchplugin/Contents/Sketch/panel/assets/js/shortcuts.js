@@ -261,6 +261,8 @@ function initOverlayMenus() {
 
   Array.prototype.forEach.call(menus, function (menu) {
     document.querySelector(menu.getAttribute('data-toggle')).addEventListener('click', function (ev) {
+      var target = document.querySelector('.fixed-overlay-menu.show');
+      target && target !== menu && target.classList.remove('show');
       menu.classList.toggle('show');
       ev.stopPropagation();
     });
@@ -286,6 +288,8 @@ function initSettingsMenu(commands) {
       result += ['<li onclick="$dispatch(\'$pluginMonster:', i, '\')">', commands[i], '</li>'].join('');
     }
   });
+
+  result += '<li class="disabled">v0.2.0</li>'
 
   settingsMenu.innerHTML = result;
 }
