@@ -9,9 +9,9 @@ A Sketch plugin for managing all plugin shortcuts.
   - [x] Detect and highlight conflicting shortcuts
   - [x] Set or clear shortcut for any command of Sketch plugins
   - [x] Not allowed to set shortcuts that conflict with Sketch or other plugins
-  - [ ] Display conflict details
-  - [ ] Filter commands which use specific shortcut keys
-  - [ ] Import and export shortcut configurations
+  - [x] Display conflict details
+  - [x] Filter commands which use specific shortcut keys
+  - [x] Import and export shortcut configurations
 - [x] Multi-language support
 - [x] Check for updates automatically
 - [ ] Manage plugin versions
