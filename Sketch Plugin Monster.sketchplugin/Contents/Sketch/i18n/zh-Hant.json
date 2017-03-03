@@ -15,8 +15,7 @@
     "clear": "清除快捷鍵成功！",
     "conflictWarning": "警告: 有 ${ conflictCount } 項操作的快捷鍵出現衝突！",
     "none": "無",
-    "clearFilter": "顯示全部",
-    "filtering": "只顯示使用 <kbd>${ shortcut }</kbd> 快捷鍵的命令："
+    "clearFilter": "顯示全部"
   },
   "checkForUpdates": {
     "available": "檢測到新版本！當前版本是 ${ currentVersion }，最新版本是 ${ latestVersion }，下載最新版嗎？",

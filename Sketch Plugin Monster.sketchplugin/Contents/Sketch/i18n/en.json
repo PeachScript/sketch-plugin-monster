@@ -15,8 +15,7 @@
     "clear": "Clear shortcut successfully!",
     "conflictWarning": "Warning: There are ${ conflictCount } operations shortcut keys in conflict!",
     "none": "none",
-    "clearFilter": "Display All",
-    "filtering": "Show only operations that use <kbd>${ shortcut }</kbd> shortcut keys:"
+    "clearFilter": "Display All"
   },
   "checkForUpdates": {
     "available": "New version detected! The latest version is ${ latestVersion } and you have version ${ currentVersion }, download it now?",
