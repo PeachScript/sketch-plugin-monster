@@ -207,6 +207,7 @@ function renderConflictMsg() {
 
   if (conflictCount) {
     container.innerHTML = i18n.conflictWarning.replace('${ conflictCount }', conflictCount);
+    container.setAttribute('data-count', conflictCount > 99 ? '99+' : conflictCount);
     conflictDetails.innerHTML = Array.prototype.map.call(Array.prototype.reduce.call(conflictCommands, function (r, input, index) {
       if (r[input.value]) {
         r[input.value] ++;
@@ -254,6 +255,24 @@ function filterPluginList(shortcut) {
 }
 
 /**
+ * initialize overlay menus
+ */
+function initOverlayMenus() {
+  var menus = document.querySelectorAll('.fixed-overlay-menu');
+
+  Array.prototype.forEach.call(menus, function (menu) {
+    document.querySelector(menu.getAttribute('data-toggle')).addEventListener('click', function (ev) {
+      menu.classList.toggle('show');
+      ev.stopPropagation();
+    });
+  });
+
+  document.addEventListener('click', function (ev) {
+    document.querySelector('.fixed-overlay-menu').classList.remove('show');
+  });
+}
+
+/**
  * $initialize by CocoaScript
  * @param  {Object} source source data from CocoaScript
  */
@@ -262,4 +281,5 @@ function $initialize(source) {
   i18n = source.i18n;
   renderList(source);
   setI18n(source.i18n);
+  initOverlayMenus();
 }

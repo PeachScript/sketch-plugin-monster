@@ -1,9 +1,10 @@
+/**
+ * Common styles
+ */
 body {
   margin: 0;
+  padding-bottom: 57px;
   font-family: "Arial", "PingFang SC", "sans-serif";
-}
-header {
-  text-align: center;
 }
 .clearfix::before, .clearfix::after {
   content: '';
@@ -11,6 +12,19 @@ header {
 }
 .clearfix::before {
   clear: both;
+}
+kbd {
+  padding: 2px 5px;
+  text-indent: -2px;
+  letter-spacing: 2px;
+  color: #EF4444;
+}
+
+/**
+ * Header
+ */
+header {
+  text-align: center;
 }
 .page-title {
   margin: 10px 0;
@@ -24,69 +38,163 @@ header {
   font-size: 14px;
   color: #999;
 }
-.conflict-warning {
-  display: inline-block;
-  margin: 0 20px 0;
-  padding: 6px 20px;
-  color: #EF4444;
-  font-size: 14px;
-  line-height: 20px;
-  background-color: #fff;
-  border: 1px solid #EF4444;
-  box-sizing: border-box;
-  border-radius: 64px;
-}
 .conflict-warning:empty {
   display: none;
 }
-.conflict-details {
-  list-style: none;
-  display: block;
-  margin: 0 auto 20px;
-  padding: 0;
-  width: 200px;
+
+/**
+ * Footer bar
+ */
+footer {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  height: 56px;
+  padding: 0 16px;
+  background-color: #fff;
+  box-shadow: 0 -8px 24px rgba(0,0,0,.24);
 }
-.conflict-details:empty {
-  display: none;
-}
-.conflict-details li {
-  padding: 8px 15px;
-  color: #333;
+footer .status-bar {
+  flex: 1;
+  align-self: center;
+  height: 24px;
   font-size: 14px;
-  line-height: 14px;
-  letter-spacing: 2px;
-  text-align: left;
-  border: 1px solid #ccc;
-  border-top: 0;
+  color: #EF4444;
+  line-height: 24px;
+}
+footer .status-bar p {
+  margin: 0;
+}
+footer .conflict-warning {
+  position: relative;
   cursor: pointer;
 }
-.conflict-details li:hover {
-  color: #4990E2;
+footer .conflict-warning:hover {
+  opacity: .9;
+}
+footer .conflict-warning:empty {
+  visibility: hidden;
+  pointer-events: none;
+  cursor: initial;
+}
+footer .conflict-warning::before {
+  content: '';
+  display: inline-block;
+  margin-right: 16px;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  background: url('../img/icon_warning_gray.png') no-repeat;
+  background-size: 100%;
+}
+footer .conflict-warning::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -2px;
+  left: 12px;
+  display: inline-block;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  line-height: 14px;
+  font-size: 10px;
+  text-align: center;
+  color: #fff;
+  background-color: #EF4444;
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+footer .button-settings {
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  background: url('../img/icon_settings.png') no-repeat;
+  background-size: 100%;
+  border: none;
+  cursor: pointer;
+}
+footer .button-settings:hover {
+  opacity: .8;
+}
+footer .button-settings:active {
+  opacity: .9;
+}
+
+/**
+ * Overlay menu
+ */
+.fixed-overlay-menu {
+  position: fixed;
+  z-index: 11;
+  bottom: 50px;
+  background-color: #fff;
+  border: 5px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.24);
+  border-radius: 5px;
+  overflow: auto;
+  transition: visibility .2s, transform .2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  visibility: hidden;
+  transform: scale(0);
+}
+.fixed-overlay-menu.show {
+  visibility: visible;
+  transform: scale(1);
+}
+.fixed-overlay-menu.left-menu {
+  transform-origin: left bottom;
+}
+.fixed-overlay-menu.right-menu {
+  transform-origin: left bottom;
+}
+
+/**
+ * Conflict details menu
+ */
+.conflict-details {
+  list-style: none;
+  left: 16px;
+  margin: 0;
+  width: 150px;
+  max-height: 200px;
+  padding: 0;
+}
+.conflict-details li {
+  padding: 0 5px;
+  color: #333;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-top: 0;
+  cursor: pointer;
+  background: url('../img/icon_search.png') no-repeat 93% center;
+  background-size: 12px;
 }
 .conflict-details li:last-child {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom: 0;
+}
+.conflict-details li:hover {
+  background-color: #fafafa;
 }
 .conflict-details li span {
   float: right;
+  margin-right: 24%;
   font-size: 14px;
-  font-style: italic;
   color: #888;
 }
+
+/**
+ * Plugin list container
+ */
 #panel-wrapper .filtering-tips {
   margin: -5px 0 5px;
   padding: 0 10px;
   line-height: 24px;
   font-size: 14px;
   color: #999;
-}
-#panel-wrapper .filtering-tips kbd {
-  padding: 2px 5px;
-  text-indent: -2px;
-  letter-spacing: 2px;
-  color: #4990E2;
-  border: 1px solid #4990E2;
-  border-radius: 3px;
 }
 #panel-wrapper .btn-filter-reset {
   float: right;
@@ -108,6 +216,10 @@ header {
 #panel-wrapper.filtered .plugin-shortcuts-panel tr.filter-target {
   display: table-row;
 }
+
+/**
+ * Plugin group
+ */
 .plugin-shortcuts-panel {
   margin-bottom: -1px;
   border-top: 1px solid #ccc;
