@@ -13,15 +13,16 @@
     //   z-index: 100;
     //   left: 0;
     //   right: 0;
-    //   bottom: 20px;
+    //   bottom: 76px;
     //   text-align: center;
     //   transform: scale(0) translateY(100px);
     //   opacity: 0;
-    //   transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    //   transition: none;
     // }
     // .notification-wrapper.show {
     //   opacity: 1;
     //   transform: scale(1) translateY(0);
+    //   transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     // }
     // .notification-content {
     //   max-width: 70%;

@@ -239,7 +239,6 @@ function filterPluginList(shortcut) {
     item.classList.remove('filter-target');
   });
   if (shortcut) {
-    document.querySelector('.filtering-tips span').innerHTML = i18n.filtering.replace('${ shortcut }', shortcut);
     // find filter targets
     Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel input'), function (input) {
       var row = input.parentNode.parentNode;
@@ -248,9 +247,9 @@ function filterPluginList(shortcut) {
         row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
       }
     });
-    document.getElementById('panel-wrapper').classList.add('filtered');
+    document.body.classList.add('filtered');
   } else {
-    document.getElementById('panel-wrapper').classList.remove('filtered');
+    document.body.classList.remove('filtered');
   }
 }
 

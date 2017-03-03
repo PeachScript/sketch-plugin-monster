@@ -14,16 +14,13 @@
   <footer>
     <div class="status-bar">
       <div class="status-bar-inner">
+        <p><button class="btn-filter-reset" onclick="filterPluginList()"></button></p>
         <p class="conflict-warning" data-count="10+"></p>
       </div>
     </div>
     <!-- <button class="button-settings"></button> -->
   </footer>
   <script type="text/template" id="shortcuts-template">
-    <p class="filtering-tips">
-      <span></span>
-      <a href="javascript:filterPluginList();" class="btn-filter-reset"></a>
-    </p>
     <div class="clearfix"></div>
     <%for (var i = 0; i < plugins.length; i++) {%>
     <div class="plugin-shortcuts-panel collapse">
