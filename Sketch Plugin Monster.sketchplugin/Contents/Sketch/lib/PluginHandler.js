@@ -69,14 +69,16 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
 
   utils.array.forEach(pluginList, function (item) {
     var manifest = _self.getManifestOfPlugin(item);
-    var menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '{}');
+    var menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
 
     commandList.push({
       name: String(item),
       identifier: manifest.identifier,
       commands: manifest.commands.reduce(function (result, item) {
-        // Only display the commands which belong to the menu items
-        if (menuStr.indexOf(item.identifier) > -1) {
+        if (menuStr === '""') {
+          result.push(item);
+        } else if (menuStr.indexOf(item.identifier) > -1) {
+          // Only display the commands which belong to the menu items
           item.name = _self.getCommandPathFromMenu(manifest.menu.items, item.identifier)
                            .concat(item.name)
                            .join(' -› ');
