@@ -3,8 +3,9 @@
  */
 body {
   margin: 0;
+  font-weight: 300;
   padding-bottom: 56px;
-  font-family: "Arial", "PingFang SC", "sans-serif";
+  font-family: "PingFang SC", "Arial", "sans-serif";
 }
 .clearfix::before, .clearfix::after {
   content: '';
@@ -28,7 +29,7 @@ header {
 }
 .page-title {
   margin: 10px 0;
-  font-weight: normal;
+  font-weight: 300;
   font-size: 24px;
   line-height: 40px;
   color: #333;
@@ -54,6 +55,8 @@ footer {
   display: flex;
   height: 56px;
   padding: 0 16px;
+  -webkit-user-select: none;
+  user-select: none;
   background-color: #fff;
   box-shadow: 0 -8px 24px rgba(0,0,0,.24);
 }
@@ -270,12 +273,13 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
   position: relative;
   margin: 0;
   padding: 0 24px;
-  font-weight: normal;
+  font-weight: 300;
   font-size: 24px;
   line-height: 60px;
   color: #4990E2;
   border-bottom: 1px solid #ccc;
   cursor: pointer;
+  user-select: none;
   -webkit-user-select: none;
 }
 .plugin-shortcuts-panel h2::before {
