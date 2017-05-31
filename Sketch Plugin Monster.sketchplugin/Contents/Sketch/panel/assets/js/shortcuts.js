@@ -22,7 +22,7 @@ function renderList(source) {
     if (input.value) {
       commands[input.value] = typeof(commands[input.value]) === 'number' ?
                               (commands[input.value] + 1) :
-                              0;
+                              1;
     }
   });
 
@@ -30,9 +30,10 @@ function renderList(source) {
     var commandWrapper = input.parentNode.parentNode;
     var pluginWrapper = commandWrapper.parentNode.parentNode.parentNode;
 
-    if (commands[input.value]) {
+    if (commands[input.value] > 1) {
        commandWrapper.classList.add('shortcut-conflict');
        pluginWrapper.classList.add('shortcut-conflict');
+       pluginWrapper.querySelector('h2').setAttribute('data-count', commands[input.value]);
        pluginWrapper.classList.remove('collapse');
     }
   });
@@ -185,7 +186,10 @@ function reviewConflict (targetInput, newShortcut) {
     }
 
     Array.prototype.forEach.call(plugins, function (plugin) {
-      if (!plugin.querySelectorAll('.shortcut-conflict').length) {
+      var count = plugin.querySelectorAll('.shortcut-conflict').length;
+      if (count) {
+        plugin.querySelector('h2').setAttribute('data-count', count);
+      } else {
         plugin.classList.remove('shortcut-conflict');
       }
     });

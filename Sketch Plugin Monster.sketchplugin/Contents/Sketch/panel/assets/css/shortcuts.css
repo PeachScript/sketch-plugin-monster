@@ -261,13 +261,17 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
   color: #EF4444;
 }
 .plugin-shortcuts-panel.shortcut-conflict h2::after {
-  content: '';
+  content: 'x' attr(data-count);
   margin-left: 5px;
   display: inline-block;
-  width: 16px;
   height: 16px;
-  background: url('../img/icon_warning.png') no-repeat center center;
-  background-size: 100%;
+  padding-left: 20px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #aaa;
+  line-height: 16px;
+  vertical-align: middle;
+  background: url('../img/icon_warning.png') no-repeat left center/16px;
 }
 .plugin-shortcuts-panel h2 {
   position: relative;
