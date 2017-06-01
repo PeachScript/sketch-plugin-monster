@@ -106,9 +106,6 @@ function renderList(source) {
         }
       } else if (ev.keyCode === 27) {
         ev.target.blur();
-      } else if ([16, 17, 18, 91, 93].indexOf(ev.keyCode) === -1) {
-        // except shift, control, option, command keys
-        globalNotice.error(source.i18n.notSupport, 1500);
       }
 
       ev.preventDefault();
