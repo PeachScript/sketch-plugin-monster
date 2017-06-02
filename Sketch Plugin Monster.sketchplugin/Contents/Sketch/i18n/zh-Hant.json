@@ -10,6 +10,7 @@
     "title": "插件快捷鍵設定",
     "usage": "用法：點擊想要修改的快捷鍵，然後在鍵盤上按下新的快捷鍵。",
     "conflict": "錯誤: 你設定的快捷鍵與 ${ conflictTarget } 的『${ shortcutName }』操作衝突了！",
+    "conflictMulti": "多項",
     "success": "設定快捷鍵成功！",
     "notSupport": "错误：你選擇的按鍵不支持作為快捷鍵！",
     "clear": "清除快捷鍵成功！",

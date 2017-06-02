@@ -10,6 +10,7 @@
     "title": "Plugin shortcuts settings",
     "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut.",
     "conflict": "Error: Your shortcut conflicts with \"${ shortcutName }\" of ${ conflictTarget }!",
+    "conflictMulti": "mutiple commands",
     "success": "Set shortcut successfully!",
     "notSupport": "Error: The keys you select are not supported as shortcut!",
     "clear": "Clear shortcut successfully!",

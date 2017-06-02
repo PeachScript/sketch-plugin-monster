@@ -81,10 +81,19 @@ function renderList(source) {
         if (conflictResult) {
           if (conflictResult.shortcutName !== ev.target.getAttribute('data-command')) {
             // prompt user if this shortcut conflict with Sketch or other plugin
-            globalNotice.error(source.i18n.conflict
-                                          .replace('${ shortcutName }', conflictResult.shortcutName)
-                                          .replace('${ conflictTarget }', conflictResult.name)
-                               , 2000);
+            let msg;
+
+            if (Array.isArray(conflictResult.shortcutName)) {
+              // Conflict with mutiple commands
+              msg = source.i18n.conflict.replace(/(『|")\${ shortcutName }(』|")/, source.i18n.conflictMulti);
+            } else {
+              // Conflict with one command
+              msg = source.i18n.conflict.replace('${ shortcutName }', conflictResult.shortcutName);
+            }
+
+            // Set conflict target
+            msg = msg.replace('${ conflictTarget }', conflictResult.name);
+            globalNotice.error(msg , 2000);
           } else {
             ev.target.blur();
           }
