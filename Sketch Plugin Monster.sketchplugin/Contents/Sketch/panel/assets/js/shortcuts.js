@@ -147,13 +147,13 @@ function setI18n(i18n) {
 function convertShortcut(str) {
   var keys = (str || '').split(' ');
   var mapping = {
-    'cmd': '\u2318',
-    'command': '\u2318',
     'ctrl': '\u2303',
     'control': '\u2303',
     'alt': '\u2325',
     'option': '\u2325',
     'shift': '\u21E7',
+    'cmd': '\u2318',
+    'command': '\u2318',
   };
 
   return keys.map(function (key) {

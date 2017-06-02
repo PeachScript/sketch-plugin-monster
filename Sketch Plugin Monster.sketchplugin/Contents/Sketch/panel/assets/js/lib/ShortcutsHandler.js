@@ -8,20 +8,20 @@ function ShortcutsHandler(shortcuts, sketchShortcuts) {
   var keyPriorities = {
     ctrl: 5,
     control: 5,
-    shift: 4,
-    option: 3,
-    alt: 3,
+    option: 4,
+    alt: 4,
+    shift: 3,
     cmd: 2,
     command: 2
   };
 
-  // sort shortcut keys, eg: "(ctrl) (shift) (option) (cmd) key"
+  // sort shortcut keys, eg: "(ctrl) (option) (shift) (cmd) key"
   shortcuts.forEach(function (plugin) {
     plugin.commands.forEach(function (command) {
       var handleShortcut = (command.shortcut || '').trim();
 
       if (handleShortcut &&
-          !/^(ctrl |control )?(shift )?(option |alt )?(cmd |command )?.{1}$/
+          !/^(ctrl |control )?(option |alt )?(shift )?(cmd |command )?.{1}$/
             .test(handleShortcut)) {
         command.shortcut = handleShortcut.split(' ').sort(function (prev, next) {
           var prevPriority = keyPriorities[prev] || 1;
