@@ -1,2 +1,4 @@
+/node_modules
 /dist
+/scripts/data.json
 .DS_Store

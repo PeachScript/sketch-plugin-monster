@@ -1,0 +1,29 @@
+{
+  "name": "sketch-plugin-monster",
+  "version": "0.2.0",
+  "description": "A Sketch plugin for managing all plugin shortcuts.",
+  "main": "index.js",
+  "scripts": {
+    "release": "bash ./release.sh",
+    "sync:shortcuts": "node ./scripts/sync_shortcuts.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeachScript/sketch-plugin-monster.git"
+  },
+  "keywords": [
+    "sketch-plugin",
+    "shortcuts"
+  ],
+  "author": "Peach <scdzwyxst@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PeachScript/sketch-plugin-monster/issues"
+  },
+  "homepage": "https://github.com/PeachScript/sketch-plugin-monster#readme",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.1",
+    "ora": "^1.2.0"
+  }
+}
