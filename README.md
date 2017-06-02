@@ -38,7 +38,7 @@ A Sketch plugin for managing all plugin shortcuts.
 
 ### Install with Sketchpacks
 
-[![Install sketch-plugin-monster with Sketchpacks](http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png "Install sketch-plugin-monster with Sketchpacks")](https://sketchpacks.com/PeachScript/sketch-plugin-monster/install)
+<a href="https://sketchpacks.com/PeachScript/sketch-plugin-monster/install"><img src="https://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png" alt="Install sketch-plugin-monster with Sketchpacks" width="160"></a>
 
 ## Changelog
 
