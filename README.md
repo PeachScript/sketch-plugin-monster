@@ -18,9 +18,27 @@ A Sketch plugin for managing all plugin shortcuts.
 
 ## Installation
 
+### Direct download
+
 1. Download the latest version from [release page](https://github.com/PeachScript/sketch-plugin-monster/releases) and unzip;
 
 2. Open `Sketch Plugin Monster.sketchplugin`.
+
+### Install with Runner
+
+1. Press `⌘` + `'` open Runner window;
+2. Switch to `install` tab;
+3. Type `monster`;
+4. Select `Sketch Plugin Monster` item and press `Return`.
+
+### Install with Sketch Plugin Manager
+
+1. Search `monster` in Sketch Plugin Manager;
+2. Find `Sketch Plugin Monster` in the result list and click `Install` button.
+
+### Install with Sketchpacks
+
+[![Install sketch-plugin-monster with Sketchpacks](http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png "Install sketch-plugin-monster with Sketchpacks")](https://sketchpacks.com/PeachScript/sketch-plugin-monster/install)
 
 ## Changelog
 
