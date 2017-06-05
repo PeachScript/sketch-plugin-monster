@@ -1,9 +1,22 @@
 const fs = require('fs');
 const ora = require('ora');
+const path = require('path');
 const https = require('https');
 const cheerio = require('cheerio');
-const spinner = ora('Parsing shortcuts form sketchapp.com').start();
 
+const spinner = ora('Parsing shortcuts form sketchapp.com').start();
+const basePath = '../Sketch Plugin Monster.sketchplugin/Contents/Sketch/i18n/';
+const i18nFiles = {
+  en: 'DIRECTLY',
+  'zh-hans': 'APPEND',
+  'zh-hant': 'APPEND'
+};
+
+/**
+ * parse readable shortcut keys from key string
+ * @param  {String} keyStr key string
+ * @return {String}        readable shortcut keys
+ */
 function parseShortcutKeys(keyStr) {
   let parsed = keyStr;
 
@@ -80,13 +93,27 @@ function parseShortcutKeys(keyStr) {
   return parsed.toLowerCase().trim();
 }
 
+/**
+ * parse shortcuts from html code in sketchapp.com
+ * @param  {String} html html code
+ * @return {Object}      shortcut map
+ */
 function parseShortcuts(html) {
   const $ = cheerio.load(html, {
     decodeEntities: false
   });
   const rows = $('.shortcuts-table table tr');
-  const result = {};
+  const originalI18n = {};
+  const resultI18n = {};
 
+  // Read original i18n files
+  Object.keys(i18nFiles).forEach((i18nKey) => {
+    resultI18n[i18nKey] = JSON.parse(fs.readFileSync(path.join(__dirname, basePath, `${i18nKey}.json`)));
+    originalI18n[i18nKey] = resultI18n[i18nKey].sketchShortcuts;
+    resultI18n[i18nKey].sketchShortcuts = {};
+  });
+
+  // Read shortcuts from html code
   Array.prototype.map.call(rows, (row) => {
     const cells = $(row).find('td');
 
@@ -113,21 +140,42 @@ function parseShortcuts(html) {
           action = action.replace(/center *\/ */, '');
         }
 
-        if (result[key]) {
-          if (Array.isArray(result[key])) {
-            result[key].push(action);
-          } else {
-            result[key] = [result[key], action];
+        // Update original i18n files
+        Object.keys(i18nFiles).forEach((i18nKey) => {
+          const target = resultI18n[i18nKey].sketchShortcuts;
+
+          // Solve original configurations
+          if (originalI18n[i18nKey][key]) {
+            switch (i18nFiles[i18nKey]) {
+              case 'APPEND':
+                action += ` | ${originalI18n[i18nKey][key]}`
+                break;
+              case 'DIRECTLY':
+              default:
+            }
           }
-        } else {
-          result[key] = action;
-        }
+
+          // Save shortcut keys
+          if (target[key]) {
+            if (Array.isArray(target[key])) {
+              target[key].push(action);
+            } else {
+              target[key] = [target[key], action];
+            }
+          } else {
+            target[key] = action;
+          }
+        });
       });
     }
   });
 
-  fs.writeFileSync(__dirname + '/data.json', JSON.stringify(result, null, 2));
-  spinner.succeed('Save all valid official shortcuts into scripts/data.json file');
+
+  // Save into i18n files
+  Object.keys(i18nFiles).forEach((i18nKey) => {
+    fs.writeFileSync(path.join(__dirname, basePath, `${i18nKey}.json`), JSON.stringify(resultI18n[i18nKey], null, 2));
+  });
+  spinner.succeed('Save all valid official shortcuts into i18n file!');
 }
 
 // Get the latest shortcuts from sketchapp.com
