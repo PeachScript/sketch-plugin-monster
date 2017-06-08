@@ -6,11 +6,7 @@ const cheerio = require('cheerio');
 
 const spinner = ora('Parsing shortcuts form sketchapp.com').start();
 const basePath = '../Sketch Plugin Monster.sketchplugin/Contents/Sketch/i18n/';
-const i18nFiles = {
-  en: 'DIRECTLY',
-  'zh-hans': 'APPEND',
-  'zh-hant': 'APPEND'
-};
+const i18nFiles = ['en', 'zh-hans', 'zh-hant'];
 
 /**
  * parse readable shortcut keys from key string
@@ -107,7 +103,7 @@ function parseShortcuts(html) {
   const resultI18n = {};
 
   // Read original i18n files
-  Object.keys(i18nFiles).forEach((i18nKey) => {
+  i18nFiles.forEach((i18nKey) => {
     resultI18n[i18nKey] = JSON.parse(fs.readFileSync(path.join(__dirname, basePath, `${i18nKey}.json`)));
     originalI18n[i18nKey] = resultI18n[i18nKey].sketchShortcuts;
     resultI18n[i18nKey].sketchShortcuts = {};
@@ -141,17 +137,30 @@ function parseShortcuts(html) {
         }
 
         // Update original i18n files
-        Object.keys(i18nFiles).forEach((i18nKey) => {
+        i18nFiles.forEach((i18nKey) => {
           const target = resultI18n[i18nKey].sketchShortcuts;
 
           // Solve original configurations
-          if (originalI18n[i18nKey][key]) {
-            switch (i18nFiles[i18nKey]) {
-              case 'APPEND':
-                action += ` | ${originalI18n[i18nKey][key]}`
-                break;
-              case 'DIRECTLY':
-              default:
+          if (originalI18n[i18nKey][key] && i18nKey !== 'en') {
+            if (Array.isArray(originalI18n[i18nKey][key])) {
+              let originalIndex;
+
+              switch (typeof target[key]) {
+                case 'string':
+                  originalIndex = 1;
+                  break;
+                case 'array':
+                case 'object':
+                  originalIndex = target[key].length;
+                  break;
+                case 'undefined':
+                  originalIndex = 0;
+                default:
+              }
+
+              action = originalI18n[i18nKey][key][originalIndex] || action;
+            } else {
+              action = originalI18n[i18nKey][key];
             }
           }
 
@@ -172,8 +181,8 @@ function parseShortcuts(html) {
 
 
   // Save into i18n files
-  Object.keys(i18nFiles).forEach((i18nKey) => {
-    fs.writeFileSync(path.join(__dirname, basePath, `${i18nKey}.json`), JSON.stringify(resultI18n[i18nKey], null, 2));
+  i18nFiles.forEach((i18nKey) => {
+    fs.writeFileSync(path.join(__dirname, basePath, `${i18nKey}.json`), `${JSON.stringify(resultI18n[i18nKey], null, 2)}\n`);
   });
   spinner.succeed('Save all valid official shortcuts into i18n file!');
 }
