@@ -44,6 +44,31 @@ A Sketch plugin for managing all plugin shortcuts.
 
 Details changes for each release are documented in the [release notes](https://github.com/PeachScript/sketch-plugin-monster/releases).
 
+## Maintainers
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <img width="150" height="150"
+        src="https://avatars1.githubusercontent.com/u/25733842?v=3&s=150">
+        <br>
+        <a href="https://github.com/Jokerwithfan">Jokerwithfan</a>
+        <br>
+        Designer
+      </td>
+      <td align="center">
+        <img width="150" height="150"
+        src="https://avatars0.githubusercontent.com/u/5035925?v=3&s=150">
+        <br>
+        <a href="https://github.com/PeachScript">PeachScript</a>
+        <br>
+        Developer
+      </td>
+    </tr>
+  <tbody>
+</table>
+
 ## Licence
 
 The MIT License (MIT)
