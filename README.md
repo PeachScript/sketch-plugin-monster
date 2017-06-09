@@ -1,3 +1,5 @@
+<p align="center"><img width="234" src="./Sketch%20Plugin%20Monster.sketchplugin/Contents/Sketch/icons/logo.png"></p>
+
 # Sketch Plugin Monster
 [![version](https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg)]() [![downloads](https://img.shields.io/github/downloads/PeachScript/sketch-plugin-monster/total.svg)]() [![license](https://img.shields.io/github/license/PeachScript/sketch-plugin-monster.svg)]()
 
