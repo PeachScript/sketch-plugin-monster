@@ -1,11 +1,15 @@
 <p align="center"><img width="234" src="./Sketch%20Plugin%20Monster.sketchplugin/Contents/Sketch/icons/logo.png"></p>
 
-# Sketch Plugin Monster
-[![version](https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg)]() [![downloads](https://img.shields.io/github/downloads/PeachScript/sketch-plugin-monster/total.svg)]() [![license](https://img.shields.io/github/license/PeachScript/sketch-plugin-monster.svg)]()
+<p align="center">
+  <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg" alt="version"></a>
+  <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/downloads/PeachScript/sketch-plugin-monster/total.svg" alt="downloads"></a>
+  <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/license/PeachScript/sketch-plugin-monster.svg" alt="license"></a>
+</p>
 
+## Sketch Plugin Monster
 A Sketch plugin for managing all plugin shortcuts.
 
-## Features
+### Features
 
 - [x] Manage plugin shortcuts
   - [x] Detect and highlight conflicting shortcuts
@@ -26,6 +30,10 @@ A Sketch plugin for managing all plugin shortcuts.
 
 2. Open `Sketch Plugin Monster.sketchplugin`.
 
+### Install with Sketchpacks
+
+<a href="https://sketchpacks.com/PeachScript/sketch-plugin-monster/install"><img src="https://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png" alt="Install sketch-plugin-monster with Sketchpacks" width="160"></a>
+
 ### Install with Runner
 
 1. Press `⌘` + `'` open Runner window;
@@ -33,14 +41,12 @@ A Sketch plugin for managing all plugin shortcuts.
 3. Type `monster`;
 4. Select `Sketch Plugin Monster` item and press `Return`.
 
+<a href="http://bit.ly/SketchRunnerWebsite"><img src="http://bit.ly/RunnerBadgeBlue" alt="Works with Sketch Runner" width="160"></a>
+
 ### Install with Sketch Plugin Manager
 
 1. Search `monster` in Sketch Plugin Manager;
 2. Find `Sketch Plugin Monster` in the result list and click `Install` button.
-
-### Install with Sketchpacks
-
-<a href="https://sketchpacks.com/PeachScript/sketch-plugin-monster/install"><img src="https://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png" alt="Install sketch-plugin-monster with Sketchpacks" width="160"></a>
 
 ## Changelog
 
@@ -75,7 +81,7 @@ Details changes for each release are documented in the [release notes](https://g
 
 The MIT License (MIT)
 
-Copyright (c) 2016 PeachScript
+Copyright (c) 2017 PeachScript
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
