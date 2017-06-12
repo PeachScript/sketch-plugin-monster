@@ -57,8 +57,10 @@ function initialize(context) {
 
   utils.fs.writeFile(manifestPath, utils.JSON.stringify(manifest));
 
-  // check for updates automatically
-  checkForUpdates(context, true);
+  // check for updates automatically in Sketch 45 previous versions
+  if (utils.system.againstVersion('45', MSApplicationMetadata.metadata().appVersion)) {
+    checkForUpdates(context, true);
+  }
 }
 
 function checkForUpdates(context, isAutomatically) {
