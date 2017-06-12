@@ -1,5 +1,12 @@
 {
+  "name": "Sketch Plugin Monster",
+  "identifier": "com.peachscript.pluginMonster",
+  "description": "A Sketch plugin for managing all plugin shortcuts",
+  "version": "0.2.0",
   "author": "PeachScript",
+  "authorEmail": "scdzwyxst@gmail.com",
+  "homepage": "https://github.com/PeachScript/sketch-plugin-monster",
+  "appcast": "https://api.sketchpacks.com/v1/plugins/com.peachscript.pluginMonster/appcast",
   "commands": [
     {
       "script": "monster.sketchscript",
@@ -55,11 +62,5 @@
       "checkForUpdates"
     ],
     "title": "Sketch Plugin Monster"
-  },
-  "identifier": "com.peachscript.pluginMonster",
-  "version": "0.2.0",
-  "description": "A Sketch plugin for managing all plugin shortcuts",
-  "homepage": "https://github.com/PeachScript/sketch-plugin-monster",
-  "authorEmail": "scdzwyxst@gmail.com",
-  "name": "Sketch Plugin Monster"
+  }
 }
