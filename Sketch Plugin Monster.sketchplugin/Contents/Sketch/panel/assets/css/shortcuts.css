@@ -310,17 +310,32 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
   background-image: linear-gradient(to right, rgba(239,68,68,.12), rgba(239,68,68,0));
   background-attachment: fixed;
 }
+.plugin-shortcuts-panel table tr.shortcut-conflict td {
+  padding-bottom: 2px;
+  border-bottom: 0;
+}
 .plugin-shortcuts-panel table tr.shortcut-conflict td:first-child {
-  box-shadow: 4px 0 0 #EF4444 inset;
+  position: relative;
+}
+.plugin-shortcuts-panel table tr.shortcut-conflict td:first-child::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 600px;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(239, 68, 68, 1), rgba(248, 121, 121, 0));
 }
 .plugin-shortcuts-panel table td {
   height: 48px;
+  font-size: 15px;
   line-height: 48px;
   color: #666;
   border-bottom: 1px solid #ddd;
 }
 .plugin-shortcuts-panel table td:first-child {
-  padding-left: 40px;
+  width: 30px;
+  border-bottom-color: transparent;
 }
 .plugin-shortcuts-panel table td:last-child {
   width: 150px;
@@ -347,6 +362,10 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
   transition: border-color .2s, box-shadow .4s;
   border-color: #4990E2;
   box-shadow: 0 0 0 3px rgba(0,153,255,.3);
+}
+.plugin-shortcuts-panel table tr.shortcut-conflict input:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.3);
 }
 .plugin-shortcuts-panel table input:invalid + .btn-clear {
   display: none;
