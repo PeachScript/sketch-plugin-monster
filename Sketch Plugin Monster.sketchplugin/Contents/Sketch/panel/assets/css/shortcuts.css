@@ -111,8 +111,8 @@ footer .conflict-warning::before {
   content: '';
   display: inline-block;
   margin-right: 16px;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   vertical-align: middle;
   background: url('../img/icon_warning_gray.png') no-repeat;
   background-size: 100%;
@@ -125,7 +125,7 @@ footer .conflict-warning::after {
   display: inline-block;
   min-width: 14px;
   height: 14px;
-  padding: 0 3px;
+  padding: 0 4px;
   line-height: 14px;
   font-size: 10px;
   text-align: center;
@@ -137,8 +137,8 @@ footer .conflict-warning::after {
 footer .btn-settings {
   align-self: center;
   margin-left: 50px;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   background: url('../img/icon_settings.png') no-repeat;
   background-size: 100%;
   border: none;
@@ -213,7 +213,7 @@ footer .btn-settings:active {
   border-bottom: 1px solid #ddd;
   border-top: 0;
   background: url('../img/icon_search.png') no-repeat 93% center;
-  background-size: 12px;
+  background-size: 16px;
 }
 .conflict-details li:last-child {
   border-bottom: 0;
@@ -291,10 +291,10 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
   position: absolute;
   top: 50%;
   right: 20px;
-  margin-top: -6px;
+  margin-top: -12px;
   display: block;
-  width: 12px;
-  height: 12px;
+  width: 24px;
+  height: 24px;
   background: url('../img/icon_arrow.png') no-repeat center center;
   background-size: 100%;
   transition: transform .5s cubic-bezier(0.215, 0.61, 0.355, 1);
