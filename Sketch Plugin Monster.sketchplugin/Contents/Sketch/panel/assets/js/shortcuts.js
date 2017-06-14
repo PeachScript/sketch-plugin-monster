@@ -29,12 +29,13 @@ function renderList(source) {
   Array.prototype.forEach.call(inputs, function (input) {
     var commandWrapper = input.parentNode.parentNode;
     var pluginWrapper = commandWrapper.parentNode.parentNode.parentNode;
+    var pluginTitle = pluginWrapper.querySelector('h2');
 
     if (commands[input.value] > 1) {
-       commandWrapper.classList.add('shortcut-conflict');
-       pluginWrapper.classList.add('shortcut-conflict');
-       pluginWrapper.querySelector('h2').setAttribute('data-count', commands[input.value]);
-       pluginWrapper.classList.remove('collapse');
+      commandWrapper.classList.add('shortcut-conflict');
+      pluginWrapper.classList.add('shortcut-conflict');
+      pluginWrapper.classList.remove('collapse');
+      pluginTitle.setAttribute('data-count', parseInt(pluginTitle.getAttribute('data-count') || 0, 10) + 1);
     }
   });
 
