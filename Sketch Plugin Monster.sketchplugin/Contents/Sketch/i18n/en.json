@@ -7,8 +7,8 @@
     "linkFeedback": "Feedback"
   },
   "webview": {
-    "title": "Plugin shortcuts settings",
     "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut.",
+    "searchTips": "Type any keywords of plugins or commands...",
     "conflict": "Error: Your shortcut conflicts with \"${ shortcutName }\" of ${ conflictTarget }!",
     "conflictMulti": "mutiple commands",
     "success": "Set shortcut successfully!",

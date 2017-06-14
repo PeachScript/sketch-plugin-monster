@@ -7,8 +7,9 @@
 </head>
 <body>
   <header>
-    <h1 class="page-title"></h1>
-    <p class="usage-desc"></p>
+    <div class="search-bar-wrapper">
+      <input type="search" role="search-bar" spellcheck="false">
+    </div>
   </header>
   <ul class="fixed-overlay-menu left-menu conflict-details" data-toggle=".conflict-warning"></ul>
   <ul class="fixed-overlay-menu right-menu" data-toggle=".btn-settings"></ul>
@@ -31,7 +32,7 @@
           <%for (var j = 0; j < plugins[i].commands.length; j++) {%>
           <tr>
             <td></td>
-            <td><%=plugins[i].commands[j].name %></td>
+            <td data-plugin="<%=plugins[i].name %>" role="command-name"><%=plugins[i].commands[j].name %></td>
             <td>
               <input type="text"
                      required="required"

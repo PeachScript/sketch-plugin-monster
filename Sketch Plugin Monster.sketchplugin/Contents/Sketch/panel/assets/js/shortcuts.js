@@ -144,9 +144,9 @@ function renderList(source) {
  * set i18n with i18n configurations
  */
 function setI18n(i18n) {
-  document.querySelector('.page-title').innerHTML = i18n.title;
-  document.querySelector('.usage-desc').innerHTML = i18n.usage;
   document.querySelector('.btn-filter-reset').innerHTML = i18n.clearFilter;
+  document.querySelector('.search-bar-wrapper input[role=search-bar]')
+          .setAttribute('placeholder', i18n.searchTips);
 }
 
 /**
@@ -242,22 +242,40 @@ function renderConflictMsg() {
 
 /**
  * filter plugin list and command list
- * @param  {String|undefined} shortcut shorcut name; exit filter status
+ * @param  {String|undefined} keywords  keywords; exit filter status
+ * @param  {String}           type      filter type[shortcut|search]
  */
-function filterPluginList(shortcut) {
+function filterPluginList(keywords, type) {
   // clear current filter targets
   Array.prototype.forEach.call(document.querySelectorAll('#panel-wrapper .filter-target'), function (item) {
     item.classList.remove('filter-target');
   });
-  if (shortcut) {
+  if (keywords) {
     // find filter targets
-    Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel input'), function (input) {
-      var row = input.parentNode.parentNode;
-      if (input.value === shortcut) {
-        row.classList.add('filter-target');
-        row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
-      }
-    });
+    switch (type) {
+      case 'search':
+        keywords = keywords.toLowerCase();
+        Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel td[role=command-name]'), function (command) {
+          var row = command.parentNode;
+          var commandName = command.innerText.toLowerCase();
+          var pluginName = command.getAttribute('data-plugin').toLowerCase();
+
+          if (commandName.indexOf(keywords) > -1 || pluginName.indexOf(keywords) > -1) {
+            row.classList.add('filter-target');
+            row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
+          }
+        });
+        break;
+      case 'shortcut':
+      default:
+        Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel input'), function (input) {
+          var row = input.parentNode.parentNode;
+          if (input.value === keywords) {
+            row.classList.add('filter-target');
+            row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
+          }
+        });
+    }
     document.body.classList.add('filtered');
   } else {
     document.body.classList.remove('filtered');
@@ -306,6 +324,20 @@ function initSettingsMenu(commands) {
 }
 
 /**
+ * initialize search bar
+ */
+function initSearchBar() {
+  var timer;
+
+  document.querySelector('.search-bar-wrapper input[role=search-bar]').addEventListener('input', function (ev) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      filterPluginList((ev.target.value || '').trim(), 'search');
+    }, 500);
+  });
+}
+
+/**
  * $initialize by CocoaScript
  * @param  {Object} source source data from CocoaScript
  */
@@ -316,4 +348,5 @@ function $initialize(source) {
   setI18n(source.i18n);
   initOverlayMenus();
   initSettingsMenu(source.i18nCommands);
+  initSearchBar();
 }
