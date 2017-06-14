@@ -81,7 +81,7 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
           // Only display the commands which belong to the menu items
           item.name = _self.getCommandPathFromMenu(manifest.menu.items, item.identifier)
                            .concat(item.name)
-                           .join(' -› ');
+                           .join(' → ');
           result.push(item);
         }
 

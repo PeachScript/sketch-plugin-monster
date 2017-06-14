@@ -329,7 +329,8 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
 .plugin-shortcuts-panel table td {
   height: 48px;
   font-size: 15px;
-  line-height: 48px;
+  line-height: 1.4;
+  vertical-align: middle;
   color: #666;
   border-bottom: 1px solid #ddd;
 }
