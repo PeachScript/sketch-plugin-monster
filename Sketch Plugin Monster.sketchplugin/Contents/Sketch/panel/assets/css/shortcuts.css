@@ -43,6 +43,8 @@ header {
   display: none;
 }
 .search-bar-wrapper {
+  display: flex;
+  justify-content: space-between;
   padding: 24px;
 }
 .search-bar-wrapper input {
@@ -61,6 +63,22 @@ header {
 }
 .search-bar-wrapper input:focus {
   border-color: #4990E2;
+}
+.search-bar-wrapper .btn-settings {
+  align-self: center;
+  display: block;
+  width: 24px;
+  height: 24px;
+  background: url('../img/icon_settings.png') no-repeat;
+  background-size: 100%;
+  border: none;
+  cursor: pointer;
+}
+.search-bar-wrapper .btn-settings:hover {
+  opacity: .8;
+}
+.search-bar-wrapper .btn-settings:active {
+  opacity: .9;
 }
 
 /**
@@ -81,7 +99,6 @@ footer {
   box-shadow: 0 -8px 24px rgba(0,0,0,.24);
 }
 footer .status-bar {
-  flex: 1;
   align-self: center;
   height: 30px;
   font-size: 14px;
@@ -154,22 +171,6 @@ footer .conflict-warning::after {
   border-radius: 14px;
   box-sizing: border-box;
 }
-footer .btn-settings {
-  align-self: center;
-  margin-left: 50px;
-  width: 24px;
-  height: 24px;
-  background: url('../img/icon_settings.png') no-repeat;
-  background-size: 100%;
-  border: none;
-  cursor: pointer;
-}
-footer .btn-settings:hover {
-  opacity: .8;
-}
-footer .btn-settings:active {
-  opacity: .9;
-}
 
 /**
  * Overlay menu
@@ -182,7 +183,6 @@ footer .btn-settings:active {
   display: inline-block;
   max-height: 250px;
   padding: 0;
-  bottom: 50px;
   background-color: #fff;
   border: 5px;
   box-shadow: 0 10px 24px rgba(0,0,0,.24);
@@ -211,12 +211,16 @@ footer .btn-settings:active {
   visibility: visible;
   transform: scale(1);
 }
-.fixed-overlay-menu.left-menu {
-  left: 16px;
+.fixed-overlay-menu.left-top-menu {
+  transform-origin: left top;
+}
+.fixed-overlay-menu.right-top-menu {
+  transform-origin: right top;
+}
+.fixed-overlay-menu.left-bottom-menu {
   transform-origin: left bottom;
 }
-.fixed-overlay-menu.right-menu {
-  right: 16px;
+.fixed-overlay-menu.right-bottom-menu {
   transform-origin: right bottom;
 }
 

@@ -318,7 +318,27 @@ function initOverlayMenus() {
   var menus = document.querySelectorAll('.fixed-overlay-menu');
 
   Array.prototype.forEach.call(menus, function (menu) {
-    document.querySelector(menu.getAttribute('data-toggle')).addEventListener('click', function (ev) {
+    var triggerElm = document.querySelector(menu.getAttribute('data-toggle'));
+
+    // wait for DOM updated
+    setTimeout(function () {
+      var triggerRect = triggerElm.getBoundingClientRect();
+
+      if (menu.className.indexOf('left') > -1) {
+        menu.style.left = (triggerRect.left) + 'px';
+      }
+      if (menu.className.indexOf('right') > -1) {
+        menu.style.right = (window.innerWidth - triggerRect.left - triggerRect.width / 2) + 'px';
+      }
+      if (menu.className.indexOf('top') > -1) {
+        menu.style.top = triggerRect.bottom + 'px';
+      }
+      if (menu.className.indexOf('bottom') > -1) {
+        menu.style.bottom = (window.innerHeight - triggerRect.top) + 'px';
+      }
+    }, 0);
+
+    triggerElm.addEventListener('click', function (ev) {
       var target = document.querySelector('.fixed-overlay-menu.show');
       target && target !== menu && target.classList.remove('show');
       menu.classList.toggle('show');
