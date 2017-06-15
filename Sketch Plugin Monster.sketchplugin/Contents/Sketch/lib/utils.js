@@ -31,9 +31,16 @@ var utils = {
   JSON: {
     parse: function (data) {
       // remove useless commas to avoid parse error
-      var replaceReg = new RegExp(',(\\n\\s*(\\}|\\]))', 'g');
+      var replaceReg = new RegExp(',([\\n\\s]*(\\}|\\]))', 'g');
+      var result = null;
 
-      return JSON.parse(String(data).replace(replaceReg, '$1'));
+      try {
+        result = JSON.parse(String(data).replace(replaceReg, '$1'));
+      } catch (e) {
+        log('Manifest file parse error:' + data);
+      }
+
+      return result;
     },
     stringify: function (data) {
       return JSON.stringify(data, null, 2);
