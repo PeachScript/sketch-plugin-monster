@@ -147,6 +147,7 @@ function setI18n(i18n) {
   document.querySelector('.btn-filter-reset').innerHTML = i18n.clearFilter;
   document.querySelector('.search-bar-wrapper input[role=search-bar]')
           .setAttribute('placeholder', i18n.searchTips);
+  document.querySelector('.empty-tips').innerHTML = i18n.noResultTips;
 }
 
 /**
@@ -247,6 +248,7 @@ function renderConflictMsg() {
  */
 function filterPluginList(keywords, type) {
   var pluginSearchResults = {};
+  var hasResult = false;
 
   // clear current filter targets
   Array.prototype.forEach.call(document.querySelectorAll('#panel-wrapper .filter-target'), function (item) {
@@ -268,11 +270,13 @@ function filterPluginList(keywords, type) {
             pluginWrapper.classList.add('filter-target'); // plugin
             pluginWrapper.classList.remove('collapse'); // expand command list
             pluginSearchResults[pluginName] = true;
+            hasResult = true;
           } else if (pluginName.indexOf(keywords) > -1 && !pluginSearchResults[pluginName]) {
             // collapse plugin list if plugin name is expected but there has no expected commands
             row.classList.add('filter-target');
             pluginWrapper.classList.add('filter-target');
             pluginWrapper.classList.add('collapse');
+            hasResult = true;
           }
         });
         break;
@@ -288,6 +292,11 @@ function filterPluginList(keywords, type) {
         });
     }
     document.body.classList.add('filtered');
+    if (hasResult) {
+      document.body.classList.remove('filtered-empty');
+    } else {
+      document.body.classList.add('filtered-empty');
+    }
   } else {
     document.querySelector('.search-bar-wrapper input[role=search-bar]').value = ''; // clear search input
     // expand conflict plugin list
@@ -298,7 +307,7 @@ function filterPluginList(keywords, type) {
         item.classList.add('collapse');
       }
     });
-    document.body.classList.remove('filtered');
+    document.body.classList.remove('filtered', 'filtered-empty');
   }
 }
 
@@ -353,7 +362,7 @@ function initSearchBar() {
     clearTimeout(timer);
     timer = setTimeout(function () {
       filterPluginList((ev.target.value || '').trim(), 'search');
-    }, 500);
+    }, 300);
   });
 }
 

@@ -9,6 +9,7 @@
   "webview": {
     "usage": "Usage: click the shortcut which you want to edit, then press your new shortcut.",
     "searchTips": "Type any keywords of plugins or commands...",
+    "noResultTips": "No matching plugins or commands here",
     "conflict": "Error: Your shortcut conflicts with \"${ shortcutName }\" of ${ conflictTarget }!",
     "conflictMulti": "mutiple commands",
     "success": "Set shortcut successfully!",

@@ -411,3 +411,16 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
 .plugin-shortcuts-panel table .btn-clear:active {
   opacity: .6;
 }
+.empty-tips {
+  display: none;
+  margin: 80px 0 20px;
+  height: 20px;
+  padding-top: 97px;
+  color: #bbb;
+  line-height: 20px;
+  text-align: center;
+  background: url('../img/empty_tips.png') center 0/77px no-repeat;
+}
+.filtered-empty .empty-tips {
+  display: block;
+}

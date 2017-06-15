@@ -9,6 +9,7 @@
   "webview": {
     "usage": "用法：点击想要修改的快捷键，然后在键盘上按下新的快捷键。",
     "searchTips": "输入插件或命令的关键字...",
+    "noResultTips": "未找到匹配的插件或命令",
     "conflict": "错误: 你设定的快捷键与 ${ conflictTarget } 的『${ shortcutName }』操作冲突了！",
     "conflictMulti": "多个",
     "success": "设置快捷键成功！",
