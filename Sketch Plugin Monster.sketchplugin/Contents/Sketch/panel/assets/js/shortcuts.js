@@ -294,7 +294,7 @@ function filterPluginList(keywords, type) {
     document.body.classList.add('filtered');
     if (hasResult) {
       document.body.classList.remove('filtered-empty');
-    } else {
+    } else if (type === 'search') {
       document.body.classList.add('filtered-empty');
     }
   } else {
