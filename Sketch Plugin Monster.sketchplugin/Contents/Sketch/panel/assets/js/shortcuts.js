@@ -246,6 +246,8 @@ function renderConflictMsg() {
  * @param  {String}           type      filter type[shortcut|search]
  */
 function filterPluginList(keywords, type) {
+  var pluginSearchResults = {};
+
   // clear current filter targets
   Array.prototype.forEach.call(document.querySelectorAll('#panel-wrapper .filter-target'), function (item) {
     item.classList.remove('filter-target');
@@ -259,10 +261,18 @@ function filterPluginList(keywords, type) {
           var row = command.parentNode;
           var commandName = command.innerText.toLowerCase();
           var pluginName = command.getAttribute('data-plugin').toLowerCase();
+          var pluginWrapper = row.parentNode.parentNode.parentNode;
 
-          if (commandName.indexOf(keywords) > -1 || pluginName.indexOf(keywords) > -1) {
+          if (commandName.indexOf(keywords) > -1) {
             row.classList.add('filter-target');
-            row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
+            pluginWrapper.classList.add('filter-target'); // plugin
+            pluginWrapper.classList.remove('collapse'); // expand command list
+            pluginSearchResults[pluginName] = true;
+          } else if (pluginName.indexOf(keywords) > -1 && !pluginSearchResults[pluginName]) {
+            // collapse plugin list if plugin name is expected but there has no expected commands
+            row.classList.add('filter-target');
+            pluginWrapper.classList.add('filter-target');
+            pluginWrapper.classList.add('collapse');
           }
         });
         break;
@@ -273,11 +283,21 @@ function filterPluginList(keywords, type) {
           if (input.value === keywords) {
             row.classList.add('filter-target');
             row.parentNode.parentNode.parentNode.classList.add('filter-target'); // plugin
+            row.parentNode.parentNode.parentNode.classList.remove('collapse');
           }
         });
     }
     document.body.classList.add('filtered');
   } else {
+    document.querySelector('.search-bar-wrapper input[role=search-bar]').value = ''; // clear search input
+    // expand conflict plugin list
+    Array.prototype.forEach.call(document.querySelectorAll('.plugin-shortcuts-panel'), function (item) {
+      if (item.classList.contains('shortcut-conflict')) {
+        item.classList.remove('collapse');
+      } else {
+        item.classList.add('collapse');
+      }
+    });
     document.body.classList.remove('filtered');
   }
 }

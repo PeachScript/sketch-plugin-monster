@@ -53,7 +53,7 @@ header {
   font-size: 16px;
   font-weight: lighter;
   outline: none;
-  border: 1px solid #bbb;
+  border: 1px solid #ccc;
   border-radius: 40px;
   background: url('../img/icon_search.png') no-repeat 15px 56%/24px;
   -webkit-appearance:none;
