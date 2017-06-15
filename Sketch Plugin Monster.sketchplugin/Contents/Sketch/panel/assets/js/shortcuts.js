@@ -357,19 +357,25 @@ function initOverlayMenus() {
  * @param  {Object} commands commands from i18n
  */
 function initSettingsMenu(commands) {
-  var presets = ['checkForUpdates', 'linkFeedback'];
+  var settingsPresets = ['checkForUpdates', 'linkFeedback'];
   var settingsMenu = document.querySelector('.fixed-overlay-menu[data-toggle=".btn-settings"]');
-  var result = '';
+  var exportImportPresets = ['exportShortcuts', 'importShortcuts'];
+  var exportImportMenu = document.querySelector('.fixed-overlay-menu[data-toggle=".btn-export-import"]');
+  var settingsResult = '';
+  var exportImportResult = '';
 
   Object.keys(commands).forEach(function (i) {
-    if (presets.indexOf(i) > -1) {
-      result += ['<li onclick="$dispatch(\'$pluginMonster:', i, '\')">', commands[i], '</li>'].join('');
+    if (settingsPresets.indexOf(i) > -1) {
+      settingsResult += ['<li onclick="$dispatch(\'$pluginMonster:', i, '\')">', commands[i], '</li>'].join('');
+    } else if (exportImportPresets.indexOf(i) > -1) {
+      exportImportResult += ['<li onclick="$dispatch(\'$pluginMonster:', i, '\')">', commands[i], '</li>'].join('');
     }
   });
 
-  result += '<li class="disabled">v0.2.0</li>'
+  settingsResult += '<li class="disabled">v0.2.0</li>'
 
-  settingsMenu.innerHTML = result;
+  settingsMenu.innerHTML = settingsResult;
+  exportImportMenu.innerHTML = exportImportResult;
 }
 
 /**

@@ -5,10 +5,11 @@
 @import 'lib/keyCodePresets.js';
 
 var pluginHandler = new PluginHandler();
+var panel;
 
 function manageShortcuts(context) {
   var i18n = utils.system.getI18n(context);
-  var panel = new Panel({
+  panel = new Panel({
     context: context,
     template: 'shortcuts'
   }, {
@@ -35,6 +36,12 @@ function manageShortcuts(context) {
         break;
       case '$pluginMonster:linkFeedback':
         linkFeedback();
+        break;
+      case '$pluginMonster:exportShortcuts':
+        exportShortcuts(context);
+        break;
+      case '$pluginMonster:importShortcuts':
+        importShortcuts(context, true);
         break;
       default:
     }
@@ -130,7 +137,7 @@ function exportShortcuts(context) {
   });
 }
 
-function importShortcuts(context) {
+function importShortcuts(context, isPanel) {
   var i18n = utils.system.getI18n(context);
 
   utils.system.openFileWithPanel({
@@ -160,6 +167,15 @@ function importShortcuts(context) {
         promptWindow.runModal();
       } else {
         context.document.showMessage(i18n.exportAndImport.importSuccess);
+      }
+      if (isPanel && panel && typeof panel.close === 'function') {
+        // reopen the panel
+        panel.close();
+        coscript.setShouldKeepAround(true);
+        coscript.scheduleWithInterval_jsFunction(0.2,function() {
+          manageShortcuts(context);
+          coscript.setShouldKeepAround(false);
+        });
       }
     } else {
       context.document.showMessage(i18n.exportAndImport.importReadError);
