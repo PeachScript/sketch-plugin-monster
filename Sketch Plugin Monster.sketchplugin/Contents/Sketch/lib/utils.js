@@ -37,7 +37,7 @@ var utils = {
       try {
         result = JSON.parse(String(data).replace(replaceReg, '$1'));
       } catch (e) {
-        log('Manifest file parse error:' + data);
+        log('Manifest file parsing error:' + data);
       }
 
       return result;
