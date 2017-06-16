@@ -236,7 +236,6 @@ function renderConflictMsg() {
   } else {
     conflictDetails.innerHTML = '';
     container.innerHTML = '';
-    filterPluginList();
   }
 
 }
@@ -265,18 +264,18 @@ function filterPluginList(keywords, type) {
           var pluginName = command.getAttribute('data-plugin').toLowerCase();
           var pluginWrapper = row.parentNode.parentNode.parentNode;
 
-          if (commandName.indexOf(keywords) > -1) {
-            row.classList.add('filter-target');
-            pluginWrapper.classList.add('filter-target'); // plugin
-            pluginWrapper.classList.remove('collapse'); // expand command list
-            pluginSearchResults[pluginName] = true;
-            hasResult = true;
-          } else if (pluginName.indexOf(keywords) > -1 && !pluginSearchResults[pluginName]) {
-            // collapse plugin list if plugin name is expected but there has no expected commands
+          if (pluginName.indexOf(keywords) > -1) {
             row.classList.add('filter-target');
             pluginWrapper.classList.add('filter-target');
-            pluginWrapper.classList.add('collapse');
             hasResult = true;
+            if (commandName.indexOf(keywords) > -1) {
+              pluginSearchResults[pluginName] = true;
+              pluginWrapper.classList.remove('collapse'); // expand command list
+            }
+            // collapse plugin list if plugin name is expected but there has no expected commands
+            if (!pluginSearchResults[pluginName]) {
+              pluginWrapper.classList.add('collapse');
+            }
           }
         });
         break;
