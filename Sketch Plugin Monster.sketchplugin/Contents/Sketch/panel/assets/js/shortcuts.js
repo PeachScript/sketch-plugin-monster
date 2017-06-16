@@ -264,7 +264,7 @@ function filterPluginList(keywords, type) {
           var pluginName = command.getAttribute('data-plugin').toLowerCase();
           var pluginWrapper = row.parentNode.parentNode.parentNode;
 
-          if (pluginName.indexOf(keywords) > -1) {
+          if (pluginName.indexOf(keywords) > -1 || commandName.indexOf(keywords) > -1) {
             row.classList.add('filter-target');
             pluginWrapper.classList.add('filter-target');
             hasResult = true;

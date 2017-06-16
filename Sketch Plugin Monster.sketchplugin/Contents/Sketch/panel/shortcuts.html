@@ -32,7 +32,7 @@
     <% if (plugins[i].identifier === 'error.parsing') {%>
     <div class="plugin-shortcuts-panel plugin-parsing-error">
       <h2>
-        <%=plugins[i].name %>
+        <%=plugins[i].displayName %>
         <a href="javascript:$dispatch(\'$pluginMonster:openUrl\', \'https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md#what-is-the-parsing-error\');" data-text="<%=i18n.parsingErrorTips %>"></a>
       </h2>
     </div>

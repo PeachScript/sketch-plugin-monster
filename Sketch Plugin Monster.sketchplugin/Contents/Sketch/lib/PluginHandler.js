@@ -55,11 +55,17 @@ PluginHandler.prototype.getManifestOfPlugin = function (name) {
   var confFileData = utils.fs.readFile(this.getManifestPathOfPlugin(name));
   var configurations = utils.JSON.parse(confFileData);
 
-  return configurations || {
-    name: confFileData.match(new RegExp('^\\n*\\{[^{]*"name": ?"(.*)"', 'i'))[1],
-    identifier: 'error.parsing',
-    commands: []
-  };
+  if (!configurations) {
+    configurations = confFileData.replace(new RegExp('^[^{\\[]*({[^{\\[]*)([^]*?)([^}\\]]*})[^{\\[]*$', 'i'), '$1$3');
+
+    configurations = {
+      name: (String(configurations).match(new RegExp('"name": ?"(.*?)"', 'i')) || [])[1],
+      identifier: 'error.parsing',
+      commands: []
+    }
+  }
+
+  return configurations;
 };
 
 /**
@@ -76,7 +82,7 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
     var menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
 
     commandList.push({
-      displayName: manifest.name,
+      displayName: manifest.name || String(item),
       name: String(item),
       identifier: manifest.identifier,
       commands: manifest.commands.reduce(function (result, item) {
