@@ -371,7 +371,7 @@ function initSettingsMenu(commands) {
     }
   });
 
-  settingsResult += '<li class="disabled">v0.2.0</li>'
+  settingsResult += '<li class="disabled">' + document.querySelector('head link[rel=stylesheet]').href.match(/\?(v[\.\d]*)/)[1] + '</li>'
 
   settingsMenu.innerHTML = settingsResult;
   exportImportMenu.innerHTML = exportImportResult;
