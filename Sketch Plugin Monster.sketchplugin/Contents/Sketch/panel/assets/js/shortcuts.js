@@ -357,7 +357,7 @@ function initOverlayMenus() {
  * @param  {Object} commands commands from i18n
  */
 function initSettingsMenu(commands) {
-  var settingsPresets = ['checkForUpdates', 'linkFeedback'];
+  var settingsPresets = ['checkForUpdates', 'linkFAQ', 'linkFeedback'];
   var settingsMenu = document.querySelector('.fixed-overlay-menu[data-toggle=".btn-settings"]');
   var exportImportPresets = ['exportShortcuts', 'importShortcuts'];
   var exportImportMenu = document.querySelector('.fixed-overlay-menu[data-toggle=".btn-export-import"]');

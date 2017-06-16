@@ -4,6 +4,7 @@
     "exportShortcuts": "Export Shortcut Configurations...",
     "importShortcuts": "Import Shortcut Configurations...",
     "checkForUpdates": "Check For Updates...",
+    "linkFAQ": "FAQ",
     "linkFeedback": "Feedback"
   },
   "webview": {

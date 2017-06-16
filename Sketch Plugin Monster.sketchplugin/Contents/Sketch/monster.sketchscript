@@ -37,6 +37,9 @@ function manageShortcuts(context) {
       case '$pluginMonster:linkFeedback':
         linkFeedback(context);
         break;
+      case '$pluginMonster:linkFAQ':
+        linkFAQ(context);
+        break;
       case '$pluginMonster:exportShortcuts':
         exportShortcuts(context);
         break;
@@ -192,4 +195,8 @@ function linkFeedback(context) {
   issueTpl = issueTpl.replace('PluginVersion', context.plugin.version());
   issueTpl = issueTpl.replace('SketchVersion', MSApplicationMetadata.metadata().appVersion);
   utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/issues/new?body=' + issueTpl);
+}
+
+function linkFAQ(context) {
+  utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md');
 }

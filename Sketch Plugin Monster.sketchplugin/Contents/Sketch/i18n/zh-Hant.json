@@ -4,6 +4,7 @@
     "exportShortcuts": "匯出快捷鍵配置...",
     "importShortcuts": "匯入快捷鍵配置...",
     "checkForUpdates": "檢查更新...",
+    "linkFAQ": "常見問題",
     "linkFeedback": "意見反饋"
   },
   "webview": {
