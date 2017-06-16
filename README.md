@@ -48,6 +48,10 @@ A Sketch plugin for managing all plugin shortcuts.
 1. Search `monster` in Sketch Plugin Manager;
 2. Find `Sketch Plugin Monster` in the result list and click `Install` button.
 
+## FAQ
+
+Please visit the [FAQ page](https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md).
+
 ## Changelog
 
 Details changes for each release are documented in the [release notes](https://github.com/PeachScript/sketch-plugin-monster/releases).
