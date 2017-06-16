@@ -76,7 +76,8 @@ PluginHandler.prototype.getCommandsOfAllPlugins = function () {
     var menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
 
     commandList.push({
-      name: manifest.name,
+      displayName: manifest.name,
+      name: String(item),
       identifier: manifest.identifier,
       commands: manifest.commands.reduce(function (result, item) {
         if (menuStr === '""') {
