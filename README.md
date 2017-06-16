@@ -18,9 +18,10 @@ A Sketch plugin for managing all plugin shortcuts.
   - [x] Display conflict details
   - [x] Filter commands which use specific shortcut keys
   - [x] Import and export shortcut configurations
+  - [x] Search any command or plugin
 - [x] Multi-language support
 - [x] Check for updates automatically
-- [ ] Manage plugin versions
+- [ ] ~~Manage plugin versions~~(Sketch will [support plugin updates](http://sketchplugins.com/d/229-updating-plugins) in 45 and later)
 
 ## Installation
 
