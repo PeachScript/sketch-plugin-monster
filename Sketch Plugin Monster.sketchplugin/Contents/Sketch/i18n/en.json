@@ -17,7 +17,8 @@
     "clear": "Clear shortcut successfully!",
     "conflictWarning": "Warning: There are ${ conflictCount } operations shortcut keys in conflict!",
     "none": "none",
-    "clearFilter": "Display All"
+    "clearFilter": "Display All",
+    "parsingErrorTips": "Parsing error, click for details"
   },
   "checkForUpdates": {
     "available": "New version detected! The latest version is ${ latestVersion } and you have version ${ currentVersion }, download it now?",

@@ -43,6 +43,9 @@ function manageShortcuts(context) {
       case '$pluginMonster:importShortcuts':
         importShortcuts(context, true);
         break;
+      case '$pluginMonster:openUrl':
+        utils.system.openLink(data);
+        break;
       default:
     }
   });

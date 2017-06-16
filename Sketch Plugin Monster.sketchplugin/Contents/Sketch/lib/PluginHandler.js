@@ -55,7 +55,11 @@ PluginHandler.prototype.getManifestOfPlugin = function (name) {
   var confFileData = utils.fs.readFile(this.getManifestPathOfPlugin(name));
   var configurations = utils.JSON.parse(confFileData);
 
-  return configurations;
+  return configurations || {
+    name: confFileData.match(new RegExp('^\\n*\\{[^{]*"name": ?"(.*)"', 'i'))[1],
+    identifier: 'error.parsing',
+    commands: []
+  };
 };
 
 /**

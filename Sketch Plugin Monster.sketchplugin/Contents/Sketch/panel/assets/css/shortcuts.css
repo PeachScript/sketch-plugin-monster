@@ -4,7 +4,7 @@
 body {
   margin: 0;
   font-weight: 300;
-  padding-bottom: 56px;
+  padding-bottom: 42px;
   font-family: "PingFang SC", "Arial", "sans-serif";
 }
 .clearfix::before, .clearfix::after {
@@ -105,7 +105,7 @@ footer {
   -webkit-user-select: none;
   user-select: none;
   background-color: #fff;
-  box-shadow: 0 -8px 24px rgba(0,0,0,.24);
+  box-shadow: 0 8px 24px rgba(0,0,0,.24);
 }
 footer .status-bar {
   align-self: center;
@@ -200,7 +200,7 @@ footer .notification.success {
   padding: 0;
   background-color: #fff;
   border: 5px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.24);
+  box-shadow: 0 8px 20px rgba(0,0,0,.20);
   border-radius: 5px;
   overflow: auto;
   transition: visibility .2s, transform .2s cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -331,6 +331,62 @@ body.notified footer .status-bar-inner {
   line-height: 16px;
   vertical-align: middle;
   background: url('../img/icon_warning.png') no-repeat left center/16px;
+}
+.plugin-shortcuts-panel.plugin-parsing-error {
+  overflow: visible;
+}
+.plugin-shortcuts-panel.plugin-parsing-error h2 {
+  color: #FF7A18;
+  cursor: default;
+  pointer-events: none;
+}
+.plugin-shortcuts-panel.plugin-parsing-error h2::before {
+  display: none;
+}
+.plugin-shortcuts-panel.plugin-parsing-error h2 a {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: -4px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  vertical-align: middle;
+  cursor: pointer;
+  pointer-events: auto;
+  background: url('../img/icon_parsing_error.png') no-repeat left center/16px;
+}
+.plugin-shortcuts-panel.plugin-parsing-error h2 a:hover::before,
+.plugin-shortcuts-panel.plugin-parsing-error h2 a:hover::after {
+  display: block;
+}
+.plugin-shortcuts-panel.plugin-parsing-error h2 a::before {
+  content: attr(data-text);
+  display: none;
+  position: absolute;
+  left: 50%;
+  margin-left: -100px;
+  bottom: 150%;
+  width: 200px;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+  color: #FF7A18;
+  background-color: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,.2);
+  border-radius: 50px;
+}
+.plugin-shortcuts-panel.plugin-parsing-error h2 a::after {
+  content: '';
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: -50%;
+  margin-left: -8px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-top-color: #fff;
 }
 .plugin-shortcuts-panel h2 {
   position: relative;

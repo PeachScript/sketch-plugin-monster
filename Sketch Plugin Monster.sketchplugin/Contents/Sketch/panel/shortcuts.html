@@ -29,6 +29,14 @@
   <script type="text/template" id="shortcuts-template">
     <div class="clearfix"></div>
     <%for (var i = 0; i < plugins.length; i++) {%>
+    <% if (plugins[i].identifier === 'error.parsing') {%>
+    <div class="plugin-shortcuts-panel plugin-parsing-error">
+      <h2>
+        <%=plugins[i].name %>
+        <a href="javascript:$dispatch(\'$pluginMonster:openUrl\', \'https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md#what-is-the-parsing-error\');" data-text="<%=i18n.parsingErrorTips %>"></a>
+      </h2>
+    </div>
+    <%} else {%>
     <div class="plugin-shortcuts-panel collapse">
       <h2><%=plugins[i].name %></h2>
       <table>
@@ -55,6 +63,7 @@
         </tbody>
       </table>
     </div>
+    <%}%>
     <%}%>
   </script>
   <script src="assets/js/lib/Notification.js?v0.2.0"></script>

@@ -17,7 +17,7 @@ If you have install very, very much plugins, perhaps you will see one or more `p
 
 <p align="center"><img width="295" src="./parsing_error_pic.png"></p>
 
-This error is basically the plugin's `manifest.json` file format error caused, although this plugin always try to handle unexpected format, but it cannot handle all exceptions exactly, so please [open an issue](#how-to-create-a-high-quality-issue) and put the error log([how to get the error log?]) if you see the `parsing error`, thanks!
+This error is basically the plugin's `manifest.json` file format error caused, although this plugin always try to handle unexpected format, but it cannot handle all exceptions exactly, so please [open an issue](#how-to-create-a-high-quality-issue) and put the error log([how to get the error log?](#how-to-get-the-error-log)) if you see the `parsing error`, thanks!
 
 ## How to get the error log?
 

@@ -17,7 +17,8 @@
     "clear": "清除快捷键成功！",
     "conflictWarning": "警告: 有 ${ conflictCount } 项操作的快捷键发生了冲突！",
     "none": "无",
-    "clearFilter": "显示全部"
+    "clearFilter": "显示全部",
+    "parsingErrorTips": "配置解析出错，点击了解更多"
   },
   "checkForUpdates": {
     "available": "检测到新版本！当前版本为 ${ currentVersion }，最新版本为 ${ latestVersion }，要下载最新版吗？",
