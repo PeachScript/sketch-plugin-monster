@@ -35,7 +35,7 @@ function manageShortcuts(context) {
         checkForUpdates(context);
         break;
       case '$pluginMonster:linkFeedback':
-        linkFeedback();
+        linkFeedback(context);
         break;
       case '$pluginMonster:exportShortcuts':
         exportShortcuts(context);
@@ -183,6 +183,10 @@ function importShortcuts(context, isPanel) {
   });
 }
 
-function linkFeedback() {
-  utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/issues/new');
+function linkFeedback(context) {
+  var issueTpl = '%23%23%23%20Version%0APluginVersion%0A%0A%23%23%23%20Sketch%20version%0ASketchVersion%0A%0A%23%23%23%20What%20is%20exptected%3F%0A%0A%0A%23%23%23%20What%20is%20actually%20happening%3F%0A%0A%0A%23%23%23%20How%20to%20repreduce%20this%20problem%3F%0A%0A%0A%23%23%23%20The%20error%20log%20from%20%60Console.app%60%20when%20the%20problem%20occurred%0A%0A%0A%3C!--%20create%20from%20the%20feedback%20menu.%20DO%20NOT%20REMOVE%20--%3E';
+
+  issueTpl = issueTpl.replace('PluginVersion', context.plugin.version());
+  issueTpl = issueTpl.replace('SketchVersion', MSApplicationMetadata.metadata().appVersion);
+  utils.system.openLink('https://github.com/PeachScript/sketch-plugin-monster/issues/new?body=' + issueTpl);
 }

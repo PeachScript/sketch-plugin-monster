@@ -106,7 +106,7 @@ var utils = {
       return againstArr.join('.') > baseArr.join('.');
     },
     openLink: function (url) {
-      NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url + '?ref=sketch'));
+      NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url));
     },
     saveFileWithPanel: function (config, content, cb) {
       var panel = NSSavePanel.savePanel();
