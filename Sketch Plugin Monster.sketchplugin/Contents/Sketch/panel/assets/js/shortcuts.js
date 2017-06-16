@@ -94,7 +94,7 @@ function renderList(source) {
 
             // Set conflict target
             msg = msg.replace('${ conflictTarget }', conflictResult.name);
-            globalNotice.error(msg , 2000);
+            globalNotice.error(msg, 2000);
           } else {
             ev.target.blur();
           }

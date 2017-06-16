@@ -40,7 +40,7 @@ header {
   color: #999;
 }
 .conflict-warning:empty {
-  display: none;
+  visibility: hidden;
 }
 .search-bar-wrapper {
   display: flex;
@@ -100,7 +100,7 @@ footer {
   right: 0;
   bottom: 0;
   display: flex;
-  height: 56px;
+  height: 42px;
   padding: 0 16px;
   -webkit-user-select: none;
   user-select: none;
@@ -111,7 +111,6 @@ footer .status-bar {
   align-self: center;
   height: 30px;
   font-size: 14px;
-  color: #EF4444;
   line-height: 24px;
   overflow: hidden;
 }
@@ -144,6 +143,7 @@ footer .btn-filter-reset:active {
 footer .conflict-warning {
   position: relative;
   cursor: pointer;
+  color: #EF4444;
 }
 footer .conflict-warning:hover {
   opacity: .9;
@@ -179,6 +179,12 @@ footer .conflict-warning::after {
   background-color: #EF4444;
   border-radius: 14px;
   box-sizing: border-box;
+}
+footer .notification.error {
+  color: #EF4444;
+}
+footer .notification.success {
+  color: #79ad05;
 }
 
 /**
@@ -262,7 +268,7 @@ footer .conflict-warning::after {
  * Filtered status
  */
 body.filtered footer .status-bar-inner {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 body.filtered #panel-wrapper .plugin-shortcuts-panel,
 body.filtered #panel-wrapper .plugin-shortcuts-panel tr {
@@ -273,6 +279,26 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel.filter-target {
 }
 body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
   display: table-row;
+}
+.empty-tips {
+  display: none;
+  margin: 80px 0 20px;
+  height: 20px;
+  padding-top: 97px;
+  color: #bbb;
+  line-height: 20px;
+  text-align: center;
+  background: url('../img/empty_tips.png') center 0/77px no-repeat;
+}
+.filtered-empty .empty-tips {
+  display: block;
+}
+
+/**
+ * Notification status
+ */
+body.notified footer .status-bar-inner {
+  transform: translateY(-58px);
 }
 
 /**
@@ -423,17 +449,4 @@ body.filtered #panel-wrapper .plugin-shortcuts-panel tr.filter-target {
 }
 .plugin-shortcuts-panel table .btn-clear:active {
   opacity: .6;
-}
-.empty-tips {
-  display: none;
-  margin: 80px 0 20px;
-  height: 20px;
-  padding-top: 97px;
-  color: #bbb;
-  line-height: 20px;
-  text-align: center;
-  background: url('../img/empty_tips.png') center 0/77px no-repeat;
-}
-.filtered-empty .empty-tips {
-  display: block;
 }
