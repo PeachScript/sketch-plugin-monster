@@ -24,8 +24,7 @@ if [[ $REPLY =~ ^[Yy]$ ]] || [[ $REPLY = "" ]]; then
   tar -czf "./dist/sketch-plugin-monster-${VERSION}.tar.gz" LICENSE README.md *.sketchplugin
 
   git add -A
-  git commit -m "Release $VERSION 🎉 🎉"
-  git tag "v${VERSION}"
+  npm version $VERSION -m "Release $VERSION 🎉 🎉" --force
 
   echo "Done!"
 fi

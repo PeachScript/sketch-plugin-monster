@@ -4,7 +4,7 @@
   "description": "A Sketch plugin for managing all plugin shortcuts.",
   "main": "index.js",
   "scripts": {
-    "release": "bash ./release.sh",
+    "release": "bash ./scripts/release.sh",
     "sync:shortcuts": "node ./scripts/sync_shortcuts.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
