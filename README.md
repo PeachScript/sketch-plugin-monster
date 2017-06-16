@@ -1,4 +1,4 @@
-<p align="center"><img width="234" src="./Sketch%20Plugin%20Monster.sketchplugin/Contents/Sketch/icons/logo.png"></p>
+<p align="center"><img width="234" src="./Sketch%20Plugin%20Monster.sketchplugin/Contents/Resources/logo.png"></p>
 
 <p align="center">
   <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg" alt="version"></a>

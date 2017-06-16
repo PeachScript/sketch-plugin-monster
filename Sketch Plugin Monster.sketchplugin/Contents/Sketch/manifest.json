@@ -13,36 +13,48 @@
       "handler": "manageShortcuts",
       "shortcut": "ctrl shift m",
       "name": "Plugin Shortcuts Management",
+      "icon": "../Resources/logo_cmd.png",
+      "description": "Open the shortcuts management panel",
       "identifier": "manageShortcuts"
     },
     {
       "script": "monster.sketchscript",
       "handler": "exportShortcuts",
       "name": "Export Shortcut Configurations...",
+      "icon": "../Resources/logo_cmd.png",
+      "description": "Export all your shortcuts into a JSON file",
       "identifier": "exportShortcuts"
     },
     {
       "script": "monster.sketchscript",
       "handler": "importShortcuts",
       "name": "Import Shortcut Configurations...",
+      "icon": "../Resources/logo_cmd.png",
+      "description": "Import all available shortcuts from a JSON file",
       "identifier": "importShortcuts"
     },
     {
       "script": "monster.sketchscript",
       "handler": "linkFAQ",
       "name": "FAQ",
+      "icon": "../Resources/logo_eye.png",
+      "description": "Open the FAQ web page",
       "identifier": "linkFAQ"
     },
     {
       "script": "monster.sketchscript",
       "handler": "linkFeedback",
       "name": "Feedback",
+      "icon": "../Resources/logo_eye.png",
+      "description": "Create a new issue on GitHub",
       "identifier": "linkFeedback"
     },
     {
       "script": "monster.sketchscript",
       "handler": "checkForUpdates",
       "name": "Check For Updates...",
+      "icon": "../Resources/logo.png",
+      "description": "Check for the new version of Sketch Plugin Monster",
       "identifier": "checkForUpdates"
     },
     {
