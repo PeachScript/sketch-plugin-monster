@@ -2,7 +2,7 @@
   "name": "Sketch Plugin Monster",
   "identifier": "com.peachscript.pluginMonster",
   "description": "A Sketch plugin for managing all plugin shortcuts",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "PeachScript",
   "authorEmail": "scdzwyxst@gmail.com",
   "homepage": "https://github.com/PeachScript/sketch-plugin-monster",
