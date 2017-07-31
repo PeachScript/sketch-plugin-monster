@@ -179,19 +179,14 @@ PluginHandler.prototype.restoreShortcutsFromConfig = function (importConf) {
  */
 PluginHandler.prototype.getCommandPathFromMenu = function (menus, command) {
   var i;
-  var nextResult;
-  var result;
+  var result = [];
 
-  for (var i = 0; i < menus.length; i++) {
-    if (typeof(menus[i]) == 'string' && command == menus[i]) {
-      result = [];
+  for (i = 0; i < menus.length; i++) {
+    if (typeof(menus[i]) == 'string' && command.trim() == menus[i].trim()) {
       break;
     } else if (menus[i].items && menus[i].items.length) {
-      nextResult = this.getCommandPathFromMenu(menus[i].items, command);
-      if (nextResult) {
-        result = [menus[i].title].concat(nextResult);
-        break;
-      }
+      result = [menus[i].title].concat(this.getCommandPathFromMenu(menus[i].items, command));
+      break;
     }
   }
 
