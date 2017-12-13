@@ -4,7 +4,7 @@
 ### Sketch version
 
 
-### What is exptected?
+### What is expected?
 
 
 ### What is actually happening?
