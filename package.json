@@ -1,0 +1,39 @@
+{
+  "name": "sketch-plugin-monster",
+  "version": "0.3.1",
+  "description": "A Sketch plugin for managing all plugin shortcuts",
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "author": "Peach <scdzwyxst@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeachScript/sketch-plugin-monster.git"
+  },
+  "keywords": [
+    "sketch-plugin",
+    "shortcuts"
+  ],
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PeachScript/sketch-plugin-monster/issues"
+  },
+  "homepage": "https://github.com/PeachScript/sketch-plugin-monster#readme",
+  "skpm": {
+    "name": "sketch-plugin-monster",
+    "manifest": "src/manifest.json",
+    "main": "plugin.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.4.0"
+  }
+}

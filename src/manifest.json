@@ -1,0 +1,19 @@
+{
+  "name": "Sketch Plugin Monster",
+  "identifier": "com.peachscript.pluginMonster",
+  "compatibleVersion": 3,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "my-command",
+      "identifier": "my-command-identifier",
+      "script": "./my-command.js"
+    }
+  ],
+  "menu": {
+    "title": "Sketch Plugin Monster",
+    "items": [
+      "my-command-identifier"
+    ]
+  }
+}
