@@ -3,9 +3,11 @@
   "version": "0.3.1",
   "description": "A Sketch plugin for managing all plugin shortcuts",
   "scripts": {
-    "build": "skpm-build",
+    "start": "npm run start:webview & npm run start:sketch",
+    "start:sketch": "skpm-build --watch --run",
+    "start:webview": "webpack-dev-server --config ./webpack.webview.config.js -d --progress",
     "watch": "skpm-build --watch",
-    "start": "skpm-build --watch --run",
+    "build": "skpm-build",
     "postinstall": "npm run build && skpm-link"
   },
   "author": "Peach <scdzwyxst@gmail.com>",
@@ -33,7 +35,44 @@
       "assets/**/*"
     ]
   },
+  "dependencies": {
+    "sketch-module-web-view": "^0.2.6",
+    "vue": "^2.5.16"
+  },
   "devDependencies": {
-    "@skpm/builder": "^0.4.0"
-  }
+    "@skpm/builder": "^0.4.0",
+    "autoprefixer": "^8.1.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-import-resolver-webpack": "^0.8.4",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-html": "^4.0.2",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-vue": "^4.3.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.0.6",
+    "postcss-loader": "^2.1.2",
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "url-loader": "^1.0.1",
+    "vue-loader": "^14.2.1",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 1 versions",
+    "last 4 Android versions",
+    "last 3 iOS versions"
+  ]
 }

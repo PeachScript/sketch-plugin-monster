@@ -5,15 +5,19 @@
   "icon": "icon.png",
   "commands": [
     {
-      "name": "my-command",
-      "identifier": "my-command-identifier",
-      "script": "./my-command.js"
+      "script": "./monster.js",
+      "handler": "manageShortcuts",
+      "shortcut": "ctrl shift m",
+      "name": "Plugin Shortcuts Management",
+      "icon": "../assets/icon.png",
+      "description": "Open the shortcuts management panel",
+      "identifier": "manageShortcuts"
     }
   ],
   "menu": {
     "title": "Sketch Plugin Monster",
     "items": [
-      "my-command-identifier"
+      "manageShortcuts"
     ]
   }
 }

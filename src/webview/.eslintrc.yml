@@ -1,0 +1,23 @@
+---
+  extends: airbnb-base
+  parser: babel-eslint
+  parserOptions:
+    ecmaVersion: 6
+    sourceType: module
+    ecmaFeatures:
+      impliedStrict: true
+  env:
+    browser: true
+  plugins:
+    - html
+  settings:
+    import/resolver:
+      webpack:
+        config: ./webpack.webview.config.js
+  rules:
+    import/extensions:
+      - error
+      - always
+      -
+        js: never
+        vue: never
