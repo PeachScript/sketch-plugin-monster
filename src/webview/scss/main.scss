@@ -1,0 +1,116 @@
+@import '../../../node_modules/normalize.css/normalize';
+@import './variables';
+@import './icons';
+
+/**
+ * Reset
+ */
+html {
+  font-weight: 300;
+  font-family: 'PingFang SC', 'Arial', 'sans-serif';
+}
+
+kbd {
+  padding: 2px 5px;
+  text-indent: -2px;
+  letter-spacing: 2px;
+  color: $c-error;
+}
+
+/**
+ * Button class
+ */
+.button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &.button-dropdown{
+    position: relative;
+  }
+
+
+  &:not(.button-dropdown):hover {
+    opacity: 0.7;
+  }
+
+  &:not(.button-dropdown):active {
+    transform: translateY(1px);
+    opacity: 0.9;
+  }
+
+}
+
+/**
+ * Dropdown menu class
+ */
+.dropdown-menu {
+  list-style: none;
+  position: absolute;
+  z-index: 10;
+  margin: 0;
+  max-height: 250px;
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,.20);
+  border-radius: 5px;
+  overflow: auto;
+
+  &.left-top {
+    right: 3px;
+    bottom: 115%;
+    transform-origin: right bottom;
+  }
+
+  &.left-bottom {
+    right: 3px;
+    top: 115%;
+    transform-origin: right top;
+  }
+
+  &.right-top {
+    left: 3px;
+    bottom: 115%;
+    transform-origin: left bottom;
+  }
+
+  &.right-bottom {
+    left: 3px;
+    top: 115%;
+    transform-origin: left top;
+  }
+
+  li a {
+    display: block;
+    padding: 2px 12px;
+    color: #999;
+    font-size: 14px;
+    line-height: 28px;
+    text-align: left;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+
+    &[disabled] {
+      color: #ccc;
+      pointer-events: none;
+    }
+
+    &:hover {
+      color: #666;
+      background-color: #fafafa;
+    }
+  }
+
+  // transition control
+  &.dropdown-enter,
+  &.dropdown-leave-to {
+    transform: scale(0);
+  }
+
+  &.dropdown-enter-active,
+  &.dropdown-leave-active {
+    transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+}

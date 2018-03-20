@@ -1,0 +1,17 @@
+*[class^=icon-] {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.icon-warning {
+  width: 16px;
+  height: 16px;
+  background: url('../../../assets/icon_warning.png') no-repeat center/100%;
+}
+
+.icon-parsing-error {
+  width: 16px;
+  height: 16px;
+  background: url('../../../assets/icon_parsing_error.png') no-repeat center/100%;
+}
