@@ -1,4 +1,4 @@
-import WebUI from 'sketch-module-web-view';
+import BrowserWindow from 'sketch-module-web-view';
 
 const webViewPaths = {
   development: {
@@ -12,19 +12,25 @@ const webViewPaths = {
 };
 
 export function manageShortcuts(context) {
-  const options = {
+  const browser = new BrowserWindow({
     identifier: 'pluginMonster.manager',
-    x: 0,
-    y: 0,
     width: 600,
     height: 522,
-    onlyShowCloseButton: true,
-    frameLoadDelegate: {
-      'webView:didFinishLoadForFrame:': function (webView, webFrame) {},
-    },
-  };
+    minWidth: 600,
+    minHeight: 522,
+    backgroundColor: '#ffffff',
+    alwaysOnTop: true,
+  });
+  const panel = browser.getNativeWindowHandle();
 
-  const webUI = new WebUI(context, webViewPaths[process.env.NODE_ENV].manager, options);
+  // to fix webview fixed element overflow bug
+  browser.webContents.getNativeWebview().wantsLayer = true;
 
-  webUI.panel.setTitlebarAppearsTransparent(true);
+  // configure panel
+  panel.setTitlebarAppearsTransparent(true);
+  panel.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true);
+  panel.standardWindowButton(NSWindowZoomButton).setHidden(true);
+
+  // open url
+  browser.loadURL(webViewPaths[process.env.NODE_ENV].manager);
 }
