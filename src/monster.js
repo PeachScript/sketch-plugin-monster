@@ -31,6 +31,11 @@ export function manageShortcuts(context) {
   panel.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true);
   panel.standardWindowButton(NSWindowZoomButton).setHidden(true);
 
+  // init webview after ready
+  browser.on('ready-to-show', () => {
+    browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', 'Hello World!')`);
+  });
+
   // open url
   browser.loadURL(webViewPaths[process.env.NODE_ENV].manager);
 }

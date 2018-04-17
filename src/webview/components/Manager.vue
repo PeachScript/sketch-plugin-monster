@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <input type="search" spellcheck="false" placeholder="Type any keywords of plugins or commands...">
+      <input v-model="keywords" type="search" spellcheck="false" placeholder="Type any keywords of plugins or commands...">
       <button class="button button-dropdown button-export-import"
         @click.self="toggleDropdown('importExport')">
         <transition name="dropdown">
@@ -65,6 +65,7 @@
   </div>
 </template>
 <script>
+import bridge from '../services/bridge';
 import PluginGroup from './PluginGroup';
 
 export default {
@@ -76,7 +77,13 @@ export default {
         settings: false,
         conflicts: false,
       },
+      keywords: '',
     };
+  },
+  beforeCreate() {
+    bridge.on('$manager:init', (arg) => {
+      this.$set(this, 'keywords', arg);
+    });
   },
   mounted() {
     document.addEventListener('click', () => {
