@@ -57,6 +57,36 @@ function findMenuPath(menu, command) {
   return result;
 }
 
+/**
+ * sort shortcut keys, eg: "(ctrl) (option) (shift) (cmd) key"
+ * @param   {String}  shortcut    original shortcut
+ * @return  {String}
+ */
+function sortShortcut(shortcut) {
+  let result = shortcut;
+
+  if (!/^((ctrl|control) )?((alt|option) )?(shift )?((cmd|command) )?\S*$/.test(shortcut)) {
+    const fragments = shortcut.split(' ');
+    const seats = {
+      ctrl: 1,
+      control: 1,
+      option: 2,
+      alt: 2,
+      shift: 3,
+      cmd: 4,
+      command: 4,
+    };
+
+    result = fragments.reduce((sorted, item) => {
+      sorted[(seats[item] || 5) - 1] = `${item} `;
+
+      return sorted;
+    }, []).join('').replace(/ $/, '');
+  }
+
+  return result;
+}
+
 export default {
   manifests: searchManifests(config.paths.plugin),
   get() {
@@ -70,12 +100,13 @@ export default {
         fsName: name,
         name: manifest.name,
         identifier: manifest.identifier,
-        commands: manifest.commands.map((command) => {
+        commands: manifest.commands.filter(command => Boolean(command.identifier)).map((command) => {
           return {
             // generate menu path
             name: menuStr.indexOf(command.identifier) > -1 ?
               findMenuPath(manifest.menu.items, command).join(' → ') :
               command.name,
+            shortcut: sortShortcut(command.shortcut),
             identifier: command.identifier,
           };
         }),
