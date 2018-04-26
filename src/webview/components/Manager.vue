@@ -24,9 +24,11 @@
       </button>
     </header>
     <main>
-      <plugin-group></plugin-group>
-      <plugin-group></plugin-group>
-      <div class="empty-tips">No matching plugins or commands here</div>
+      <plugin-group v-for="plugin in plugins"
+        :key="plugin.identifier"
+        :plugin="plugin">
+      </plugin-group>
+      <div class="empty-tips" v-show="!plugins.length">No matching plugins or commands here</div>
     </main>
     <footer>
       <transition name="dropdown">
@@ -78,11 +80,12 @@ export default {
         conflicts: false,
       },
       keywords: '',
+      plugins: [],
     };
   },
   beforeCreate() {
     bridge.on('$manager:init', (arg) => {
-      this.$set(this, 'keywords', arg);
+      this.$set(this, 'plugins', arg);
     });
   },
   mounted() {

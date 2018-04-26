@@ -1,30 +1,39 @@
 <template>
-  <div class="plugin-group conflicts-inside">
-    <h2>
-      AnimateMate
+  <div class="plugin-group conflicts-inside"
+    :style="{ 'max-height': `${plugin.commands.length * 50 + 60}px` }"
+    :class="{ collapse: !plugin.expanded }">
+    <h2 @click="toggle">
+      {{ plugin.name }}
       <i class="icon-warning" data-count="1"></i>
-      <a href="javascript:;" class="icon-parsing-error"></a>
+      <a href="javascript:;" class="icon-parsing-error" v-show="plugin.identifier === 'error.parsing'"></a>
     </h2>
-    <div class="plugin-command-item">
-      <h3>Export Animation</h3>
-      <input type="text" placeholder="⌘s" readonly>
-      <button class="button button-delete"></button>
-    </div>
-    <div class="plugin-command-item conflicting">
-      <h3>Create Animation</h3>
-      <input type="text" placeholder="⌘D" readonly>
-      <button class="button button-delete"></button>
-    </div>
-    <div class="plugin-command-item">
-      <h3>Edit Animation</h3>
-      <input type="text" placeholder="⌘Z" readonly>
-      <button class="button button-delete"></button>
+    <div class="plugin-command-item"
+      v-for="command in plugin.commands"
+      :key="command.identifier">
+      <h3 v-text="command.name"></h3>
+      <input type="text"
+        tabindex="-2"
+        :placeholder="command.shortcut | shortcut"
+        readonly>
+      <button class="button button-delete"
+        :disabled="!command.shortcut"></button>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'pluginGroup',
+  props: {
+    plugin: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    toggle() {
+      this.$set(this.plugin, 'expanded', !this.plugin.expanded);
+    },
+  },
 };
 </script>
 
@@ -149,6 +158,10 @@ export default {
       width: $size;
       height: $size;
       background: url('../../../assets/icon_clear.png') no-repeat center/18px;
+
+      &:disabled {
+        visibility: hidden;
+      }
     }
 
     &.conflicting{
@@ -175,7 +188,11 @@ export default {
   }
 
   &.collapse {
-    max-height: $s-plugin-title-height + 1 !important;
+    max-height: $s-plugin-title-height !important;
+
+    h2::before {
+      transform: rotate(-180deg);
+    }
   }
 }
 </style>
