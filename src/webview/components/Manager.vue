@@ -23,28 +23,32 @@
         </transition>
       </button>
     </header>
-    <main>
+    <main class="plugin-list"
+      :class="{ empty: isEmpty }"
+      data-empty="No matching plugins or commands here">
       <plugin-group v-for="plugin in plugins"
         :key="plugin.identifier"
         :plugin="plugin">
       </plugin-group>
-      <div class="empty-tips" v-show="!plugins.length">No matching plugins or commands here</div>
     </main>
     <footer>
       <transition name="dropdown">
         <ul class="dropdown-menu right-top conflict-details" v-show="dropdown.conflicts">
           <li v-for="conflict in conflicts" :key="conflict.name">
-            <a href="javascript:;">
+            <a href="javascript:;" @click="filter('shortcut', conflict.name)">
               <kbd>{{ conflict.name | shortcut }}</kbd>
               <span>x{{ conflict.count }}</span>
             </a>
           </li>
         </ul>
       </transition>
-      <div class="status-bar-wrapper">
+      <div class="status-bar-wrapper"
+        :class="{
+          'in-filtering': isFiltered
+        }">
         <div class="status-bar-inner">
           <div class="status-bar-item">
-            <button class="button button-display-all">Display All</button>
+            <button class="button button-display-all" @click="displayAll">Display All</button>
           </div>
           <div class="status-bar-item">
             <button class="button button-conflict-warning"
@@ -63,6 +67,7 @@
 </template>
 <script>
 import bridge from '../services/bridge';
+import eventBus from '../services/event-bus';
 import PluginGroup from './PluginGroup';
 
 export default {
@@ -75,6 +80,8 @@ export default {
         conflicts: false,
       },
       keywords: '',
+      isFiltered: false,
+      isEmpty: false,
       plugins: [],
       shortcutMapping: {},
     };
@@ -116,7 +123,8 @@ export default {
 
         return result;
       }, {}));
-      // generate plugin data
+
+      // generate plugin data with conflict status
       this.$set(this, 'plugins', arg.map((plugin) => {
         plugin.commands.forEach((command) => {
           if (command.shortcut && this.shortcutMapping[command.shortcut].length > 1) {
@@ -146,6 +154,18 @@ export default {
           this.dropdown[target] = true;
         });
       }
+    },
+    filter(type, arg) {
+      this.isFiltered = true;
+      this.isEmpty = true;
+      eventBus.$once('$filter:result', () => {
+        this.isEmpty = false;
+      });
+      eventBus.$emit(`$filter:${type}`, arg);
+    },
+    displayAll() {
+      this.isFiltered = false;
+      eventBus.$emit('$filter:keyword');
     },
   },
   components: { PluginGroup },
@@ -196,8 +216,24 @@ header {
   }
 }
 
-main {
-  padding-bottom: $s-footer-height;
+.plugin-list {
+  margin-bottom: $s-footer-height - 1;
+  border-bottom: 1px solid #ddd;
+
+  &.empty {
+    margin: 80px 0 20px;
+    height: 20px;
+    padding-top: 97px;
+    color: #bbb;
+    line-height: 20px;
+    text-align: center;
+    background: url('../../../assets/empty_tips.png') center 0/77px no-repeat;
+    border-bottom: none;
+
+    &::before {
+      content: attr(data-empty);
+    }
+  }
 }
 
 .empty-tips {

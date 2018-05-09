@@ -1,11 +1,12 @@
 <template>
   <div class="plugin-group"
+    v-show="!hiddenMapping.$"
     :style="{ 'max-height': `${plugin.commands.length * 50 + 60}px` }"
     :class="{
-      collapse: !plugin.expanded,
+      collapse: !isExpanded,
       'conflicts-inside': plugin.conflicts
     }">
-    <h2 @click="toggle">
+    <h2 @click="isExpanded = !isExpanded">
       {{ plugin.name }}
       <i class="icon-warning" :data-count="plugin.conflicts"></i>
       <a href="javascript:;" class="icon-parsing-error" v-show="plugin.identifier === 'error.parsing'"></a>
@@ -13,8 +14,9 @@
     <div class="plugin-command-item"
       :class="{ conflicting: command.conflicting }"
       v-for="command in plugin.commands"
-      :key="command.identifier">
-      <h3 v-text="command.name"></h3>
+      :key="command.identifier"
+      v-show="!hiddenMapping[command.identifier]">
+      <h3 v-text="command.name || '(Unknown)'"></h3>
       <input type="text"
         tabindex="-2"
         :placeholder="command.shortcut | shortcut"
@@ -25,17 +27,58 @@
   </div>
 </template>
 <script>
+import eventBus from '../services/event-bus';
+
 export default {
   name: 'pluginGroup',
+  data() {
+    return {
+      isExpanded: false,
+      hiddenMapping: {},
+    };
+  },
   props: {
     plugin: {
       type: Object,
       required: true,
     },
   },
+  beforeCreate() {
+    eventBus.$on('$filter:shortcut', (str) => {
+      this.updateHiddenMapping({ shortcut: str });
+    });
+    eventBus.$on('$filter:keyword', (str) => {
+      this.updateHiddenMapping({ keyword: str });
+    });
+  },
   methods: {
-    toggle() {
-      this.$set(this.plugin, 'expanded', !this.plugin.expanded);
+    updateHiddenMapping(filter) {
+      const result = { $: true };
+
+      this.plugin.commands.forEach((command) => {
+        if (
+          this.plugin.name.indexOf(filter.keyword) === -1 &&
+          (command.name || '').indexOf(filter.keyword) === -1 &&
+          command.shortcut !== filter.shortcut
+        ) {
+          // hide this command if cannot match keyword/shortcut both of plugin and command
+          result[command.identifier] = true;
+        } else if (result.$) {
+          // display plugin self if there has any match
+          delete result.$;
+          eventBus.$emit('$filter:result');
+        }
+      });
+
+      if (Object.keys(result).length) {
+        // expand if filtered some commands
+        this.isExpanded = true;
+      } else {
+        // collapse if match all commands
+        this.isExpanded = false;
+      }
+
+      this.hiddenMapping = result;
     },
   },
 };
@@ -173,6 +216,7 @@ export default {
       background-image: linear-gradient(to right, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0));
 
       &::after {
+        display: block;
         left: 0;
         height: 2px;
         background: transparent;
