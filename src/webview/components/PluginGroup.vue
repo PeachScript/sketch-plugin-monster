@@ -1,13 +1,17 @@
 <template>
-  <div class="plugin-group conflicts-inside"
+  <div class="plugin-group"
     :style="{ 'max-height': `${plugin.commands.length * 50 + 60}px` }"
-    :class="{ collapse: !plugin.expanded }">
+    :class="{
+      collapse: !plugin.expanded,
+      'conflicts-inside': plugin.conflicts
+    }">
     <h2 @click="toggle">
       {{ plugin.name }}
-      <i class="icon-warning" data-count="1"></i>
+      <i class="icon-warning" :data-count="plugin.conflicts"></i>
       <a href="javascript:;" class="icon-parsing-error" v-show="plugin.identifier === 'error.parsing'"></a>
     </h2>
     <div class="plugin-command-item"
+      :class="{ conflicting: command.conflicting }"
       v-for="command in plugin.commands"
       :key="command.identifier">
       <h3 v-text="command.name"></h3>
@@ -74,6 +78,7 @@ export default {
     }
 
     .icon-warning {
+      display: none;
       width: auto;
       line-height: 16px;
       font-style: normal;
@@ -184,6 +189,10 @@ export default {
   &.conflicts-inside {
     h2 {
       color: $c-error;
+
+      .icon-warning {
+        display: inline-block;
+      }
     }
   }
 

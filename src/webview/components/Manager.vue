@@ -33,16 +33,10 @@
     <footer>
       <transition name="dropdown">
         <ul class="dropdown-menu right-top conflict-details" v-show="dropdown.conflicts">
-          <li>
+          <li v-for="conflict in conflicts" :key="conflict.name">
             <a href="javascript:;">
-              <kbd>⌘S</kbd>
-              <span>x2</span>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <kbd>⌘T</kbd>
-              <span>x4</span>
+              <kbd>{{ conflict.name | shortcut }}</kbd>
+              <span>x{{ conflict.count }}</span>
             </a>
           </li>
         </ul>
@@ -54,10 +48,11 @@
           </div>
           <div class="status-bar-item">
             <button class="button button-conflict-warning"
-              data-count="10"
+              v-show="conflicts.length"
+              :data-count="conflicts.length"
               @click.self="toggleDropdown('conflicts')"></button>
-            <span>
-              Warning: There are 6 operations shortcut keys in conflict!
+            <span v-show="conflicts.length">
+              Warning: There are {{ conflicts.length }} operations shortcut keys in conflict!
             </span>
           </div>
           <div class="status-bar-item notification">sdfadfafdsaf</div>
@@ -81,11 +76,58 @@ export default {
       },
       keywords: '',
       plugins: [],
+      shortcutMapping: {},
     };
+  },
+  computed: {
+    conflicts() {
+      return Object.keys(this.shortcutMapping).reduce((result, name) => {
+        const group = this.shortcutMapping[name];
+
+        if (group.length > 1) {
+          result.push({
+            name,
+            count: group.length,
+          });
+        }
+
+        return result;
+      }, []);
+    },
   },
   beforeCreate() {
     bridge.on('$manager:init', (arg) => {
-      this.$set(this, 'plugins', arg);
+      // generate shortcut mapping
+      this.$set(this, 'shortcutMapping', arg.reduce((result, plugin) => {
+        plugin.commands.forEach((command) => {
+          if (command.shortcut) {
+            const item = {
+              pluginName: plugin.name,
+              commandName: command.name,
+            };
+
+            if (result[command.shortcut]) {
+              result[command.shortcut].push(item);
+            } else {
+              result[command.shortcut] = [item]; // eslint-disable-line no-param-reassign
+            }
+          }
+        });
+
+        return result;
+      }, {}));
+      // generate plugin data
+      this.$set(this, 'plugins', arg.map((plugin) => {
+        plugin.commands.forEach((command) => {
+          if (command.shortcut && this.shortcutMapping[command.shortcut].length > 1) {
+            /* eslint-disable no-param-reassign */
+            command.conflicting = true;
+            plugin.conflicts = plugin.conflicts ? (plugin.conflicts + 1) : 1;
+            /* eslint-enable no-param-reassign */
+          }
+        });
+        return plugin;
+      }));
     });
   },
   mounted() {
