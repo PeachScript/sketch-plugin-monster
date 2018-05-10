@@ -54,12 +54,13 @@ export default {
   methods: {
     updateHiddenMapping(filter) {
       const result = { $: true };
+      const pluginName = this.plugin.name.toLowerCase();
 
       this.plugin.commands.forEach((command) => {
         if (
-          this.plugin.name.indexOf(filter.keyword) === -1 &&
-          (command.name || '').indexOf(filter.keyword) === -1 &&
-          command.shortcut !== filter.shortcut
+          pluginName.indexOf(filter.keyword) === -1 &&
+          (command.name || '').toLowerCase().indexOf(filter.keyword) === -1 &&
+          command.shortcut !== (filter.shortcut || '--') // to prevent match no shortcut command
         ) {
           // hide this command if cannot match keyword/shortcut both of plugin and command
           result[command.identifier] = true;
@@ -103,6 +104,10 @@ export default {
     border-bottom: 1px solid #ddd;
     cursor: pointer;
     user-select: none;
+
+    &:hover {
+      background-color: #fcfcfc;
+    }
 
     &::before {
       $size: 24px;

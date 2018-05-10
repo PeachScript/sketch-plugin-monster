@@ -1,7 +1,10 @@
 <template>
   <div>
     <header>
-      <input v-model="keywords" type="search" spellcheck="false" placeholder="Type any keywords of plugins or commands...">
+      <input type="search" spellcheck="false"
+        v-model.trim="keywords"
+        @input="search"
+        placeholder="Type any keywords of plugins or commands...">
       <button class="button button-dropdown button-export-import"
         @click.self="toggleDropdown('importExport')">
         <transition name="dropdown">
@@ -80,6 +83,7 @@ export default {
         conflicts: false,
       },
       keywords: '',
+      searchTimer: null,
       isFiltered: false,
       isEmpty: false,
       plugins: [],
@@ -155,6 +159,15 @@ export default {
         });
       }
     },
+    search(delay = 100) {
+      clearTimeout(this.searchTimer);
+      this.searchTimer = setTimeout(() => {
+        this.filter('keyword', this.keywords.toLowerCase());
+        if (!this.keywords) {
+          this.isFiltered = false;
+        }
+      }, delay);
+    },
     filter(type, arg) {
       this.isFiltered = true;
       this.isEmpty = true;
@@ -164,8 +177,8 @@ export default {
       eventBus.$emit(`$filter:${type}`, arg);
     },
     displayAll() {
-      this.isFiltered = false;
-      eventBus.$emit('$filter:keyword');
+      this.keywords = '';
+      this.search(0);
     },
   },
   components: { PluginGroup },
@@ -218,7 +231,10 @@ header {
 
 .plugin-list {
   margin-bottom: $s-footer-height - 1;
-  border-bottom: 1px solid #ddd;
+
+  &:not(.empty) {
+    border-bottom: 1px solid #ddd;
+  }
 
   &.empty {
     margin: 80px 0 20px;
@@ -228,7 +244,6 @@ header {
     line-height: 20px;
     text-align: center;
     background: url('../../../assets/empty_tips.png') center 0/77px no-repeat;
-    border-bottom: none;
 
     &::before {
       content: attr(data-empty);
