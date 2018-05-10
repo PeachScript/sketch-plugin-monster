@@ -1,0 +1,267 @@
+{
+  "commands": {
+    "manageShortcuts": "插件快捷鍵管理",
+    "exportShortcuts": "匯出快捷鍵配置...",
+    "importShortcuts": "匯入快捷鍵配置...",
+    "checkForUpdates": "檢查更新...",
+    "linkFAQ": "常見問題",
+    "linkFeedback": "意見反饋"
+  },
+  "webview": {
+    "usage": "用法：點擊想要修改的快捷鍵，然後在鍵盤上按下新的快捷鍵。",
+    "searchTips": "鍵入插件或命令的關鍵字...",
+    "noResultTips": "未發現匹配的插件或命令",
+    "conflict": "錯誤: 你設定的快捷鍵與 { conflictTarget } 的『{ shortcutName }』操作衝突了！",
+    "conflictMulti": "多項",
+    "success": "設定快捷鍵成功！",
+    "notSupport": "错误：你選擇的按鍵不支持作為快捷鍵！",
+    "clear": "清除快捷鍵成功！",
+    "conflictWarning": "警告: 有 { conflictCount } 項操作的快捷鍵出現衝突！",
+    "none": "無",
+    "clearFilter": "顯示全部",
+    "parsingErrorTips": "配置解析出錯，點擊了解更多"
+  },
+  "checkForUpdates": {
+    "available": "檢測到新版本！當前版本是 { currentVersion }，最新版本是 { latestVersion }，下載最新版嗎？",
+    "unavailable": "恭喜，當前版本就是最新版！🎉🎉🎉",
+    "btnDownload": "即刻下載",
+    "btnLater": "以後再說",
+    "btnDone": "好"
+  },
+  "exportAndImport": {
+    "exportTitle": "匯出快捷鍵配置",
+    "exportSuccess": "匯出快捷鍵配置成功！",
+    "importReadError": "讀取配置文件出錯！",
+    "importPartOfShortcuts": "由於在此計算機中找不到相應插件，這些插件的快捷鍵匯入失敗：\n\n",
+    "importSuccess": "匯入快捷鍵配置成功！",
+    "btnKnow": "明白了"
+  },
+  "sketchShortcuts": {
+    "0": [
+      "設定圖層透明度",
+      "設定漸變游標的位置"
+    ],
+    "1": [
+      "設定圖層透明度",
+      "設定鋼筆頂點為直角型",
+      "設定漸變游標的位置"
+    ],
+    "2": [
+      "設定圖層透明度",
+      "設定鋼筆頂點為對稱型",
+      "設定漸變游標的位置"
+    ],
+    "3": [
+      "設定圖層透明度",
+      "設定鋼筆頂點為分離型",
+      "設定漸變游標的位置"
+    ],
+    "4": [
+      "設定圖層透明度",
+      "設定鋼筆頂點為不對稱型",
+      "設定漸變游標的位置"
+    ],
+    "5": [
+      "設定圖層透明度",
+      "設定漸變游標的位置"
+    ],
+    "6": [
+      "設定圖層透明度",
+      "設定漸變游標的位置"
+    ],
+    "7": [
+      "設定圖層透明度",
+      "設定漸變游標的位置"
+    ],
+    "8": [
+      "設定圖層透明度",
+      "設定漸變游標的位置"
+    ],
+    "9": [
+      "設定圖層透明度",
+      "設定漸變游標的位置"
+    ],
+    "cmd c": "拷貝",
+    "cmd x": "剪下",
+    "cmd v": "貼上",
+    "shift cmd v": "貼上到所選",
+    "shift cmd n": "建立頁面",
+    "cmd =": "放大",
+    "cmd -": "縮小",
+    "ctrl r": "顯示/隱藏標尺",
+    "ctrl p": "顯示/隱藏像素",
+    "ctrl x": "顯示/隱藏像素網格",
+    "ctrl g": "顯示/隱藏網格",
+    "ctrl l": "顯示/隱藏佈局參考線",
+    "ctrl e": "顯示/隱藏切片",
+    "ctrl f": "顯示/隱藏原型",
+    "cmd f": "查詢圖層",
+    "ctrl cmd k": "執行自定義指令碼",
+    "cmd z": "還原",
+    "shift cmd z": "重做",
+    "cmd n": "建立",
+    "cmd o": "開啟",
+    "cmd w": "關閉",
+    "cmd s": "儲存",
+    "shift cmd s": "拷貝",
+    "option shift cmd s": "另存為",
+    "shift cmd p": "頁面設定",
+    "cmd ,": "打開偏好設定窗口",
+    "cmd h": "隱藏 Sketch",
+    "cmd q": "退出 Sketch",
+    "shift cmd ?": "打開幫助菜單",
+    "cmd p": "打開預覽窗口",
+    "r": [
+      "插入矩形",
+      "右側固定縮放"
+    ],
+    "o": "插入橢圓形",
+    "l": [
+      "插入直線",
+      "左側固定縮放"
+    ],
+    "u": "插入圓角矩形",
+    "v": "使用向量工具",
+    "p": "使用鋼筆工具",
+    "t": [
+      "插入文本圖層",
+      "頂部固定縮放"
+    ],
+    "a": "插入畫板",
+    "s": "插入切片",
+    "h": [
+      "熱區工具",
+      "在指定高度上匯出圖層。例如：512h"
+    ],
+    "cmd a": "全選",
+    "shift cmd a": "全選所有畫板",
+    "shift cmd j": "在圖層列表中顯示",
+    "cmd d": "複製",
+    "←": "將圖層向左移動 1px",
+    "↑": [
+      "將圖層向上移動 1px",
+      "將值自增 1"
+    ],
+    "→": "將圖層向右移動 1px",
+    "↓": [
+      "將圖層向下 1px",
+      "將值自減 1"
+    ],
+    "shift ←": "將圖層向左移動 10px",
+    "shift ↑": [
+      "將圖層向上移動 10px",
+      "將值自增 10"
+    ],
+    "shift →": "將圖層向右移動 10px",
+    "shift ↓": [
+      "將圖層向下移動 10px",
+      "將值自減 10"
+    ],
+    "shift k": "縮放圖層",
+    "cmd →": "將元素寬度增加 1px",
+    "cmd ↓": "將元素高度增加 1px",
+    "cmd ←": "將元素寬度減少 1px",
+    "cmd ↑": "將元素高度減少 1px",
+    "shift cmd →": "將元素寬度增加 10px",
+    "shift cmd ↓": "將元素高度增加 10px",
+    "shift cmd ←": "將元素寬度減少 10px",
+    "shift cmd ↑": "將元素高度減少 10px",
+    "enter": [
+      "編輯圖層",
+      "在圖層組中選擇圖層",
+      "確認更改"
+    ],
+    "escape": [
+      "完成編輯",
+      "選擇父級圖層組",
+      "放棄更改"
+    ],
+    "⌫": "刪除圖層",
+    "option cmd c": "拷貝樣式",
+    "option cmd v": "貼上樣式",
+    "ctrl s": "同步共享樣式",
+    "option ctrl s": "重設共享樣式",
+    "w": [
+      "添加鏈接到畫板",
+      "在指定寬度上匯出圖層。例如：512w"
+    ],
+    "f": "切換填充狀態",
+    "b": [
+      "切换边框",
+      "底部固定缩放"
+    ],
+    "ctrl c": "拾色器",
+    "shift cmd t": "變換圖層",
+    "shift cmd r": "旋轉圖層",
+    "ctrl cmd m": "使用遮罩",
+    "cmd escape": "返回实例",
+    "option cmd u": "合併圖層",
+    "option cmd s": "減去頂層",
+    "option cmd i": "選取圖層重疊部分",
+    "ctrl cmd x": "顯示圖層不同部分",
+    "option cmd o": "打開/閉合路徑",
+    "tab": [
+      "選擇下一個頂點",
+      "選取下一個圖層",
+      "選擇下一個文本框"
+    ],
+    "option": "顯示所有控制點",
+    "option shift cmd v": "粘貼為富文本",
+    "cmd t": "修改字型",
+    "cmd b": "粗體",
+    "cmd i": "斜體",
+    "cmd u": "下劃線",
+    "option cmd =": "增大字號",
+    "option cmd -": "减小字號",
+    "ctrl option l": "加寬字符間隙",
+    "ctrl option t": "縮緊字符間隙",
+    "shift cmd [": "左對齊",
+    "shift cmd \\": "居中對齊",
+    "shift cmd ]": "右對齊",
+    "option cmd  space": "Emoji 表情 & 符號",
+    "shift cmd o": "轉化為外框",
+    "shift return": "插入換行符",
+    "cmd g": "群組圖層",
+    "shift cmd g": "取消群組圖層",
+    "cmd r": "重命名圖層",
+    "shift tab": [
+      "選取上一個圖層",
+      "選擇下一個文本框"
+    ],
+    "option cmd ↑": "上移一層",
+    "ctrl option cmd ↑": "置前",
+    "option cmd ↓": "下移一層",
+    "ctrl option cmd ↓": "置後",
+    "option shift cmd ↑": "上移（離開組或畫板）",
+    "ctrl cmd h": "水平分佈",
+    "ctrl cmd v": "垂直分佈",
+    "shift cmd h": "顯示/隱藏圖層",
+    "shift cmd l": "鎖定/解鎖圖層",
+    "shift cmd e": "匯出",
+    "cmd e": "匯出選中圖層",
+    "cmd 0": "縮放畫板到實際大小",
+    "cmd 1": "縮放畫板到適應屏幕大小",
+    "cmd 2": "縮放到選中圖層大小",
+    "cmd 3": "居中畫布到所選圖層",
+    "shift `": "臨時縮放至 100%",
+    "ctrl cmd f": "切换全屏",
+    "option cmd 1": "顯示/隱藏圖層列表",
+    "option cmd 2": "顯示/隱藏檢查器",
+    "cmd .": "演示模式",
+    "option cmd t": "顯示/隱藏工具欄",
+    "option tab": "定位到檢查器",
+    "option ↑": "將值自增 0.1",
+    "option ↓": "將值自減 0.1",
+    "c": "中心固定縮放",
+    "m": "中間固定縮放",
+    "shift =": "增加",
+    "-": "減少",
+    "shift 8": "乘",
+    "/": "除",
+    "shift 5": "將圖層大小調整為父級圖層組或畫板的百分比值",
+    ";": "值分隔符。例如：40;0;40;0",
+    "x": "倍增。例如： 2x 表示兩倍大小",
+    "ctrl cmd r": "運行上次使用的插件命令",
+    "=": "在兩個存在的漸變頂點間直接選擇停止頂點"
+  }
+}
