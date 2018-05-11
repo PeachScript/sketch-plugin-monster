@@ -125,9 +125,23 @@ export default {
 @import '../scss/variables';
 
 .plugin-group {
+  position: relative;
   border-top: 1px solid #ddd;
   overflow: hidden;
   transition: max-height 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  // hide last line
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    height: 1px;
+    background-color: #fbfbfb;
+  }
 
   h2 {
     position: relative;
@@ -203,10 +217,6 @@ export default {
       background-color: #ddd;
     }
 
-    &:last-child::after {
-      display: none;
-    }
-
     h3 {
       flex: 1;
       color: #666;
@@ -257,7 +267,7 @@ export default {
       background-image: linear-gradient(to right, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0));
 
       &::after {
-        display: block;
+        z-index: 2;
         left: 0;
         height: 2px;
         background: transparent;
@@ -283,6 +293,10 @@ export default {
 
   &.collapse {
     max-height: $s-plugin-title-height !important;
+
+    &::after {
+      display: none;
+    }
 
     h2::before {
       transform: rotate(-180deg);
