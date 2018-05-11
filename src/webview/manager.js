@@ -1,5 +1,11 @@
 import Vue from 'vue';
+import VueI18n from 'vue-i18n';
 import Manager from './components/Manager';
+import en from '../i18n/en.json';
+import zhHans from '../i18n/zh-Hans.json';
+import zhHant from '../i18n/zh-Hant.json';
+
+Vue.use(VueI18n);
 
 Vue.filter('shortcut', (input = '') => {
   const mapping = {
@@ -17,5 +23,14 @@ Vue.filter('shortcut', (input = '') => {
 
 export default new Vue({
   el: '#app',
+  i18n: new VueI18n({
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages: {
+      en,
+      'zh-Hans': zhHans,
+      'zh-Hant': zhHant,
+    },
+  }),
   render: h => h(Manager),
 });

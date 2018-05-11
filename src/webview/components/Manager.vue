@@ -4,13 +4,13 @@
       <input type="search" spellcheck="false"
         v-model.trim="keywords"
         @input="search"
-        placeholder="Type any keywords of plugins or commands...">
+        :placeholder="$t('webview.searchTips')">
       <button class="button button-dropdown button-export-import"
         @click.self="toggleDropdown('importExport')">
         <transition name="dropdown">
           <ul class="dropdown-menu left-bottom" v-show="dropdown.importExport">
-            <li><a href="javascript:;">Import Shortcut Configurations...</a></li>
-            <li><a href="javascript:;">Export Shortcut Configurations...</a></li>
+            <li><a href="javascript:;" v-text="$t('commands.importShortcuts')"></a></li>
+            <li><a href="javascript:;" v-text="$t('commands.exportShortcuts')"></a></li>
           </ul>
         </transition>
       </button>
@@ -18,9 +18,9 @@
         @click.self="toggleDropdown('settings')">
         <transition name="dropdown">
           <ul class="dropdown-menu left-bottom" v-show="dropdown.settings">
-            <li><a href="javascript:;">Check For Updates...</a></li>
-            <li><a href="javascript:;">FAQ</a></li>
-            <li><a href="javascript:;">Feedback</a></li>
+            <li><a href="javascript:;" v-text="$t('commands.checkForUpdates')"></a></li>
+            <li><a href="javascript:;" v-text="$t('commands.linkFAQ')"></a></li>
+            <li><a href="javascript:;" v-text="$t('commands.linkFeedback')"></a></li>
             <li><a href="javascript:;" disabled="disabled">v0.3.1</a></li>
           </ul>
         </transition>
@@ -51,18 +51,20 @@
         }">
         <div class="status-bar-inner">
           <div class="status-bar-item">
-            <button class="button button-display-all" @click="displayAll">Display All</button>
+            <button class="button button-display-all"
+              @click="displayAll"
+              v-text="$t('webview.clearFilter')"></button>
           </div>
           <div class="status-bar-item">
             <button class="button button-conflict-warning"
               v-show="conflicts.length"
               :data-count="conflicts.length"
               @click.self="toggleDropdown('conflicts')"></button>
-            <span v-show="conflicts.length">
-              Warning: There are {{ conflicts.length }} operations shortcut keys in conflict!
+            <span v-show="conflicts.length"
+              v-text="$t('webview.conflictWarning', { conflictCount: conflicts.length })">
             </span>
           </div>
-          <div class="status-bar-item notification">sdfadfafdsaf</div>
+          <div class="status-bar-item notification"></div>
         </div>
       </div>
     </footer>
@@ -107,9 +109,9 @@ export default {
     },
   },
   beforeCreate() {
-    bridge.on('$manager:init', (arg) => {
+    bridge.on('$manager:init', ({ plugins, lang }) => {
       // generate shortcut mapping
-      this.$set(this, 'shortcutMapping', arg.reduce((result, plugin) => {
+      this.$set(this, 'shortcutMapping', plugins.reduce((result, plugin) => {
         plugin.commands.forEach((command) => {
           if (command.shortcut) {
             const item = {
@@ -129,7 +131,7 @@ export default {
       }, {}));
 
       // generate plugin data with conflict status
-      this.$set(this, 'plugins', arg.map((plugin) => {
+      this.$set(this, 'plugins', plugins.map((plugin) => {
         plugin.commands.forEach((command) => {
           if (command.shortcut && this.shortcutMapping[command.shortcut].length > 1) {
             /* eslint-disable no-param-reassign */
@@ -140,6 +142,8 @@ export default {
         });
         return plugin;
       }));
+
+      this.$i18n.locale = lang;
     });
   },
   mounted() {

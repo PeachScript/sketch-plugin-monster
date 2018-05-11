@@ -1,5 +1,6 @@
 import plugin from './plugin';
 import BrowserWindow from 'sketch-module-web-view';
+import { system } from './config';
 
 const webViewPaths = {
   development: {
@@ -23,7 +24,10 @@ export function manageShortcuts(context) {
     alwaysOnTop: true,
   });
   const panel = browser.getNativeWindowHandle();
-  const plugins = plugin.get();
+  const initData = {
+    plugins: plugin.get(),
+    lang: system.lang,
+  };
 
   // to fix webview fixed element overflow bug
   browser.webContents.getNativeWebview().wantsLayer = true;
@@ -35,7 +39,7 @@ export function manageShortcuts(context) {
 
   // init webview after ready
   browser.on('ready-to-show', () => {
-    browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(plugins)})`);
+    browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
   });
 
   // open url

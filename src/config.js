@@ -14,14 +14,19 @@ export const identifiers = {
   nonexistent: 'error.nonexistent',
 };
 
+export const system = {
+  lang: NSLocale.preferredLanguages().firstObject().replace(/-\w+$/, ''),
+};
+
 export const i18n = {
   en,
   'zh-Hans': zhHans,
   'zh-Hant': zhHant,
-};
+}[system.lang] || en;
 
 export default {
   paths,
   identifiers,
+  system,
   i18n,
 };
