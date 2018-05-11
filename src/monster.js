@@ -42,6 +42,11 @@ export function manageShortcuts(context) {
     browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
   });
 
+  // listen event
+  browser.webContents.on('$updateShortcut', (pluginName, replacement) => {
+    plugin.updateShortcut(pluginName, replacement);
+  });
+
   // open url
   browser.loadURL(webViewPaths[process.env.NODE_ENV].manager);
 }

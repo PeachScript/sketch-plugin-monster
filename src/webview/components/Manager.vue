@@ -29,9 +29,10 @@
     <main class="plugin-list"
       :class="{ empty: isEmpty }"
       data-empty="No matching plugins or commands here">
-      <plugin-group v-for="plugin in plugins"
+      <plugin-group v-for="(plugin, $index) in plugins"
         :key="plugin.identifier"
-        :plugin="plugin">
+        :plugin="plugin"
+        @update:shortcut="updateHandler($index, $event)">
       </plugin-group>
     </main>
     <footer>
@@ -126,6 +127,7 @@ export default {
             const item = {
               pluginName: plugin.name,
               commandName: command.name,
+              identifier: command.identifier,
             };
 
             if (result[command.shortcut]) {
@@ -212,6 +214,55 @@ export default {
     clearNotification() {
       if (!this.notification.timer) {
         this.notification.msg = '';
+      }
+    },
+    updateHandler(index, replacement) {
+      const pluginConflicts = (
+        this.shortcutMapping[replacement.shortcut] ||
+        []
+      ).filter((item => item.identifier !== replacement.identifier));
+      const sketchConflicts = this.$t('sketchShortcuts')[replacement.shortcut];
+      const originalConflicts = this.shortcutMapping[replacement.original];
+
+      if (pluginConflicts.length) {
+        // notify error if conflict with other plugins
+        eventBus.$emit('$notification:error', {
+          content: this.$t('webview.conflict', {
+            conflictTarget: pluginConflicts[0].pluginName,
+            shortcutName: pluginConflicts[0].commandName,
+          }),
+          duration: 2000,
+        });
+      } else if (sketchConflicts) {
+        // notify error if conflict with Sketch
+        eventBus.$emit('$notification:error', {
+          content: this.$t('webview.conflict', {
+            conflictTarget: 'Sketch',
+            shortcutName: Array.isArray(sketchConflicts) ? this.$t('webview.conflictMulti') : sketchConflicts,
+          }),
+          duration: 2000,
+        });
+      } else {
+        // update shortcut
+        bridge.emit('$updateShortcut', this.plugins[index].fsName, replacement);
+        eventBus.$emit('$notification:success', {
+          content: this.$t('webview.success'),
+          duration: 2000,
+        });
+        this.$set(this.plugins[index].commands[replacement.index], 'shortcut', replacement.shortcut);
+
+        // update shortcut mapping
+        this.shortcutMapping[replacement.shortcut] = [{
+          pluginName: this.plugins[index].name,
+          commandName: this.plugins[index].commands[replacement.index].name,
+          identifier: replacement.identifier,
+        }];
+
+        // remove conflict if exists
+        if (originalConflicts) {
+          this.shortcutMapping[replacement.original] = originalConflicts
+            .filter(item => item.identifier !== replacement.identifier);
+        }
       }
     },
   },

@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import Manager from './components/Manager';
-import en from '../i18n/en.json';
-import zhHans from '../i18n/zh-Hans.json';
-import zhHant from '../i18n/zh-Hant.json';
+import { i18n } from './config';
 
 Vue.use(VueI18n);
 
@@ -26,11 +24,7 @@ export default new Vue({
   i18n: new VueI18n({
     locale: 'en',
     fallbackLocale: 'en',
-    messages: {
-      en,
-      'zh-Hans': zhHans,
-      'zh-Hant': zhHant,
-    },
+    messages: i18n,
   }),
   render: h => h(Manager),
 });

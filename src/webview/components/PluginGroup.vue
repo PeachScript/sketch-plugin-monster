@@ -13,13 +13,14 @@
     </h2>
     <div class="plugin-command-item"
       :class="{ conflicting: command.conflicting }"
-      v-for="command in plugin.commands"
+      v-for="(command, $index) in plugin.commands"
       :key="command.identifier"
       v-show="!hiddenMapping[command.identifier]">
       <h3 v-text="command.name || '(Unknown)'"></h3>
       <input type="text"
         tabindex="-2"
         :placeholder="command.shortcut | shortcut"
+        @keydown.prevent="setShortcut($event, $index, command)"
         readonly>
       <button class="button button-delete"
         :disabled="!command.shortcut"></button>
@@ -28,6 +29,7 @@
 </template>
 <script>
 import eventBus from '../services/event-bus';
+import { keyCodePresets } from '../config';
 
 export default {
   name: 'pluginGroup',
@@ -80,6 +82,35 @@ export default {
       }
 
       this.hiddenMapping = result;
+    },
+    setShortcut(ev, index, command) {
+      const validKey = keyCodePresets[ev.keyCode];
+
+      if (validKey) {
+        const keys = [validKey];
+        let shortcut = '';
+
+        // handle special keys
+        if (ev.metaKey) keys.unshift('cmd');
+        if (ev.shiftKey) keys.unshift('shift');
+        if (ev.altKey) keys.unshift('option');
+        if (ev.ctrlKey) keys.unshift('ctrl');
+
+        // generate new shortcut
+        shortcut = keys.join(' ');
+
+        if (shortcut !== command.shortcut) {
+          // emit update event
+          this.$emit('update:shortcut', {
+            index,
+            shortcut: keys.join(' '),
+            original: command.shortcut,
+            identifier: command.identifier,
+          });
+        }
+      } else if (ev.keyCode === 27) {
+        ev.target.blur();
+      }
     },
   },
 };
