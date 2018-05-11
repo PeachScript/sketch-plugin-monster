@@ -23,7 +23,12 @@
         @keydown.prevent="setShortcut($event, $index, command)"
         readonly>
       <button class="button button-delete"
-        :disabled="!command.shortcut"></button>
+        :disabled="!command.shortcut"
+        @click="$emit('update:shortcut', {
+          index: $index,
+          original: command.shortcut,
+          identifier: command.identifier
+        })"></button>
     </div>
   </div>
 </template>

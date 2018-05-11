@@ -246,17 +246,19 @@ export default {
         // update shortcut
         bridge.emit('$updateShortcut', this.plugins[index].fsName, replacement);
         eventBus.$emit('$notification:success', {
-          content: this.$t('webview.success'),
+          content: this.$t(replacement.shortcut ? 'webview.success' : 'webview.clear'),
           duration: 2000,
         });
         this.$set(this.plugins[index].commands[replacement.index], 'shortcut', replacement.shortcut);
 
         // update shortcut mapping
-        this.shortcutMapping[replacement.shortcut] = [{
-          pluginName: this.plugins[index].name,
-          commandName: this.plugins[index].commands[replacement.index].name,
-          identifier: replacement.identifier,
-        }];
+        if (replacement.shortcut) {
+          this.shortcutMapping[replacement.shortcut] = [{
+            pluginName: this.plugins[index].name,
+            commandName: this.plugins[index].commands[replacement.index].name,
+            identifier: replacement.identifier,
+          }];
+        }
 
         // remove conflict if exists
         if (originalConflicts) {
