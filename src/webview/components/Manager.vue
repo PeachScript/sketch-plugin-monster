@@ -47,8 +47,10 @@
       </transition>
       <div class="status-bar-wrapper"
         :class="{
-          'in-filtering': isFiltered
-        }">
+          'in-filtering': isFiltered,
+          'in-notification': notification.timer,
+        }"
+        @transitionend.self="clearNotification">
         <div class="status-bar-inner">
           <div class="status-bar-item">
             <button class="button button-display-all"
@@ -64,7 +66,9 @@
               v-text="$t('webview.conflictWarning', { conflictCount: conflicts.length })">
             </span>
           </div>
-          <div class="status-bar-item notification"></div>
+          <div class="status-bar-item notification"
+            :class="notification.type"
+            v-text="notification.msg"></div>
         </div>
       </div>
     </footer>
@@ -90,6 +94,11 @@ export default {
       isEmpty: false,
       plugins: [],
       shortcutMapping: {},
+      notification: {
+        type: 'success',
+        timer: null,
+        msg: '',
+      },
     };
   },
   computed: {
@@ -152,6 +161,14 @@ export default {
         this.dropdown[key] = false;
       });
     });
+
+    eventBus.$on('$notification:success', (conf) => {
+      this.notify('success', conf.content || conf, conf.duration);
+    });
+
+    eventBus.$on('$notification:error', (conf) => {
+      this.notify('error', conf.content || conf, conf.duration);
+    });
   },
   methods: {
     toggleDropdown(target) {
@@ -183,6 +200,19 @@ export default {
     displayAll() {
       this.keywords = '';
       this.search(0);
+    },
+    notify(type, msg, duration) {
+      clearTimeout(this.notification.timer);
+      this.notification.msg = msg;
+      this.notification.type = type;
+      this.notification.timer = setTimeout(() => {
+        this.notification.timer = null;
+      }, duration || msg.length * 80);
+    },
+    clearNotification() {
+      if (!this.notification.timer) {
+        this.notification.msg = '';
+      }
     },
   },
   components: { PluginGroup },
