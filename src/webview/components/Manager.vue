@@ -10,7 +10,12 @@
         <transition name="dropdown">
           <ul class="dropdown-menu left-bottom" v-show="dropdown.importExport">
             <li><a href="javascript:;" v-text="$t('commands.importShortcuts')"></a></li>
-            <li><a href="javascript:;" v-text="$t('commands.exportShortcuts')"></a></li>
+            <li>
+              <a href="javascript:;"
+                v-text="$t('commands.exportShortcuts')"
+                @click="emitToBridge('$exportShortcuts')">
+              </a>
+            </li>
           </ul>
         </transition>
       </button>
@@ -173,6 +178,9 @@ export default {
     });
   },
   methods: {
+    emitToBridge(name, ...arg) {
+      bridge.emit(name, ...arg);
+    },
     toggleDropdown(target) {
       if (this.dropdown[target]) {
         this.dropdown[target] = false;

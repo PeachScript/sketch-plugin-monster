@@ -1,6 +1,7 @@
+import fs from '@skpm/fs';
 import pluginHandler from './plugin';
 import BrowserWindow from 'sketch-module-web-view';
-import { system } from './config';
+import { system, i18n } from './config';
 import { setTimeout } from './utils';
 
 const webViewPaths = {
@@ -50,7 +51,35 @@ export function manageShortcuts(context) {
   browser.webContents.on('$updateShortcut', (pluginName, replacement) => {
     pluginHandler.updateShortcut(pluginName, replacement);
   });
+  browser.webContents.on('$exportShortcuts', (pluginName, replacement) => {
+    exportShortcuts();
+  });
 
   // open url
   browser.loadURL(webViewPaths[process.env.NODE_ENV].manager);
+}
+
+export function exportShortcuts() {
+  const panel = NSSavePanel.savePanel();
+  const plugins = pluginHandler.get();
+  const output = plugins.map(plugin => ({
+    name: plugin.name,
+    identifier: plugin.identifier,
+    commands: plugin.commands.reduce((result, command) => {
+      if (command.shortcut) {
+        result[command.identifier] = command.shortcut;
+      }
+
+      return result;
+    }, {})
+  }));
+
+  panel.title = i18n.exportAndImport.exportTitle;
+  panel.nameFieldStringValue = 'plugin_monster_export';
+  panel.allowedFileTypes = ['json'];
+  panel.allowsOtherFileTypes = false;
+
+  if (panel.runModal()) {
+    fs.writeFileSync(panel.URL(), JSON.stringify(output, null, 2));
+  }
 }
