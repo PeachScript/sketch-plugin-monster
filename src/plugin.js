@@ -88,10 +88,11 @@ function sortShortcut(shortcut) {
 }
 
 const pluginHandler = {
+  manifests: {},
   get() {
     const result = [];
 
-    Object.keys(this.manifests).forEach((name) => {
+    Object.keys(this.paths).forEach((name) => {
       const manifest = this.getMainifest(name);
       const menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
 
@@ -115,19 +116,25 @@ const pluginHandler = {
     return result;
   },
   getMainifest(plugin) {
-    const mainfestPath = this.manifests[plugin];
-    let result = {
-      name: plugin,
-      identifier: config.identifiers.nonexistent,
-      commands: [],
-    };
+    let result;
 
-    if (mainfestPath) {
-      const content = safeJSONParser(fs.readFileSync(mainfestPath, 'utf8'));
+    if (this.manifests[plugin]) {
+      // read cache firstly
+      result = this.manifests[plugin];
+    } else if (this.paths[plugin]) {
+      // read manifest file
+      const content = safeJSONParser(fs.readFileSync(this.paths[plugin], 'utf8'));
 
-      result = content || {
+      result = this.manifests[plugin] = content || {
         name: plugin,
         identifier: config.identifiers.parseError,
+        commands: [],
+      };
+    } else {
+      // report not found
+      result = this.manifests[plugin] = {
+        name: plugin,
+        identifier: config.identifiers.nonexistent,
         commands: [],
       };
     }
@@ -137,8 +144,11 @@ const pluginHandler = {
   updateManifest(name, content) {
     const data = typeof content === 'string' ? content : JSON.stringify(content, null, 2);
 
-    if (this.manifests[name]) {
-      fs.writeFileSync(this.manifests[name], data);
+    if (this.paths[name]) {
+      // update cache
+      this.manifests[name] = data;
+      // update file
+      fs.writeFileSync(this.paths[name], data);
     }
   },
   updateShortcut(name, replacement) {
@@ -159,15 +169,15 @@ const pluginHandler = {
       }
     }
 
-    // write changes to mainfest
+    // write changes to manifest
     this.updateManifest(name, content);
   },
 };
 
-// init manifest data when read manifests property
-Object.defineProperty(pluginHandler, 'manifests', {
+// init manifest file paths when read paths property
+Object.defineProperty(pluginHandler, 'paths', {
   get() {
-    return this.__manifests || (this.__manifests = searchManifests());
+    return this.__paths || (this.__paths = searchManifests());
   },
 });
 
