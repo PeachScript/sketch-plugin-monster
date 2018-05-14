@@ -10,7 +10,7 @@ const fileManager = NSFileManager.defaultManager();
  * @param   {String} basePath   search path
  * @return  {Object}
  */
-function searchManifests(basePath, result = {}) {
+function searchManifests(basePath = config.paths.plugin, result = {}) {
   const files = fileManager.contentsOfDirectoryAtPath_error(basePath, null);
 
   Array.prototype.forEach.call(files, (item) => {
@@ -87,8 +87,7 @@ function sortShortcut(shortcut) {
   return result;
 }
 
-export default {
-  manifests: searchManifests(config.paths.plugin),
+const pluginHandler = {
   get() {
     const result = [];
 
@@ -164,3 +163,12 @@ export default {
     this.updateManifest(name, content);
   },
 };
+
+// init manifest data when read manifests property
+Object.defineProperty(pluginHandler, 'manifests', {
+  get() {
+    return this.__manifests || (this.__manifests = searchManifests());
+  },
+});
+
+export default pluginHandler;

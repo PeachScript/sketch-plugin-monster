@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="manager-container" :class="{ hide: !plugins.length }">
     <header>
       <input type="search" spellcheck="false"
         v-model.trim="keywords"
@@ -276,6 +276,46 @@ export default {
 </style>
 <style lang="scss" scoped>
 @import '../scss/variables';
+
+.manager-container {
+  > * {
+    transition: visibility 0.3s, opacity 0.3s;
+  }
+
+  &.hide {
+    > * {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    &::after {
+      $size: 35px;
+
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -$size/2;
+      margin-left: -$size/2;
+      display: block;
+      width: $size;
+      height: $size;
+      border: 3px solid #bbb;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      animation: linear rotate 0.8s infinite;
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+}
 
 header {
   display: flex;

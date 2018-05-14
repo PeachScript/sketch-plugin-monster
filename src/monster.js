@@ -1,6 +1,7 @@
-import plugin from './plugin';
+import pluginHandler from './plugin';
 import BrowserWindow from 'sketch-module-web-view';
 import { system } from './config';
+import { setTimeout } from './utils';
 
 const webViewPaths = {
   development: {
@@ -25,7 +26,7 @@ export function manageShortcuts(context) {
   });
   const panel = browser.getNativeWindowHandle();
   const initData = {
-    plugins: plugin.get(),
+    plugins: [],
     lang: system.lang,
   };
 
@@ -39,12 +40,15 @@ export function manageShortcuts(context) {
 
   // init webview after ready
   browser.on('ready-to-show', () => {
-    browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
+    setTimeout(() => {
+      initData.plugins = pluginHandler.get();
+      browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
+    }, 100);
   });
 
   // listen event
   browser.webContents.on('$updateShortcut', (pluginName, replacement) => {
-    plugin.updateShortcut(pluginName, replacement);
+    pluginHandler.updateShortcut(pluginName, replacement);
   });
 
   // open url
