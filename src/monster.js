@@ -49,7 +49,7 @@ export function manageShortcuts(context) {
     }, 100);
   });
 
-  // listen event
+  // listen events
   browser.webContents.on('$updateShortcut', (pluginName, replacement) => {
     pluginHandler.updateShortcut(pluginName, replacement);
   });
@@ -64,6 +64,9 @@ export function manageShortcuts(context) {
   });
   browser.webContents.on('$linkFAQ', () => {
     linkFAQ();
+  });
+  browser.webContents.on('$openURL', (url) => {
+    openURL(url);
   });
 
   // open url

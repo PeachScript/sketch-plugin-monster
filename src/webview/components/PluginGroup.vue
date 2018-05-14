@@ -4,12 +4,16 @@
     :style="{ 'max-height': `${plugin.commands.length * 50 + 60}px` }"
     :class="{
       collapse: !isExpanded,
-      'conflicts-inside': plugin.conflicts
+      'conflicts-inside': plugin.conflicts,
+      'parsing-error': plugin.identifier === 'error.parsing'
     }">
     <h2 @click="isExpanded = !isExpanded">
       {{ plugin.name }}
       <i class="icon-warning" :data-count="plugin.conflicts"></i>
-      <a href="javascript:;" class="icon-parsing-error" v-show="plugin.identifier === 'error.parsing'"></a>
+      <a href="javascript:;" class="icon-parsing-error"
+        :data-text="$t('webview.parsingErrorTips')"
+        @click.stop="emitToBridge('$openURL', 'https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md#what-is-the-parsing-error')">
+      </a>
     </h2>
     <div class="plugin-command-item"
       :class="{ conflicting: command.conflicting }"
@@ -33,6 +37,7 @@
   </div>
 </template>
 <script>
+import bridge from '../services/bridge';
 import eventBus from '../services/event-bus';
 import { keyCodePresets } from '../config';
 
@@ -59,6 +64,9 @@ export default {
     });
   },
   methods: {
+    emitToBridge(name, ...arg) {
+      bridge.emit(name, ...arg);
+    },
     updateHiddenMapping(filter) {
       const result = { $: true };
       const pluginName = this.plugin.name.toLowerCase();
@@ -192,8 +200,49 @@ export default {
     }
 
     .icon-parsing-error {
+      display: none;
+      position: relative;
       margin-top: -1px;
       text-decoration: none;
+
+      &::before,
+      &::after {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        display: none;
+      }
+
+      &::before {
+        content: attr(data-text);
+        bottom: 150%;
+        padding: 8px 16px;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 13px;
+        color: #FF7A18;
+        background-color: #fff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        border-radius: 50px;
+        transform: translateX(-50%);
+      }
+
+      &::after {
+        $size: 8px;
+
+        content: '';
+        top: -50%;
+        margin-left: -$size;
+        width: 0;
+        height: 0;
+        border: $size solid transparent;
+        border-top-color: #fff;
+      }
+
+      &:hover::before,
+      &:hover::after {
+        display: block;
+      }
     }
   }
 
@@ -242,7 +291,7 @@ export default {
         cursor: initial;
         transition: border-color 0.2s, box-shadow 0.4s;
         border-color: #4990E2;
-        box-shadow: 0 0 0 3px rgba(0,153,255,.3);
+        box-shadow: 0 0 0 3px rgba(0,153,255,0.3);
       }
 
       &::placeholder {
@@ -281,13 +330,11 @@ export default {
     }
   }
 
-  &.conflicts-inside {
-    h2 {
-      color: $c-error;
+  &.conflicts-inside h2 {
+    color: $c-error;
 
-      .icon-warning {
-        display: inline-block;
-      }
+    .icon-warning {
+      display: inline-block;
     }
   }
 
@@ -300,6 +347,18 @@ export default {
 
     h2::before {
       transform: rotate(-180deg);
+    }
+  }
+
+  &.parsing-error {
+    overflow: visible;
+    pointer-events: none;
+
+    h2 {
+      .icon-parsing-error {
+        display: inline-block;
+        pointer-events: initial;
+      }
     }
   }
 }
