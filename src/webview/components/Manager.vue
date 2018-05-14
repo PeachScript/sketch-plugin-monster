@@ -12,13 +12,13 @@
             <li>
               <a href="javascript:;"
                 v-text="$t('commands.importShortcuts')"
-                @click="emitToBridge('$importShortcuts')">
+                @click="$bridge('$importShortcuts')">
               </a>
             </li>
             <li>
               <a href="javascript:;"
                 v-text="$t('commands.exportShortcuts')"
-                @click="emitToBridge('$exportShortcuts')">
+                @click="$bridge('$exportShortcuts')">
               </a>
             </li>
           </ul>
@@ -32,13 +32,13 @@
             <li>
               <a href="javascript:;"
                 v-text="$t('commands.linkFAQ')"
-                @click="emitToBridge('$linkFAQ')">
+                @click="$bridge('$linkFAQ')">
               </a>
             </li>
             <li>
               <a href="javascript:;"
                 v-text="$t('commands.linkFeedback')"
-                @click="emitToBridge('$linkFeedback')">
+                @click="$bridge('$linkFeedback')">
               </a>
             </li>
             <li><a href="javascript:;" disabled="disabled">v0.3.1</a></li>
@@ -193,9 +193,6 @@ export default {
     });
   },
   methods: {
-    emitToBridge(name, ...arg) {
-      bridge.emit(name, ...arg);
-    },
     toggleDropdown(target) {
       if (this.dropdown[target]) {
         this.dropdown[target] = false;

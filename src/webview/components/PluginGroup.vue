@@ -12,7 +12,7 @@
       <i class="icon-warning" :data-count="plugin.conflicts"></i>
       <a href="javascript:;" class="icon-parsing-error"
         :data-text="$t('webview.parsingErrorTips')"
-        @click.stop="emitToBridge('$openURL', 'https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md#what-is-the-parsing-error')">
+        @click.stop="$bridge('$openURL', 'https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md#what-is-the-parsing-error')">
       </a>
     </h2>
     <div class="plugin-command-item"
@@ -37,7 +37,6 @@
   </div>
 </template>
 <script>
-import bridge from '../services/bridge';
 import eventBus from '../services/event-bus';
 import { keyCodePresets } from '../config';
 
@@ -64,9 +63,6 @@ export default {
     });
   },
   methods: {
-    emitToBridge(name, ...arg) {
-      bridge.emit(name, ...arg);
-    },
     updateHiddenMapping(filter) {
       const result = { $: true };
       const pluginName = this.plugin.name.toLowerCase();

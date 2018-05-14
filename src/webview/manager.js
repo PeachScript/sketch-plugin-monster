@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import Manager from './components/Manager';
+import bridge from './services/bridge';
 import { i18n } from './config';
 
 Vue.use(VueI18n);
@@ -18,6 +19,8 @@ Vue.filter('shortcut', (input = '') => {
 
   return input.split(' ').map(key => mapping[key] || key).join('');
 });
+
+Vue.prototype.$bridge = bridge.emit;
 
 export default new Vue({
   el: '#app',
