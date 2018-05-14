@@ -1,3 +1,4 @@
+import UI from 'sketch/ui';
 import fs from '@skpm/fs';
 import pluginHandler from './plugin';
 import BrowserWindow from 'sketch-module-web-view';
@@ -14,9 +15,10 @@ const webViewPaths = {
     pills: './webview/pills.html',
   },
 };
+let browser;
 
 export function manageShortcuts(context) {
-  const browser = new BrowserWindow({
+  browser = new BrowserWindow({
     identifier: 'pluginMonster.manager',
     width: 600,
     height: 522,
@@ -51,8 +53,11 @@ export function manageShortcuts(context) {
   browser.webContents.on('$updateShortcut', (pluginName, replacement) => {
     pluginHandler.updateShortcut(pluginName, replacement);
   });
-  browser.webContents.on('$exportShortcuts', (pluginName, replacement) => {
+  browser.webContents.on('$exportShortcuts', () => {
     exportShortcuts();
+  });
+  browser.webContents.on('$importShortcuts', () => {
+    importShortcuts();
   });
 
   // open url
@@ -81,5 +86,73 @@ export function exportShortcuts() {
 
   if (panel.runModal()) {
     fs.writeFileSync(panel.URL(), JSON.stringify(output, null, 2));
+  }
+}
+
+export function importShortcuts() {
+  const panel = NSOpenPanel.openPanel();
+
+  panel.allowedFileTypes = ['json'];
+  panel.allowsOtherFileTypes = false;
+
+  // request user select a config file
+  if (panel.runModal()) {
+    const raw = fs.readFileSync(String(panel.URL()).replace(/^file:\/\//, ''), 'utf8');
+    let input;
+
+    try {
+      input = JSON.parse(raw);
+    } catch (e) {
+      UI.message(i18n.exportAndImport.importReadError);
+    }
+
+    if (input[0] && input[0].commands) {
+      const manifests = Object.keys(pluginHandler.paths).reduce((result, fsName) => {
+        const manifest = pluginHandler.getMainifest(fsName);
+
+        // add fsName property for update shortcut
+        result[manifest.identifier] = Object.assign({}, manifest, { fsName });
+        return result;
+      }, {}); // convert to identifier: name from name: path
+      const missings = [];
+
+      input.forEach((plugin) => {
+        // compatible non-identifier plugin
+        const manifest = manifests[plugin.identifier || plugin.name];
+
+        if (manifest) {
+          // restore shortcuts if this computer has the plugin installed
+          manifest.commands.forEach((command) => {
+            pluginHandler.updateShortcut(manifest.fsName, {
+              identifier: command.identifier,
+              shortcut: plugin.commands[command.identifier],
+            });
+          });
+        } else {
+          // save into missing array if cannot found the plugin
+          missings.push(plugin.name);
+        }
+      });
+
+      if (missings.length) {
+        // prompt missing plugins for user
+        UI.alert(
+          'Sketch Plugin Monster',
+          i18n.exportAndImport.importPartOfShortcuts + missings.map((item, index) => `  ${index + 1}. ${item}`).join('\n')
+        );
+      } else {
+        UI.message(i18n.exportAndImport.importSuccess);
+      }
+
+      // update webview data if webview exists
+      if (browser) {
+        browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify({
+          plugins: pluginHandler.get(),
+          lang: system.lang,
+        })})`);
+      }
+    } else {
+      UI.message(i18n.exportAndImport.importReadError);
+    }
   }
 }

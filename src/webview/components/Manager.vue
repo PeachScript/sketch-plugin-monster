@@ -9,7 +9,12 @@
         @click.self="toggleDropdown('importExport')">
         <transition name="dropdown">
           <ul class="dropdown-menu left-bottom" v-show="dropdown.importExport">
-            <li><a href="javascript:;" v-text="$t('commands.importShortcuts')"></a></li>
+            <li>
+              <a href="javascript:;"
+                v-text="$t('commands.importShortcuts')"
+                @click="emitToBridge('$importShortcuts')">
+              </a>
+            </li>
             <li>
               <a href="javascript:;"
                 v-text="$t('commands.exportShortcuts')"
