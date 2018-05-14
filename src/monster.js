@@ -3,7 +3,7 @@ import fs from '@skpm/fs';
 import pluginHandler from './plugin';
 import BrowserWindow from 'sketch-module-web-view';
 import { system, i18n } from './config';
-import { setTimeout } from './utils';
+import { setTimeout, openURL } from './utils';
 
 const webViewPaths = {
   development: {
@@ -58,6 +58,12 @@ export function manageShortcuts(context) {
   });
   browser.webContents.on('$importShortcuts', () => {
     importShortcuts();
+  });
+  browser.webContents.on('$linkFeedback', () => {
+    linkFeedback(context);
+  });
+  browser.webContents.on('$linkFAQ', () => {
+    linkFAQ();
   });
 
   // open url
@@ -155,4 +161,35 @@ export function importShortcuts() {
       UI.message(i18n.exportAndImport.importReadError);
     }
   }
+}
+
+export function linkFeedback(context) {
+  const issueTpl = encodeURIComponent(`
+### Version
+${context.plugin.version()}
+
+### Sketch version
+${UI.version.sketch}
+
+### What is exptected?
+
+
+### What is actually happening?
+
+
+### How to repreduce this problem?
+
+
+### The error log from \`Console.app\` when the problem occurred
+<!--
+
+Do not know how to get the error log? Steps: https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md#how-to-get-the-error-log
+
+-->`);
+
+  openURL('https://github.com/PeachScript/sketch-plugin-monster/issues/new?body=' + issueTpl);
+}
+
+export function linkFAQ(context) {
+  openURL('https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md');
 }

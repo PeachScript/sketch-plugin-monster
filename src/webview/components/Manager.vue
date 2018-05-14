@@ -29,8 +29,18 @@
         <transition name="dropdown">
           <ul class="dropdown-menu left-bottom" v-show="dropdown.settings">
             <li><a href="javascript:;" v-text="$t('commands.checkForUpdates')"></a></li>
-            <li><a href="javascript:;" v-text="$t('commands.linkFAQ')"></a></li>
-            <li><a href="javascript:;" v-text="$t('commands.linkFeedback')"></a></li>
+            <li>
+              <a href="javascript:;"
+                v-text="$t('commands.linkFAQ')"
+                @click="emitToBridge('$linkFAQ')">
+              </a>
+            </li>
+            <li>
+              <a href="javascript:;"
+                v-text="$t('commands.linkFeedback')"
+                @click="emitToBridge('$linkFeedback')">
+              </a>
+            </li>
             <li><a href="javascript:;" disabled="disabled">v0.3.1</a></li>
           </ul>
         </transition>

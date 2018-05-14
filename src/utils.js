@@ -15,3 +15,7 @@ export const safeJSONParser = (data) => {
 export const setTimeout = (cb, time) => {
   coscript.scheduleWithInterval_jsFunction(time / 1000, cb);
 };
+
+export const openURL = (url) => {
+  NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url));
+};
