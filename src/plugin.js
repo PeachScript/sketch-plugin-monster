@@ -92,12 +92,12 @@ const pluginHandler = {
   get() {
     const result = [];
 
-    Object.keys(this.paths).forEach((name) => {
-      const manifest = this.getMainifest(name);
+    Object.keys(this.paths).forEach((fsName) => {
+      const manifest = this.getMainifest(fsName);
       const menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
 
       result.push({
-        fsName: name,
+        fsName,
         name: manifest.name,
         identifier: manifest.identifier,
         commands: manifest.commands.filter(command => Boolean(command.identifier)).map((command) => {
@@ -130,6 +130,9 @@ const pluginHandler = {
         identifier: config.identifiers.parseError,
         commands: [],
       };
+
+      // compatible non-identifier plugin
+      result.identifier = result.identifier || result.name;
     } else {
       // report not found
       result = this.manifests[plugin] = {
@@ -141,22 +144,26 @@ const pluginHandler = {
 
     return result;
   },
-  updateManifest(name, content) {
-    const data = typeof content === 'string' ? content : JSON.stringify(content, null, 2);
+  updateManifest(fsName, content) {
+    const data = JSON.stringify(content, null, 2);
 
-    if (this.paths[name]) {
+    if (this.paths[fsName]) {
       // update cache
-      this.manifests[name] = data;
+      this.manifests[fsName] = content;
       // update file
-      fs.writeFileSync(this.paths[name], data);
+      fs.writeFileSync(this.paths[fsName], data);
     }
   },
-  updateShortcut(name, replacement) {
-    const content = this.getMainifest(name);
+  updateShortcut(fsName, replacement) {
+    const content = this.getMainifest(fsName);
+    let isUpdated = false;
 
     for (let i = 0; i < content.commands.length; i += 1) {
       // search target command
-      if (content.commands[i].identifier === replacement.identifier) {
+      if (
+        content.commands[i].identifier === replacement.identifier &&
+        content.commands[i].shortcut !== replacement.shortcut
+      ) {
         if (replacement.shortcut) {
           // update shortcut
           content.commands[i].shortcut = replacement.shortcut;
@@ -165,12 +172,15 @@ const pluginHandler = {
           delete content.commands[i].shortcut;
         }
 
+        isUpdated = true;
         break;
       }
     }
 
-    // write changes to manifest
-    this.updateManifest(name, content);
+    if (isUpdated) {
+      // write changes to manifest
+      this.updateManifest(fsName, content);
+    }
   },
 };
 
