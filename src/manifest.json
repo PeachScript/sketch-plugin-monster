@@ -11,12 +11,49 @@
       "icon": "../Resources/logo_cmd.png",
       "description": "Open the shortcuts management panel",
       "identifier": "manageShortcuts"
+    },
+    {
+      "script": "./monster.js",
+      "handler": "exportShortcuts",
+      "name": "Export Shortcut Configurations...",
+      "icon": "../Resources/logo_cmd.png",
+      "description": "Export all your shortcuts into a JSON file",
+      "identifier": "exportShortcuts"
+    },
+    {
+      "script": "./monster.js",
+      "handler": "importShortcuts",
+      "name": "Import Shortcut Configurations...",
+      "icon": "../Resources/logo_cmd.png",
+      "description": "Import all available shortcuts from a JSON file",
+      "identifier": "importShortcuts"
+    },
+    {
+      "script": "./monster.js",
+      "handler": "linkFAQ",
+      "name": "FAQ",
+      "icon": "../Resources/logo_eye.png",
+      "description": "Open the FAQ web page",
+      "identifier": "linkFAQ"
+    },
+    {
+      "script": "./monster.js",
+      "handler": "linkFeedback",
+      "name": "Feedback",
+      "icon": "../Resources/logo_eye.png",
+      "description": "Create a new issue on GitHub",
+      "identifier": "linkFeedback"
     }
   ],
   "menu": {
     "title": "Sketch Plugin Monster",
     "items": [
-      "manageShortcuts"
+      "manageShortcuts",
+      "importShortcuts",
+      "exportShortcuts",
+      "-",
+      "linkFAQ",
+      "linkFeedback"
     ]
   }
 }
