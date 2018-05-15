@@ -62,6 +62,10 @@ export default {
       this.updateHiddenMapping({ keyword: str });
     });
   },
+  mounted() {
+    // expand command list if this plugin has conflicts
+    this.isExpanded = Boolean(this.plugin.conflicts);
+  },
   methods: {
     updateHiddenMapping(filter) {
       const result = { $: true };
@@ -82,8 +86,11 @@ export default {
         }
       });
 
-      if (Object.keys(result).length) {
-        // expand if filtered some commands
+      if (
+        Object.keys(result).length ||
+        (!filter.keyword && !filter.shortcut && this.plugin.conflicts)
+      ) {
+        // expand if filtered some commands or has conflicts
         this.isExpanded = true;
       } else {
         // collapse if match all commands
