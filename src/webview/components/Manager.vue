@@ -1,6 +1,6 @@
 <template>
   <div class="manager-container" :class="{ hide: !plugins.length }">
-    <header>
+    <header @transitionend="$event.target.children[0].focus()">
       <input type="search" spellcheck="false"
         v-model.trim="keywords"
         @input="search"
@@ -28,7 +28,6 @@
         @click.self="toggleDropdown('settings')">
         <transition name="dropdown">
           <ul class="dropdown-menu left-bottom" v-show="dropdown.settings">
-            <li><a href="javascript:;" v-text="$t('commands.checkForUpdates')"></a></li>
             <li>
               <a href="javascript:;"
                 v-text="$t('commands.linkFAQ')"
