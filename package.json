@@ -4,7 +4,7 @@
   "description": "A Sketch plugin for managing all plugin shortcuts",
   "scripts": {
     "start": "npm run start:webview & npm run start:sketch",
-    "start:sketch": "skpm-build --watch --run",
+    "start:sketch": "skpm-build --watch",
     "start:webview": "webpack-dev-server --config ./webpack.webview.config.js -d --progress",
     "watch": "skpm-build --watch",
     "build": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && npm run build:sketch && npm run build:webview",
