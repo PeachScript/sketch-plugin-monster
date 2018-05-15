@@ -43,6 +43,16 @@
       "icon": "../Resources/logo_eye.png",
       "description": "Create a new issue on GitHub",
       "identifier": "linkFeedback"
+    },
+    {
+      "script": "./monster.js",
+      "handlers": {
+        "actions": {
+          "OpenDocument": "initialize"
+        }
+      },
+      "name": "Initialize",
+      "identifier": "initialize"
     }
   ],
   "menu": {

@@ -24,6 +24,10 @@ export const i18n = {
   'zh-Hant': zhHant,
 }[system.lang] || en;
 
+export const settingKeys = {
+  lang: 'lang',
+};
+
 export default {
   paths,
   identifiers,

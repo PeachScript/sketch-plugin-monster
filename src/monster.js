@@ -1,8 +1,9 @@
 import UI from 'sketch/ui';
 import fs from '@skpm/fs';
-import pluginHandler from './plugin';
+import settings from 'sketch/settings';
 import BrowserWindow from 'sketch-module-web-view';
-import { system, i18n } from './config';
+import pluginHandler from './plugin';
+import { system, i18n, settingKeys } from './config';
 import { setTimeout, openURL } from './utils';
 
 const webViewPaths = {
@@ -195,4 +196,20 @@ Do not know how to get the error log? Steps: https://github.com/PeachScript/sket
 
 export function linkFAQ(context) {
   openURL('https://github.com/PeachScript/sketch-plugin-monster/blob/master/doc/FAQ.md');
+}
+
+export function initialize(context) {
+  if (settings.settingForKey(settingKeys.lang) !== system.lang && system.lang !== 'en') {
+    // translate menu if system language is not English and never be translated
+    const manifest = pluginHandler.getMainifest(context.plugin.name());
+
+    manifest.commands.forEach((command, i) => {
+      manifest.commands[i].name = i18n.commands[command.identifier] || manifest.commands[i].name;
+    });
+
+    pluginHandler.updateManifest(context.plugin.name(), manifest);
+
+    // save i18n status
+    settings.setSettingForKey(settingKeys.lang, system.lang);
+  }
 }
