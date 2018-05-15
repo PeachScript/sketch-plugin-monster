@@ -1,14 +1,14 @@
 {
   "identifier": "com.peachscript.pluginMonster",
   "compatibleVersion": 3,
-  "icon": "icon.png",
+  "icon": "../Resources/logo.png",
   "commands": [
     {
       "script": "./monster.js",
       "handler": "manageShortcuts",
       "shortcut": "ctrl shift m",
       "name": "Plugin Shortcuts Management",
-      "icon": "../assets/icon.png",
+      "icon": "../Resources/logo_cmd.png",
       "description": "Open the shortcuts management panel",
       "identifier": "manageShortcuts"
     }
