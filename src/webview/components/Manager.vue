@@ -271,6 +271,11 @@ export default {
         });
         this.$set(this.plugins[index].commands[replacement.index], 'shortcut', replacement.shortcut);
 
+        // remove conflict status
+        if (this.plugins[index].commands[replacement.index].conflicting) {
+          this.$delete(this.plugins[index].commands[replacement.index], 'conflicting');
+        }
+
         // update shortcut mapping
         if (replacement.shortcut) {
           this.shortcutMapping[replacement.shortcut] = [{
