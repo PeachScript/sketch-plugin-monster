@@ -47,7 +47,7 @@
     </header>
     <main class="plugin-list"
       :class="{ empty: isEmpty }"
-      data-empty="No matching plugins or commands here">
+      :data-empty="$t('webview.noResultTips')">
       <plugin-group v-for="(plugin, $index) in plugins"
         :key="plugin.identifier"
         :plugin="plugin"
