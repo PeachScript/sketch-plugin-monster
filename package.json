@@ -7,8 +7,10 @@
     "start:sketch": "skpm-build --watch --run",
     "start:webview": "webpack-dev-server --config ./webpack.webview.config.js -d --progress",
     "watch": "skpm-build --watch",
-    "build": "skpm-build",
-    "postinstall": "npm run build && skpm-link"
+    "build": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && npm run build:sketch && npm run build:webview",
+    "build:sketch": "NODE_ENV=production skpm-build",
+    "build:webview": "NODE_ENV=production webpack -p --progress --hide-modules --config ./webpack.webview.config.js",
+    "postinstall": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && mkdir \"Sketch Plugin Monster.sketchplugin\" && skpm-link"
   },
   "author": "Peach <scdzwyxst@gmail.com>",
   "repository": {

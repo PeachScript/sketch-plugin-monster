@@ -7,8 +7,8 @@ import { setTimeout, openURL } from './utils';
 
 const webViewPaths = {
   development: {
-    manager: 'http://localhost:8080/Sketch/webview/manager.html',
-    pills: 'http://localhost:8080/Sketch/webview/pills.html',
+    manager: 'http://localhost:8080/Resources/webview/manager.html',
+    pills: 'http://localhost:8080/Resources/webview/pills.html',
   },
   production: {
     manager: './webview/manager.html',

@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, pkg.skpm.main, 'Contents'),
-    filename: 'Sketch/webview/[name].js',
+    filename: 'Resources/webview/[name].js',
     publicPath: '/'
   },
   resolve: {
@@ -53,9 +53,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: 'Sketch/webview/manager.html',
+      filename: 'Resources/webview/manager.html',
       template: './src/webview/index.html',
       chunks: ['manager']
     })
   ]
 };
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.output.filename = 'Resources/webview/[name]_[chunkhash:7].js';
+  module.exports.output.publicPath = '../../';
+}
