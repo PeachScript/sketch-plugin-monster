@@ -62,19 +62,23 @@ function findMenuPath(menu, command) {
  * @param   {String}  shortcut    original shortcut
  * @return  {String}
  */
-function sortShortcut(shortcut) {
-  let result = shortcut;
+function sortShortcut(shortcut = '') {
+  // make shortcut style uniform
+  let result = shortcut.toLowerCase().replace(/control|alt|command/g, (item) => {
+    return {
+      control: 'ctrl',
+      alt: 'option',
+      command: 'cmd',
+    }[item];
+  });
 
-  if (!/^((ctrl|control) )?((alt|option) )?(shift )?((cmd|command) )?\S*$/.test(shortcut)) {
-    const fragments = shortcut.split(' ');
+  if (!/^(ctrl )?(option )?(shift )?(cmd )?\S*$/.test(result)) {
+    const fragments = result.split(' ');
     const seats = {
       ctrl: 1,
-      control: 1,
       option: 2,
-      alt: 2,
       shift: 3,
       cmd: 4,
-      command: 4,
     };
 
     result = fragments.reduce((sorted, item) => {
