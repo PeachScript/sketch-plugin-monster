@@ -1,6 +1,7 @@
 {
   "identifier": "com.peachscript.pluginMonster",
   "compatibleVersion": 3,
+  "appcast": "https://api.sketchpacks.com/v1/plugins/com.peachscript.pluginMonster/appcast",
   "icon": "../Resources/logo.png",
   "commands": [
     {
