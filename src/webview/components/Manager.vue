@@ -80,10 +80,10 @@
           <div class="status-bar-item">
             <button class="button button-conflict-warning"
               v-show="conflicts.length"
-              :data-count="conflicts.length"
+              :data-count="conflictCount"
               @click.self="toggleDropdown('conflicts')"></button>
             <span v-show="conflicts.length"
-              v-text="$t('webview.conflictWarning', { conflictCount: conflicts.length })">
+              v-text="$t('webview.conflictWarning', { conflictCount })">
             </span>
           </div>
           <div class="status-bar-item notification"
@@ -135,6 +135,9 @@ export default {
 
         return result;
       }, []);
+    },
+    conflictCount() {
+      return this.conflicts.reduce((count, item) => count + item.count, 0);
     },
   },
   beforeCreate() {
