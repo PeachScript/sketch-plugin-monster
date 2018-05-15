@@ -273,6 +273,7 @@ export default {
         // remove conflict status
         if (this.plugins[index].commands[replacement.index].conflicting) {
           this.$delete(this.plugins[index].commands[replacement.index], 'conflicting');
+          this.$set(this.plugins[index], 'conflicts', this.plugins[index].conflicts - 1);
         }
 
         // update shortcut mapping
