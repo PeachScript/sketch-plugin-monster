@@ -23,7 +23,7 @@
       <h3 v-text="command.name || '(Unknown)'"></h3>
       <input type="text"
         tabindex="-2"
-        :placeholder="command.shortcut | shortcut"
+        :placeholder="(command.shortcut || $t('webview.none')) | shortcut"
         @keydown.prevent="setShortcut($event, $index, command)"
         readonly>
       <button class="button button-delete"
@@ -297,7 +297,7 @@ export default {
         box-shadow: 0 0 0 3px rgba(0,153,255,0.3);
       }
 
-      &::placeholder {
+      &:not([placeholder="none"]):not([placeholder="无"]):not([placeholder="無"])::placeholder {
         color: #666;
       }
     }
