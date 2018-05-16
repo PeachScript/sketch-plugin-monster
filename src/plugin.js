@@ -11,16 +11,30 @@ const fileManager = NSFileManager.defaultManager();
  * @return  {Object}
  */
 function searchManifests(basePath = config.paths.plugin, result = {}) {
-  const files = fileManager.contentsOfDirectoryAtPath_error(basePath, null);
+  const files = Array.from(fileManager.contentsOfDirectoryAtPath_error(basePath, null));
+  const extReg = /\.sketchplugin$/;
 
-  Array.prototype.forEach.call(files, (item) => {
+  // parse .sketchplugin file priority, same as Sketch's logic
+  files.sort((prev, next) => {
+    let r;
+
+    if (extReg.test(prev) && !extReg.test(next)) {
+      r = -1;
+    } else if (!extReg.test(prev) && extReg.test(next)) {
+      r = 1;
+    } else {
+      r = prev.charCodeAt(0) - next.charCodeAt(0)
+    }
+
+    return r;
+  }).forEach((item) => {
     const file = String(item);
     const filePath = path.join(basePath, file);
     const expectedPath = path.join(filePath, config.paths.manifest);
 
-    if (/\.sketchplugin/.test(file) && fs.existsSync(expectedPath)) {
+    if (extReg.test(file) && fs.existsSync(expectedPath)) {
       result[file.replace(/\.\w+$/, '')] = expectedPath;
-    } else if (fs.statSync(filePath).isDirectory()) {
+    } else if (!/^\./.test(file) && fs.statSync(filePath).isDirectory()) {
       searchManifests(filePath, result);
     }
   });
