@@ -357,7 +357,7 @@ header {
     flex: 1;
     padding: 10px 10px 10px 40px;
     font-size: 16px;
-    font-weight: 200;
+    font-weight: 300;
     line-height: 1.4;
     outline: none;
     border: 1px solid #ccc;
