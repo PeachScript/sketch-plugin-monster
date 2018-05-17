@@ -32,6 +32,7 @@ export function manageShortcuts(context) {
   const initData = {
     plugins: [],
     lang: system.lang,
+    version: '',
   };
 
   // to fix webview fixed element overflow bug
@@ -46,6 +47,7 @@ export function manageShortcuts(context) {
   browser.on('ready-to-show', () => {
     setTimeout(() => {
       initData.plugins = pluginHandler.get();
+      initData.version = pluginHandler.getMainifest(context.plugin.name()).version;
       browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
     }, 100);
   });

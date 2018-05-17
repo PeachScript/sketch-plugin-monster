@@ -40,7 +40,7 @@
                 @click="$bridge('$linkFeedback')">
               </a>
             </li>
-            <li><a href="javascript:;" disabled="disabled">v0.3.1</a></li>
+            <li><a href="javascript:;" disabled="disabled" v-text="`v${version}`"></a></li>
           </ul>
         </transition>
       </button>
@@ -109,6 +109,7 @@ export default {
         conflicts: false,
       },
       keywords: '',
+      version: '',
       searchTimer: null,
       isFiltered: false,
       isEmpty: false,
@@ -141,7 +142,7 @@ export default {
     },
   },
   beforeCreate() {
-    bridge.on('$manager:init', ({ plugins, lang }) => {
+    bridge.on('$manager:init', ({ plugins, lang, version }) => {
       // generate shortcut mapping
       this.$set(this, 'shortcutMapping', plugins.reduce((result, plugin) => {
         plugin.commands.forEach((command) => {
@@ -175,6 +176,8 @@ export default {
         });
         return plugin;
       }));
+
+      this.$set(this, 'version', version);
 
       this.$i18n.locale = lang;
     });
