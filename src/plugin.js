@@ -113,22 +113,27 @@ const pluginHandler = {
     Object.keys(this.paths).forEach((fsName) => {
       const manifest = this.getMainifest(fsName);
       const menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
-
-      result.push({
+      const converted = {
         fsName,
         name: manifest.name,
         identifier: manifest.identifier,
-        commands: manifest.commands.filter(command => Boolean(command.identifier)).map((command) => {
+        commands: manifest.commands.filter((command) => {
+          // remove commands that not in the menu
+          return command.identifier && menuStr.indexOf(`"${command.identifier}"`) > -1;
+        }).map((command) => {
           return {
             // generate menu path
-            name: menuStr.indexOf(command.identifier) > -1 ?
-              findMenuPath(manifest.menu.items, command).join(' → ') :
-              command.name,
+            name: findMenuPath(manifest.menu.items, command).join(' → '),
             shortcut: sortShortcut(command.shortcut),
             identifier: command.identifier,
           };
         }),
-      });
+      };
+
+      if (converted.commands.length) {
+        // filter plugins that has not any valid command
+        result.push(converted);
+      }
     });
 
     return result;
