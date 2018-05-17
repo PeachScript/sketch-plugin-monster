@@ -10,6 +10,7 @@
     "build": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && npm run build:sketch && npm run build:webview",
     "build:sketch": "NODE_ENV=production skpm-build",
     "build:webview": "NODE_ENV=production webpack -p --progress --hide-modules --config ./webpack.webview.config.js",
+    "release": "bash ./scripts/release.sh",
     "postinstall": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && mkdir \"Sketch Plugin Monster.sketchplugin\" && skpm-link"
   },
   "author": "PeachScript <scdzwyxst@gmail.com>",
