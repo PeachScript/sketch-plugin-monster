@@ -12,7 +12,7 @@
     "build:webview": "NODE_ENV=production webpack -p --progress --hide-modules --config ./webpack.webview.config.js",
     "postinstall": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && mkdir \"Sketch Plugin Monster.sketchplugin\" && skpm-link"
   },
-  "author": "Peach <scdzwyxst@gmail.com>",
+  "author": "PeachScript <scdzwyxst@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PeachScript/sketch-plugin-monster.git"
@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/PeachScript/sketch-plugin-monster/issues"
   },
-  "homepage": "https://github.com/PeachScript/sketch-plugin-monster#readme",
+  "homepage": "https://github.com/PeachScript/sketch-plugin-monster",
   "skpm": {
     "name": "Sketch Plugin Monster",
     "manifest": "src/manifest.json",
@@ -80,8 +80,6 @@
   },
   "browserslist": [
     "> 1%",
-    "last 1 versions",
-    "last 4 Android versions",
-    "last 3 iOS versions"
+    "last 2 versions"
   ]
 }
