@@ -46,9 +46,19 @@ export function manageShortcuts(context) {
   // init webview after ready
   browser.on('ready-to-show', () => {
     setTimeout(() => {
+      const manifest = pluginHandler.getManifest(context.plugin.name());
+
       initData.plugins = pluginHandler.get();
-      initData.version = pluginHandler.getManifest(context.plugin.name()).version;
+      initData.version = manifest.version;
       browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
+
+      // remove language setting to execute i18n again if i18n was invalid
+      if (
+        manifest.commands[0].name !== i18n.commands.manageShortcuts &&
+        settings.settingForKey(settingKeys.lang) === system.lang
+      ) {
+        settings.setSettingForKey(settingKeys.lang, null);
+      }
     }, 100);
   });
 
