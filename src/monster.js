@@ -47,7 +47,7 @@ export function manageShortcuts(context) {
   browser.on('ready-to-show', () => {
     setTimeout(() => {
       initData.plugins = pluginHandler.get();
-      initData.version = pluginHandler.getMainifest(context.plugin.name()).version;
+      initData.version = pluginHandler.getManifest(context.plugin.name()).version;
       browser.webContents.executeJavaScript(`webviewBroadcaster('$manager:init', ${JSON.stringify(initData)})`);
     }, 100);
   });
@@ -120,7 +120,7 @@ export function importShortcuts() {
 
     if (input[0] && input[0].commands) {
       const manifests = Object.keys(pluginHandler.paths).reduce((result, fsName) => {
-        const manifest = pluginHandler.getMainifest(fsName);
+        const manifest = pluginHandler.getManifest(fsName);
 
         // add fsName property for update shortcut
         result[manifest.identifier] = Object.assign({}, manifest, { fsName });
@@ -203,7 +203,7 @@ export function linkFAQ(context) {
 export function initialize(context) {
   if (settings.settingForKey(settingKeys.lang) !== system.lang && system.lang !== 'en') {
     // translate menu if system language is not English and never be translated
-    const manifest = pluginHandler.getMainifest(context.plugin.name());
+    const manifest = pluginHandler.getManifest(context.plugin.name());
 
     manifest.commands.forEach((command, i) => {
       manifest.commands[i].name = i18n.commands[command.identifier] || manifest.commands[i].name;

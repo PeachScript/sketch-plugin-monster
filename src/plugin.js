@@ -111,7 +111,7 @@ const pluginHandler = {
     const result = [];
 
     Object.keys(this.paths).forEach((fsName) => {
-      const manifest = this.getMainifest(fsName);
+      const manifest = this.getManifest(fsName);
       const menuStr = JSON.stringify((manifest.menu && manifest.menu.items) || '');
       const converted = {
         fsName,
@@ -138,7 +138,7 @@ const pluginHandler = {
 
     return result;
   },
-  getMainifest(plugin) {
+  getManifest(plugin) {
     let result;
 
     if (this.manifests[plugin]) {
@@ -178,7 +178,7 @@ const pluginHandler = {
     }
   },
   updateShortcut(fsName, replacement) {
-    const content = this.getMainifest(fsName);
+    const content = this.getManifest(fsName);
     let isUpdated = false;
 
     for (let i = 0; i < content.commands.length; i += 1) {
