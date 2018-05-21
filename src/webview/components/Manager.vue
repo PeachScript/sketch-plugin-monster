@@ -144,13 +144,17 @@ export default {
   beforeCreate() {
     bridge.on('$manager:init', ({ plugins, lang, version }) => {
       // generate shortcut mapping
-      this.$set(this, 'shortcutMapping', plugins.reduce((result, plugin) => {
-        plugin.commands.forEach((command) => {
+      this.$set(this, 'shortcutMapping', plugins.reduce((result, plugin, i) => {
+        plugin.commands.forEach((command, j) => {
           if (command.shortcut) {
             const item = {
               pluginName: plugin.name,
               commandName: command.name,
               identifier: command.identifier,
+              indexs: {
+                plugin: i,
+                command: j,
+              },
             };
 
             if (result[command.shortcut]) {
@@ -242,19 +246,19 @@ export default {
       }
     },
     updateHandler(index, replacement) {
-      const pluginConflicts = (
-        this.shortcutMapping[replacement.shortcut] ||
+      const latestConflicts = this.shortcutMapping[replacement.shortcut] || [];
+      const originalConflicts = (
+        this.shortcutMapping[replacement.original] ||
         []
       ).filter((item => item.identifier !== replacement.identifier));
       const sketchConflicts = this.$t('sketchShortcuts')[replacement.shortcut];
-      const originalConflicts = this.shortcutMapping[replacement.original];
 
-      if (pluginConflicts.length) {
+      if (latestConflicts.length) {
         // notify error if conflict with other plugins
         eventBus.$emit('$notification:error', {
           content: this.$t('webview.conflict', {
-            conflictTarget: pluginConflicts[0].pluginName,
-            shortcutName: pluginConflicts[0].commandName,
+            conflictTarget: latestConflicts[0].pluginName,
+            shortcutName: latestConflicts[0].commandName,
           }),
           duration: 2000,
         });
@@ -276,12 +280,6 @@ export default {
         });
         this.$set(this.plugins[index].commands[replacement.index], 'shortcut', replacement.shortcut);
 
-        // remove conflict status
-        if (this.plugins[index].commands[replacement.index].conflicting) {
-          this.$delete(this.plugins[index].commands[replacement.index], 'conflicting');
-          this.$set(this.plugins[index], 'conflicts', this.plugins[index].conflicts - 1);
-        }
-
         // update shortcut mapping
         if (replacement.shortcut) {
           this.shortcutMapping[replacement.shortcut] = [{
@@ -292,9 +290,30 @@ export default {
         }
 
         // remove conflict if exists
-        if (originalConflicts) {
-          this.shortcutMapping[replacement.original] = originalConflicts
-            .filter(item => item.identifier !== replacement.identifier);
+        if (originalConflicts.length) {
+          // remove conflict of current commands and update conflict number of its plugin
+          this.$delete(this.plugins[index].commands[replacement.index], 'conflicting');
+          this.$set(this.plugins[index], 'conflicts', this.plugins[index].conflicts - 1);
+
+          // update shortcut mapping
+          this.shortcutMapping[replacement.original] = originalConflicts;
+
+          // remove another conflict if original shortcut is not in conflict
+          if (originalConflicts.length === 1) {
+            const anotherPlugin = this.plugins[originalConflicts[0].indexs.plugin];
+
+            this.$delete(
+              anotherPlugin.commands[originalConflicts[0].indexs.command],
+              'conflicting',
+            );
+            this.$set(
+              anotherPlugin,
+              'conflicts',
+              anotherPlugin.conflicts - 1,
+            );
+          }
+        } else {
+          delete this.shortcutMapping[replacement.original];
         }
       }
     },
