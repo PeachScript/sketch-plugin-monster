@@ -10,6 +10,7 @@
     "build": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && npm run build:sketch && npm run build:webview",
     "build:sketch": "NODE_ENV=production skpm-build",
     "build:webview": "NODE_ENV=production webpack -p --progress --hide-modules --config ./webpack.webview.config.js",
+    "test": "jest",
     "release": "bash ./scripts/release.sh",
     "postinstall": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && mkdir \"Sketch Plugin Monster.sketchplugin\" && skpm-link"
   },
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@skpm/builder": "^0.4.3",
+    "@vue/test-utils": "^1.0.0-beta.16",
     "autoprefixer": "^8.1.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -68,11 +70,13 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.6",
+    "jest": "^22.4.4",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.1.2",
     "sass-loader": "^6.0.7",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "^1.0.1",
+    "vue-jest": "^2.6.0",
     "vue-loader": "^14.2.1",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.1.1",
@@ -82,5 +86,25 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/webview/**/*.{js,vue}",
+      "!**/node_modules/**"
+    ],
+    "coverageReporters": [
+      "html",
+      "text-summary"
+    ]
+  }
 }
