@@ -100,7 +100,7 @@
     "setupFiles": ["<rootDir>/test/unit/setup.js"],
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/webview/**/*.{js,vue}",
+      "src/webview/**/*.{vue}",
       "!**/node_modules/**"
     ],
     "coverageReporters": [
