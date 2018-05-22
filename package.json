@@ -97,6 +97,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
+    "setupFiles": ["<rootDir>/test/unit/setup.js"],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/webview/**/*.{js,vue}",
