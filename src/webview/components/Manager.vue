@@ -69,8 +69,7 @@
         :class="{
           'in-filtering': isFiltered,
           'in-notification': notification.timer,
-        }"
-        @transitionend.self="clearNotification">
+        }">
         <div class="status-bar-inner">
           <div class="status-bar-item">
             <button class="button button-display-all"
@@ -239,11 +238,6 @@ export default {
       this.notification.timer = setTimeout(() => {
         this.notification.timer = null;
       }, duration || msg.length * 80);
-    },
-    clearNotification() {
-      if (!this.notification.timer) {
-        this.notification.msg = '';
-      }
     },
     updateHandler(index, replacement) {
       const latestConflicts = this.shortcutMapping[replacement.shortcut] || [];
