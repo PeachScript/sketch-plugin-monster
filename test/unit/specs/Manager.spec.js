@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
-import Manager from '../../../src/webview/components/Manager';
-import eventBus from '../../../src/webview/services/event-bus';
+import Manager from '@/components/Manager';
+import eventBus from '@/services/event-bus';
 
 describe('Manager.vue', () => {
   const manager = mount(Manager);

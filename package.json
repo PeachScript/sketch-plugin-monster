@@ -88,6 +88,9 @@
     "last 2 versions"
   ],
   "jest": {
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/webview/$1"
+    },
     "moduleFileExtensions": [
       "js",
       "json",
