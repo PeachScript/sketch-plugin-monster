@@ -1,8 +1,10 @@
 <p align="center"><img width="234" src="https://raw.githubusercontent.com/PeachScript/sketch-plugin-monster/master/assets/logo.png"></p>
 
 <p align="center">
-  <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg" alt="version"></a>
+  <a href="https://travis-ci.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/travis/PeachScript/sketch-plugin-monster/master.svg"></a>
+  <a href="https://codecov.io/github/PeachScript/sketch-plugin-monster?branch=master"><img src="https://img.shields.io/codecov/c/github/PeachScript/sketch-plugin-monster/master.svg"></a>
   <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/downloads/PeachScript/sketch-plugin-monster/total.svg" alt="downloads"></a>
+  <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/release/PeachScript/sketch-plugin-monster.svg" alt="version"></a>
   <a href="https://github.com/PeachScript/sketch-plugin-monster"><img src="https://img.shields.io/github/license/PeachScript/sketch-plugin-monster.svg" alt="license"></a>
 </p>
 
