@@ -107,8 +107,9 @@
       "!**/node_modules/**"
     ],
     "coverageReporters": [
-      "html",
+      "lcov",
       "text-summary"
-    ]
+    ],
+    "coverageDirectory": "<rootDir>/test/unit/coverage"
   }
 }
