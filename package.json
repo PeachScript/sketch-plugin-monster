@@ -49,7 +49,7 @@
     "vue-i18n": "^7.6.0"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.4.3",
+    "@skpm/builder": "^0.5.7",
     "@vue/test-utils": "^1.0.0-beta.16",
     "autoprefixer": "^8.1.0",
     "babel-core": "^6.26.0",
@@ -100,7 +100,9 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
-    "setupFiles": ["<rootDir>/test/unit/setup.js"],
+    "setupFiles": [
+      "<rootDir>/test/unit/setup.js"
+    ],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/webview/**/*.{vue}",
