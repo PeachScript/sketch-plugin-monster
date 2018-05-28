@@ -3,7 +3,7 @@
     <header @transitionend="$event.target.children[0].focus()">
       <input type="search" spellcheck="false"
         v-model.trim="keywords"
-        @input="search"
+        @input="search()"
         :placeholder="$t('webview.searchTips')">
       <button class="button button-dropdown button-export-import"
         @click.self="toggleDropdown('importExport')">
