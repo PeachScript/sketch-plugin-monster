@@ -5,14 +5,14 @@
   "scripts": {
     "start": "npm run start:webview & npm run start:sketch",
     "start:sketch": "skpm-build --watch",
-    "start:webview": "webpack-dev-server --config ./webpack.webview.config.js -d --progress",
+    "start:webview": "webpack-dev-server --config ./build/webpack.webview.config.js -d --progress",
     "watch": "skpm-build --watch",
     "build": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && npm run build:sketch && npm run build:webview",
     "build:sketch": "NODE_ENV=production skpm-build",
-    "build:webview": "NODE_ENV=production webpack -p --progress --hide-modules --config ./webpack.webview.config.js",
+    "build:webview": "NODE_ENV=production webpack -p --progress --hide-modules --config ./build/webpack.webview.config.js",
     "test": "jest",
-    "release": "bash ./scripts/release.sh",
-    "postinstall": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && mkdir \"Sketch Plugin Monster.sketchplugin\" && skpm-link"
+    "release": "bash ./build/release.sh",
+    "link": "rm -rf \"Sketch Plugin Monster.sketchplugin\" && mkdir \"Sketch Plugin Monster.sketchplugin\" && skpm-link"
   },
   "author": "PeachScript <scdzwyxst@gmail.com>",
   "repository": {

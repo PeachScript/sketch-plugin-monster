@@ -1,14 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const pkg = require('./package.json');
+const pkg = require('../package.json');
 
 module.exports = {
   entry: {
-    'manager': './src/webview/manager.js'
+    manager: './src/webview/manager.js'
   },
   output: {
-    path: path.join(__dirname, pkg.skpm.main, 'Contents'),
+    path: path.join(process.cwd(), pkg.skpm.main, 'Contents'),
     filename: 'Resources/webview/[name].js',
     publicPath: '/'
   },
@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.(vue|js)$/,
         enforce: 'pre',
-        include: path.join(__dirname, './src/webview'),
+        include: path.join(process.cwd(), './src/webview'),
         loader: 'eslint-loader',
         options: {
           formatter: require('eslint-friendly-formatter')
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: path.join(__dirname, './src'),
+        include: path.join(process.cwd(), './src/webview'),
         loader: 'babel-loader',
         options: {
           forceEnv: 'webview'

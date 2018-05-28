@@ -13,7 +13,7 @@
   settings:
     import/resolver:
       webpack:
-        config: ./webpack.webview.config.js
+        config: build/webpack.webview.config.js
   rules:
     import/extensions:
       - error
