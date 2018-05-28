@@ -32,7 +32,10 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.join(__dirname, './src'),
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          forceEnv: 'webview'
+        }
       },
       {
         test: /\.vue$/,
