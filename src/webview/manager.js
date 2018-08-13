@@ -6,7 +6,7 @@ import { i18n } from './config';
 
 Vue.use(VueI18n);
 
-Vue.filter('shortcut', (input = '') => {
+Vue.filter('shortcut', (input) => {
   const mapping = {
     ctrl: '\u2303',
     control: '\u2303',
@@ -17,7 +17,7 @@ Vue.filter('shortcut', (input = '') => {
     command: '\u2318',
   };
 
-  return input.split(' ').map(key => mapping[key] || key).join('');
+  return (input || '').split(' ').map(key => mapping[key] || key).join('');
 });
 
 Vue.prototype.$bridge = bridge.emit;

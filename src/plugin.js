@@ -76,9 +76,9 @@ function findMenuPath(menu, command) {
  * @param   {String}  shortcut    original shortcut
  * @return  {String}
  */
-function sortShortcut(shortcut = '') {
+function sortShortcut(shortcut) {
   // make shortcut style uniform
-  let result = shortcut.toLowerCase().replace(/control|alt|command/g, (item) => {
+  let result = (shortcut || '').toLowerCase().replace(/control|alt|command/g, (item) => {
     return {
       control: 'ctrl',
       alt: 'option',
